@@ -15,13 +15,13 @@
         <div class="full-box dashboard-sideBar-ct">
             <!--SideBar Title -->
             <div class="full-box text-uppercase text-center text-titles dashboard-sideBar-title">
-                company <i class="zmdi zmdi-close btn-menu-dashboard visible-xs"></i>
+                Escuela de Español <i class="zmdi zmdi-close btn-menu-dashboard visible-xs"></i>
             </div>
             <!-- SideBar User info -->
             <div class="full-box dashboard-sideBar-UserInfo">
                 <figure class="full-box">
                     <img src="~/assets/img/avatar.jpg" alt="UserIcon">
-                    <figcaption class="text-center text-titles">User Name</figcaption>
+                    <figcaption class="text-center text-titles">Estuar</figcaption>
                 </figure>
                 <ul class="full-box list-unstyled text-center">
                     <li>
@@ -45,7 +45,7 @@
                 </li>
                 <li>
                     <a href="#!" class="btn-sideBar-SubMenu">
-                        <i class="zmdi zmdi-case zmdi-hc-fw"></i> Administration <i class="zmdi zmdi-caret-down pull-right"></i>
+                        <i class="zmdi zmdi-case zmdi-hc-fw"></i> Administracion <i class="zmdi zmdi-caret-down pull-right"></i>
                     </a>
                     <ul class="list-unstyled full-box">
                         <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
@@ -102,18 +102,40 @@
         </div>
     </section>
 
+    <section class="full-box dashboard-contentPage">
+        <nav class="full-box dashboard-Navbar">
+            <ul class="full-box list-unstyled text-right">
+                <li class="pull-left">
+                    <a href="#!" class="btn-menu-dashboard"><i class="zmdi zmdi-menu"></i></a>
+                </li>
+                <li>
+                    <a href="#!" class="btn-Notifications-area">
+                        <i class="zmdi zmdi-notifications-none"></i>
+                        <span class="badge">7</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#!" class="btn-search">
+                        <i class="zmdi zmdi-search"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#!" class="btn-modal-help">
+                        <i class="zmdi zmdi-help-outline"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
 
+        @RenderBody()
 
-    @RenderBody()
-
-    <hr />
-
+    </section>
 
 
-    @Scripts.Render("~/bundles/js1")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        @Scripts.Render("~/bundles/js1")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 </html>

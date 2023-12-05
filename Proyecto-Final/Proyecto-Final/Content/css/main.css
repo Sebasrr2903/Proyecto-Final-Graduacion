@@ -92,7 +92,7 @@ body, html{
 .dashboard-sideBar{
 	left: 0;
 	z-index: 2;
-	background-image: url('../assets/img/sideBar-font.jpg');
+	background-image: url('/assets/img/Libros.jpeg');
 	border-right: 1px solid rgba(255, 255, 255, .4);
 	overflow: hidden;
 }
@@ -215,16 +215,17 @@ body, html{
 }
 .dashboard-Navbar,
 .dashboard-Navbar > ul,
-.dashboard-Navbar > ul >li,
-.dashboard-Navbar > ul > li > a{
+.dashboard-Navbar > ul > li,
+.dashboard-Navbar > ul > li > a {
 	height: 50px;
 	line-height: 50px;
+	background-color:black;
 }
 .dashboard-Navbar > ul > li > a{
 	outline: none;
 }
-.dashboard-Navbar{
-	background-color: #000;
+.dashboard-Navbar {
+	
 	overflow: hidden;
 }
 .dashboard-Navbar > ul >li,
