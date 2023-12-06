@@ -1,0 +1,56 @@
+﻿
+
+
+<h2>Create</h2>
+
+
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+<div class="container bootstrap snippets bootdey">
+    <section id="create-course" class="gray-bg padding-top-bottom">
+        <div class="container bootstrap snippets bootdey">
+            <div class="row justify-content-center">
+                <form id="create-course-form" class="col-md-8 col-lg-6" action="@Url.Action("CrearCurso", "Curso")" method="post" novalidate>
+
+                    <div class="form-group">
+                        <label class="control-label" for="course-name">Nombre del Curso</label>
+                        <div class="controls">
+                            <input id="course-name" name="Nombre" placeholder="Nombre del curso" class="form-control requiredField Highlighted-label" data-new-placeholder="Nombre del curso" type="text" data-error-empty="Por favor, ingrese el nombre del curso">
+                            <i class="fa fa-user"></i>
+                        </div>
+                    </div><!-- End nombre del curso input -->
+
+                    <div class="form-group">
+                        <label class="control-label" for="course-description">Descripción del Curso</label>
+                        <div class="controls">
+                            <textarea id="course-description" name="Descripcion" placeholder="Descripción del curso" class="form-control requiredField Highlighted-label" data-new-placeholder="Descripción del curso" rows="6" data-error-empty="Por favor, ingrese la descripción del curso"></textarea>
+                            <i class="fa fa-comment"></i>
+                        </div>
+                    </div><!-- End descripción del curso textarea -->
+
+                    <div class="form-group">
+                        <label class="control-label" for="course-date">Fecha de Inicio</label>
+                        <div class="controls">
+                            <input id="course-date" name="FechaInicio" placeholder="Fecha de inicio" class="form-control requiredField Highlighted-label" type="date" data-error-empty="Por favor, ingrese la fecha de inicio">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                    </div><!-- End fecha de inicio input -->
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="course-active" name="Activo">
+                            <label class="custom-control-label" for="course-active">Curso Activo</label>
+                        </div>
+                    </div><!-- End activo checkbox -->
+
+                    <p>
+                        <button name="submit" type="submit" class="btn btn-info btn-block" data-error-message="Error!" data-sending-message="Enviando..." data-ok-message="Mensaje Enviado">
+                            <i class="fa fa-location-arrow"></i> Crear Curso
+                        </button>
+                    </p>
+                    <input type="hidden" name="submitted" id="submitted" value="true">
+                </form><!-- End create-course-form -->
+            </div>
+        </div>
+    </section>
+</div>

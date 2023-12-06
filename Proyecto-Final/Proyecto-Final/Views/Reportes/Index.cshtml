@@ -1,0 +1,99 @@
+﻿
+<section class="full-box ">
+
+    <div class="container-fluid" style="text-align: center;">
+        <div class="page-header">
+            <h1 class="text-titles">Gestión de Usuarios</h1>
+        </div>
+    </div>
+    <div class="full-box text-center" style="padding: 30px 10px;">
+        <article class="full-box tile">
+            <div class="full-box tile-title text-center text-titles text-uppercase">
+                Administradores
+            </div>
+            <div class="full-box tile-icon text-center">
+                <i class="zmdi zmdi-account"></i>
+            </div>
+            <div class="full-box tile-number text-titles">
+                <p class="full-box">7</p>
+                <small>Registrados</small>
+            </div>
+        </article>
+        <article class="full-box tile">
+            <div class="full-box tile-title text-center text-titles text-uppercase">
+                Profesores
+            </div>
+            <div class="full-box tile-icon text-center">
+                <i class="zmdi zmdi-male-alt"></i>
+            </div>
+            <div class="full-box tile-number text-titles">
+                <p class="full-box">10</p>
+                <small>Registrados</small>
+            </div>
+        </article>
+        <article class="full-box tile">
+            <div class="full-box tile-title text-center text-titles text-uppercase">
+                Estudiantes
+            </div>
+            <div class="full-box tile-icon text-center">
+                <i class="zmdi zmdi-face"></i>
+            </div>
+            <div class="full-box tile-number text-titles">
+                <p class="full-box">70</p>
+                <small>Registrados</small>
+            </div>
+        </article>
+
+    </div>
+
+</section>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+
+        <!-- Card Administradores -->
+        <div class="col-md-4">
+            <div class="card mx-auto">
+                <div class="card-header">
+                    Usuarios
+                </div>
+                <div class="card-body text-center">
+                    <canvas id="myPieChart" width="400" height="400"></canvas>
+                </div>
+                <div class="card-footer">
+                    <small>Registrados: 87</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Card Profesores -->
+
+
+<script>
+    // Datos de ejemplo (reemplázalos con tus propios datos)
+    var data = {
+        labels: ['Estudiantes', 'Profesores', 'Administradores'],
+        datasets: [{
+            data: [50, 20, 10], // Reemplaza estos valores con las cantidades reales
+            backgroundColor: ['blue', 'green', 'red']
+        }]
+    };
+
+    // Configuración del gráfico
+    var options = {
+        responsive: true,
+        maintainAspectRatio: false,
+    };
+
+    // Obtén el contexto del lienzo
+    var ctx = document.getElementById('myPieChart').getContext('2d');
+
+    // Crea el gráfico de pastel
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: options
+    });
+</script>

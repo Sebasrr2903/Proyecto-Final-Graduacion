@@ -3,5 +3,56 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
+
+<div class="container-fluid" style="text-align: center;">
+    <div class="page-header">
+        <h1 class="text-titles">Cursos</h1>
+        <a href="@Url.Action("Create", "Cursos")" class="btn btn-danger" style="width: 200px;">Agregar Curso</a>
+    </div>
+
+</div>
+
+
+<div class="container mt-5">
+    <div class="row">
+
+ 
+        <div class="col-md-4">
+            <div class="card">
+                <img src="~/assets/img/Libros.jpeg" class="card-img-top" alt="Curso 1">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre del Curso 1</h5>
+                    <p class="card-text">Descripción breve del curso.</p>
+                    <a href="#" class="btn btn-primary">Ver Detalles</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta de Curso 2 -->
+        <div class="col-md-4">
+            <div class="card">
+                <img src="~/assets/img/Libros.jpeg" class="card-img-top" alt="Curso 2">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre del Curso 2</h5>
+                    <p class="card-text">Descripción breve del curso.</p>
+                    <a href="#" class="btn btn-primary">Ver Detalles</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <img src="~/assets/img/Libros.jpeg" class="card-img-top" alt="Curso 2">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre del Curso 2</h5>
+                    <p class="card-text">Descripción breve del curso.</p>
+                    <a href="#" class="btn btn-primary">Ver Detalles</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agrega más tarjetas según sea necesario -->
+
+    </div>
+</div>

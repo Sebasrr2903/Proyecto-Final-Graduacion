@@ -215,17 +215,16 @@ body, html{
 }
 .dashboard-Navbar,
 .dashboard-Navbar > ul,
-.dashboard-Navbar > ul > li,
-.dashboard-Navbar > ul > li > a {
+.dashboard-Navbar > ul >li,
+.dashboard-Navbar > ul > li > a{
 	height: 50px;
 	line-height: 50px;
-	background-color:black;
 }
 .dashboard-Navbar > ul > li > a{
 	outline: none;
 }
-.dashboard-Navbar {
-	
+.dashboard-Navbar{
+	background-color: #000;
 	overflow: hidden;
 }
 .dashboard-Navbar > ul >li,
