@@ -8,22 +8,9 @@ namespace SAEE_Web.Controllers
 {
     public class HomeController : Controller
     {
+        //Controller used only for the index informational window
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }
