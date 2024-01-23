@@ -4,5 +4,42 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<main style="display:flex; justify-content:space-around;">
+    @* Estos cards se cargaran dinamicamente segun los cursos que el estudiante tenga matricualdos *@
+    @* Se empleará el uso del modelo y un for each para crearlos *@
+    <div class="card" style="width: 18rem;">
+        <div class="content">
+            <img class="card-img-top" src="~/Images/librosEj.jpg" alt="Ejemplo Curso">
+            <div class="card-body">
+                <h5 class="card-title">Español Básico I</h5>
+                <p class="card-text">Bases del idioma español para principiantes.</p>
+                <a href="@Url.Action("SpecificCourse", "Course")" class="btn btn-primary">Ir al curso</a>
+            </div>
+        </div> 
+    </div>
 
+    <div class="card" style="width: 18rem;">
+        <div class="content">
+            <img class="card-img-top" src="~/Images/librosEj.jpg" alt="Ejemplo Curso">
+            <div class="card-body">
+                <h5 class="card-title">Español Básico II</h5>
+                <p class="card-text">Español intermedio para personas que dominen ligeramente el idioma.</p>
+                <a href="@Url.Action("SpecificCourse", "Course")" class="btn btn-primary">Ir al curso</a>
+            </div>
+        </div>  
+    </div>
+
+    <div class="card" style="width: 18rem;">
+        <div class="content">
+            <img class="card-img-top" src="~/Images/librosEj.jpg" alt="Ejemplo Curso">
+            <div class="card-body">
+                <h5 class="card-title">Español Básico III</h5>
+                <p class="card-text">Idioma español avanzado, enfocado en prácticas conversacionales.</p>
+                <a href="@Url.Action("SpecificCourse", "Course")" class="btn btn-primary">Ir al curso</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<br />
 

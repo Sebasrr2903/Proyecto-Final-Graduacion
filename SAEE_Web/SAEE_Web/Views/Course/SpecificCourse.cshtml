@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "SpecificCourse";
+    Layout = "~/Views/Shared/_Layout_Course.cshtml";
+}
+
+<div style="width: 70%; margin-left: auto; margin-right:50rem; text-align: center;">
+    <br />
+    @* SECONDARY NAV *@
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="display:flex; justify-content:flex-start;">
+        @* Estas semanas se cargarán dinamicamente según tenga el curso accesado *@
+        @* Tienen varios saltos "quemados" para orden pero se hará correctamente al cargarlos dinamicamente *@
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="navbar-brand" href="#">Introducción</a> &nbsp;&nbsp;&nbsp;
+        <a class="navbar-brand" href="#">Semana 1</a> &nbsp;&nbsp;&nbsp;
+        <a class="navbar-brand" href="#">Semana 2</a> &nbsp;&nbsp;&nbsp;
+        <a class="navbar-brand" href="#">Semana 3</a> &nbsp;&nbsp;&nbsp;
+        <a class="navbar-brand" href="#">Semana 4</a> &nbsp;&nbsp;&nbsp;
+        <a class="navbar-brand" href="#">Semana 5</a> &nbsp;&nbsp;&nbsp;
+    </nav>
+
+    @* Content (tambien será cargado dinamicamente según cada curso)*@
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action active">
+            <div class="d-flex w-100 justify-content-between">
+                <h2 class="mb-1">Curso español ejemplo</h2>
+            </div>
+            <p class="mb-1">Bases del idioma español para principiantes.</p>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h4 class="mb-1">Profesor Fernando Pérez</h4>
+            </div>
+            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
+                <p class="mb-1" style="font-weight:bold;">Acerca del profesor:</p>
+                <p class="mb-1">Licenciado en español</p>
+                <p class="mb-1">10 años de experiencia</p>
+                <p class="mb-1">Multiples escuelas públicas y privadas.</p>
+            </div>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h4 class="mb-1">Información del curso:</h4>
+            </div>
+            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
+                <p class="mb-1">Clases todas las semanas de 6:00pm a 9:00pm</p>
+                <p class="mb-1">Programa del curso (enlace)</p> @*Seran descargas*@
+                <p class="mb-1">Indicaciones Proyecto final</p> @*Seran descargas*@
+            </div>
+        </a>
+    </div>
+</div>

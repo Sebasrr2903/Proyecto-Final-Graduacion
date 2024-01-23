@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "UsersTable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="text-align: center;">
+    <h2>Estudiantes matriculados</h2>
+    <br>
+    <div style="display:flex;">
+        &nbsp;&nbsp;
+        <div style="text-align:left">
+            <a class="btn btn-primary" href="#">Matricualar</a>
+        </div>
+        &nbsp;&nbsp;
+        <div style="text-align:left">
+            <a class="btn btn-primary" href="#">Descargar reporte</a>
+        </div>
+    </div>
+    <br />
+    @* Se aplicaran metodo para busqueda y repoortes, bien pueden ser datatables o creados manualmente *@
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Cambiar Estado</th>
+                <th scope="col">Actualizar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @*Cada objeto se cargaria dinamicamente*@
+                <th>1</th>
+                <td>Fernando</td>
+                <td>Perez</td>
+                <td>Activo</td>
+                <td style="text-align:center">
+                    <a href="#"><i class="icon-edit-solid"></i></a>
+                </td>
+                <td style="text-align:center">
+                    <a href="#"><i class="icon-arrow-right-solid"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

@@ -122,6 +122,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -149,7 +150,9 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\ELEC.png" />
+    <Content Include="Images\librosEj.jpg" />
     <Content Include="Images\logoELEC.png" />
+    <Content Include="Images\spanish.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -367,9 +370,14 @@
     <Content Include="Template\sourcemaps\team.css.min.map" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Course\AllCourses.cshtml" />
+    <Content Include="Views\Course\SpecificCourse.cshtml" />
+    <Content Include="Views\Shared\_Layout_Course.cshtml" />
+    <Content Include="Views\User\UsersTable.cshtml" />
+    <Content Include="Views\Report\GeneralReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Functions\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "GeneralReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-xs-12 text-center">
+    <h2>Personas totales en el sistema</h2>
+</div>
+
+<div id="donut-chart"></div>
+
+@* Este y varios otros gráficos más que sean de utilidad para la escuela se generarán dinamicamente segun sea el caso *@
+<script>
+    var chart = bb.generate({
+        data: {
+            columns: [
+                ["Estudiantes", 50],
+                ["Profesores", 5],
+                ["Administradores", 3],
+            ],
+            type: "donut",
+            onclick: function (d, i) {
+                console.log("onclick", d, i);
+            },
+            onover: function (d, i) {
+                console.log("onover", d, i);
+            },
+            onout: function (d, i) {
+                console.log("onout", d, i);
+            },
+        },
+        donut: {
+            title: "58",
+        },
+        bindto: "#donut-chart",
+    });
+</script>

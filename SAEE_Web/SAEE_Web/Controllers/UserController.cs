@@ -13,5 +13,12 @@ namespace SAEE_Web.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult UsersTable()
+        {
+            return View();
+        }
+        
     }
 }

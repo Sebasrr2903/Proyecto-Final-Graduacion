@@ -6,16 +6,10 @@ using System.Web.Mvc;
 
 namespace SAEE_Web.Controllers
 {
-    public class CourseController : Controller
+    public class ReportController : Controller
     {
         [HttpGet]
-        public ActionResult AllCourses()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult SpecificCourse()
+        public ActionResult GeneralReport()
         {
             return View();
         }
