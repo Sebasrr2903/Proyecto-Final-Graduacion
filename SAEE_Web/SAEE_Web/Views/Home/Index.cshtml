@@ -1,56 +1,60 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- hero section start -->
-<div class="underlay"></div>
-<section class="hero">
-    <div class="container d-lg-flex align-items-center">
-        <div class="hero_content">
-            <h1 class="hero_content-header" data-aos="fade-up">Large educational programs</h1>
-            <div class="hero_content-rating d-flex flex-column flex-sm-row align-items-center">
-                <p class="text" data-aos="fade-left">Our course is rated excellent by over 42,000 people</p>
-                <div class="wrapper" data-aos="fade-left" data-aos-delay="50">
-                    <ul class="rating d-flex align-items-center">
-                        <li class="rating_star">
-                            <i class="icon-star icon"></i>
-                        </li>
-                        <li class="rating_star">
-                            <i class="icon-star icon"></i>
-                        </li>
-                        <li class="rating_star">
-                            <i class="icon-star icon"></i>
-                        </li>
-                        <li class="rating_star">
-                            <i class="icon-star icon"></i>
-                        </li>
-                        <li class="rating_star">
-                            <i class="icon-star icon"></i>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <p class="hero_content-text" data-aos="fade-up" data-aos-delay="50">
-                Today, more than 48,000 people have already studied at our university in various fields: programming,
-                photography, marketing and management
-            </p>
-            <div class="hero_content-action d-flex flex-wrap">
-                <a class="btn btn--gradient" href="#" data-aos="fade-left">
-                    <span class="text">Try for Free</span>
-                </a>
-                <a class="btn btn--highlight" href="~/Template/pricing.html" data-aos="fade-left" data-aos-delay="50">
-                    <span class="text">See Pricing Plans</span>
-                </a>
-            </div>
-        </div>
-        <div class="hero_media col-lg-6">
-            <lottie-player src="~/Template/lottie/hero.json"
-                           background="transparent"
-                           speed="1"
-                           style="width: 100%; height: 100%"
-                           loop
-                           autoplay></lottie-player>
+<!-- features section start -->
+<main class="contacts">
+    <div class="features">
+        <div class="container">
+            <ul class="features_list d-md-flex flex-wrap">
+                <li class="features_list-item col-md-4" data-order="1" data-aos="fade-up">
+                    <div class="card">
+                        <div class="content">
+                            <div class="card_media">
+                                <i class="icon-user-graduate-solid icon"></i>
+                            </div>
+                            <div class="card_main">
+                                <h5 class="card_main-title">Inicio de cuatrimestre</h5>
+                                <p class="card_main-text">
+                                    Recuerda tener todo en orden para el inicio de clases el 15 de enero.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="features_list-item col-md-4" data-order="2" data-aos="fade-up">
+                    <div class="card">
+                        <div class="content">
+                            <div class="card_media">
+                                <i class="icon-globe-solid icon"></i>
+                            </div>
+                            <div class="card_main">
+                                <h5 class="card_main-title">Todo en un solo sitio</h5>
+                                <p class="card_main-text">
+                                    Con el nuevo sitio SAEE puedes ver el material de estudio, calificaciones y demás de forma ágil y sencilla.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="features_list-item col-md-4" data-order="3" data-aos="fade-up">
+                    <div class="card">
+                        <div class="content">
+                            <div class="card_media">
+                                <i class="icon-headset-solid icon"></i>
+                            </div>
+                            <div class="card_main">
+                                <h5 class="card_main-title">Asistencia</h5>
+                                <p class="card_main-text">
+                                    Recuerda utilizar el servicio de reportes ante cualquier imprevisto o fallo en el sitio.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
-</section>
-<!-- hero section end -->
+</main>
+    <!-- features section end -->

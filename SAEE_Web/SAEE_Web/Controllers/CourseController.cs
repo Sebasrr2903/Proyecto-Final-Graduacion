@@ -6,11 +6,10 @@ using System.Web.Mvc;
 
 namespace SAEE_Web.Controllers
 {
-    public class HomeController : Controller
+    public class CourseController : Controller
     {
-        //Controller used only for the index informational window
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult AllCourses()
         {
             return View();
         }

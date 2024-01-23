@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Home | Edison</title>
+    <title>SAEE - ELEC</title>
     <script id="www-widgetapi-script" src="https://s.ytimg.com/yts/jsbin/www-widgetapi-vflS50iB-/www-widgetapi.js" async=""></script>
     <script src="https://www.youtube.com/player_api"></script>
     <link rel="stylesheet preload" as="style" href="~/Template/css/preload.min.css" />
@@ -12,49 +12,21 @@
     <link rel="stylesheet preload" as="style" href="~/Template/css/libs.min.css" />
 
     <link rel="stylesheet" href="~/Template/css/index.min.css" />
+    <link rel="stylesheet" href="~/Template/css/contacts.min.css" />
 </head>
 
 <body>
-    @* TOP *@
-    <div class="promobar d-flex align-items-center">
-        <div class="container d-flex align-items-center justify-content-between">
-            <ul class="promobar_socials d-flex align-items-center">
-                <li class="promobar_socials-item">
-                    <a class="link" href="#" target="_blank" rel="noopener noreferrer">
-                        <i class="icon-facebook"></i>
-                    </a>
-                </li>
-                <li class="promobar_socials-item">
-                    <a class="link" href="#" target="_blank" rel="noopener noreferrer">
-                        <i class="icon-twitter"></i>
-                    </a>
-                </li>
-                <li class="promobar_socials-item">
-                    <a class="link" href="#" target="_blank" rel="noopener noreferrer">
-                        <i class="icon-instagram"></i>
-                    </a>
-                </li>
-            </ul>
-            <div class="promobar_main d-flex align-items-center">
-                <p class="promobar_main-text">Try for free! <span class="hide">30 day Trial and Free Lectures</span></p>
-                <a class="btn btn--yellow" href="#" id="signUpTrigger">
-                    <span>Sign Up</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
     @* NAV *@
     <header class="header" data-page="home">
         <div class="container d-flex flex-wrap justify-content-between align-items-center">
             <div class="logo header_logo">
-                <a class="d-inline-flex align-items-center" href="~/Template/index.html">
+                <a class="d-inline-flex align-items-center" href="@Url.Action("Index", "Home")">
                     <span class="logo_picture">
-                        <img src="~/Template/svg/logo.svg" alt="Edison" />
+                        <img src="~/Images/ELEC.png" alt="ELEC" />
                     </span>
                     <span class="text">
-                        <span class="brand">edison</span>
-                        <span class="text_secondary">courses</span>
+                        <span class="brand">ELEC</span>
+                        <span class="text_secondary">Spanish School</span>
                     </span>
                 </a>
             </div>
@@ -68,141 +40,67 @@
                 <span class="line"></span>
             </button>
             <nav class="header_nav collapse" id="headerMenu">
+                @* En toda esta lista se deben agregar validaciones para decidir que mostrar según su sesion y rol *@
                 <ul class="header_nav-list">
                     <li class="header_nav-list_item">
-                        <a class="nav-item" href="~/Template/index.html" data-page="home">Home</a>
+                        <a class="nav-item" href="@Url.Action("Index", "Home")" data-page="home">Inicio</a>
                     </li>
                     <li class="header_nav-list_item dropdown">
                         <a class="nav-link nav-item dropdown-toggle d-inline-flex align-items-center"
-                           href="courses.html"
+                           href="@Url.Action("AllCourses", "Course")"
                            data-bs-toggle="collapse"
                            data-bs-target="#coursesMenu"
                            data-trigger="dropdown"
                            aria-expanded="false"
                            aria-controls="coursesMenu"
                            data-page="courses">
-                            All Courses
+                            Todos los cursos
                             <i class="icon-angle-down icon"></i>
                         </a>
                         <div class="dropdown-menu collapse" id="coursesMenu">
                             <ul class="dropdown-list">
-                                <li class="list-item" data-main="true">
-                                    <a class="dropdown-item nav-item" data-page="courses" href="courses.html" data-main="true">
-                                        All Courses
-                                    </a>
+                                @* Acá se cargarían dinamicamente los cursos que el estudiante tenga activos *@
+                                <li class="list-item">
+                                    <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 1</a>
                                 </li>
                                 <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Course Description</a>
+                                    <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 2</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
                     <li class="header_nav-list_item">
-                        <a class="nav-item" href="~/Template/about.html" data-page="about">About Us</a>
+                        <a class="nav-item" href="~/Template/about.html" data-page="about">Preguntas frecuentes</a>
                     </li>
                     <li class="header_nav-list_item">
-                        <a class="nav-item" href="~/Template/pricing.html" data-page="pricing">Prices</a>
-                    </li>
-                    <li class="header_nav-list_item dropdown">
-                        <a class="nav-link nav-item dropdown-toggle d-inline-flex align-items-center"
-                           href="~/Template/journal.html"
-                           data-bs-toggle="collapse"
-                           data-bs-target="#journalMenu"
-                           data-trigger="dropdown"
-                           aria-expanded="false"
-                           aria-controls="journalMenu"
-                           data-page="journal">
-                            Journal
-                            <i class="icon-angle-down icon"></i>
+                        <a class="btn btn--gradient" href="@Url.Action("Login","User")">
+                            <span class="text">Iniciar Sesión</span>
                         </a>
-                        <div class="dropdown-menu collapse" id="journalMenu">
-                            <ul class="dropdown-list">
-                                <li class="list-item" data-main="true">
-                                    <a class="dropdown-item nav-item" data-page="journal" href="~/Template/journal.html" data-main="true">
-                                        Journal
-                                    </a>
-                                </li>
-                                <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="post" href="~/Template/post.html">Single Post</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="header_nav-list_item dropdown">
-                        <a class="nav-link nav-item dropdown-toggle d-inline-flex align-items-center"
-                           href="#"
-                           data-bs-toggle="collapse"
-                           data-bs-target="#pagesMenu"
-                           data-trigger="dropdown"
-                           aria-expanded="false"
-                           aria-controls="pagesMenu"
-                           data-page="">
-                            Pages
-                            <i class="icon-angle-down icon"></i>
-                        </a>
-                        <div class="dropdown-menu collapse" id="pagesMenu">
-                            <ul class="dropdown-list">
-                                <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="library" href="~/Template/library.html">Media library</a>
-                                </li>
-                                <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="events" href="~/Template/events.html">Events</a>
-                                </li>
-                                <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="teachers" href="~/Template/team.html">Teachers</a>
-                                </li>
-                                <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="faq" href="~/Template/faq.html">FAQ</a>
-                                </li>
-                                <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="error" href="~/Template/404.html">404</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="header_nav-list_item">
-                        <a class="nav-item" href="~/Template/contacts.html" data-page="contacts">Contact Us</a>
-                    </li>
-                </ul>
-                <ul class="promobar_socials d-flex align-items-center justify-content-center">
-                    <li class="promobar_socials-item">
-                        <a class="link" href="#" target="_blank" rel="noopener noreferrer">
-                            <i class="icon-facebook"></i>
-                        </a>
-                    </li>
-                    <li class="promobar_socials-item">
-                        <a class="link" href="#" target="_blank" rel="noopener noreferrer">
-                            <i class="icon-twitter"></i>
-                        </a>
-                    </li>
-                    <li class="promobar_socials-item">
-                        <a class="link" href="#" target="_blank" rel="noopener noreferrer">
-                            <i class="icon-instagram"></i>
-                        </a>
-                    </li>
+                    </li> 
                 </ul>
             </nav>
         </div>
     </header>
     <!-- homepage content start -->
     <main>
+        <br />
         @RenderBody()
     </main>
     <!-- homepage content end -->
 
-    @* FOOTER *@
+    @* FOOTER *@ 
     <footer class="footer">
         <div class="container">
             <div class="footer_wrapper d-sm-flex flex-wrap flex-lg-nowrap justify-content-lg-between">
                 <div class="footer_block col-sm-6 col-lg-auto" data-order="1">
                     <div class="logo logo--footer">
-                        <a class="d-inline-flex align-items-center" href="index.html">
+                        <a class="d-inline-flex align-items-center" href="@Url.Action("Index", "Home")">
                             <span class="logo_picture">
-                                <img src="~/Template/svg/logo.svg" alt="Edison" />
+                                <img src="~/Images/ELEC.png" alt="Edison" />
                             </span>
                             <span class="text">
-                                <span class="brand">edison</span>
-                                <span class="text_secondary">courses</span>
+                                <span class="brand">ELEC</span>
+                                <span class="text_secondary">Spanish School</span>
                             </span>
                         </a>
                     </div>
@@ -217,9 +115,9 @@
                             <i class="icon-envelope icon"></i>
                             correoEscual@mail.com
                         </a>
-                        <a class="link link--contacts text text--sm d-inline-flex align-items-center" href="tel:+123456789">
+                        <a class="link link--contacts text text--sm d-inline-flex align-items-center" href="tel:+50688263675">
                             <i class="icon-phone-solid icon"></i>
-                            numEscual0000
+                            +506 8826-3675
                         </a>
                     </div>
                 </div>
