@@ -321,6 +321,7 @@ main>.underlay:after {
 }
 
 .btn--gradient {
+    height:30px;
     background: -o-linear-gradient(338.59deg,#ff0844 24.85%,#ff8b67 95.39%);
     background: linear-gradient(111.41deg,#ff0844 24.85%,#ff8b67 95.39%);
     position: relative;
@@ -342,21 +343,21 @@ main>.underlay:after {
     font-size: 14px
 }
 
-.btn--gradient:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: -o-linear-gradient(338.59deg,#ff8b67 24.85%,#ff0844 95.39%);
-    background: linear-gradient(111.41deg,#ff8b67 24.85%,#ff0844 95.39%);
-    -webkit-transition: opacity .3s ease-in-out;
-    -o-transition: opacity .3s ease-in-out;
-    transition: opacity .3s ease-in-out;
-    opacity: 0;
-    z-index: 1
-}
+    .btn--gradient:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 30px;
+        top: 0;
+        left: 0;
+        background: -o-linear-gradient(338.59deg,#ff8b67 24.85%,#ff0844 95.39%);
+        background: linear-gradient(111.41deg,#ff8b67 24.85%,#ff0844 95.39%);
+        -webkit-transition: opacity .3s ease-in-out;
+        -o-transition: opacity .3s ease-in-out;
+        transition: opacity .3s ease-in-out;
+        opacity: 0;
+        z-index: 1
+    }
 
 .btn--gradient:focus:after,.btn--gradient:hover:after {
     opacity: 1
