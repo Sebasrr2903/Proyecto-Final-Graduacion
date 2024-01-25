@@ -146,6 +146,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\icomoon.css" />
+    <Content Include="Content\libs.min.css" />
+    <Content Include="Content\general.css" />
+    <Content Include="Content\preload.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -374,6 +378,8 @@
     <Content Include="Views\Shared\_Layout_Course.cshtml" />
     <Content Include="Views\User\UsersTable.cshtml" />
     <Content Include="Views\Report\GeneralReport.cshtml" />
+    <Content Include="Views\Shared\_HeadPartial.cshtml" />
+    <Content Include="Views\Shared\_FooterPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
