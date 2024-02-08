@@ -50,7 +50,7 @@ namespace SAEE_Web.Controllers
                 }
                 else
                 {
-                    ViewBag.MessagePopUP = "Compruebe la información de sus credenciales.";
+                    ViewBag.BoxMessage = "Compruebe la información de sus credenciales.";
                     return View();
                 }
             }  
@@ -67,6 +67,8 @@ namespace SAEE_Web.Controllers
         [HttpGet]
         public ActionResult RegisterUser()
         {
+            ViewBag.ListUsersTypes = userModel.ListUsersTypes();
+            ViewBag.ListSpecialties = userModel.ListSpecialties();
             return View();
         }
 
@@ -75,6 +77,8 @@ namespace SAEE_Web.Controllers
         {
             user.activeUser = (int)Session["ActiveId"];//For action register
 
+            ViewBag.ListUsersTypes = userModel.ListUsersTypes();
+            ViewBag.ListSpecialties = userModel.ListSpecialties();
             var resp = userModel.RegisterUser(user);
 
             if (resp == "OK")
@@ -84,24 +88,19 @@ namespace SAEE_Web.Controllers
             else if (resp == "Repeated email")
             {
                 ViewBag.MessageMail = "Correo electrónico ya registrado.";
+                ViewBag.ListUsersTypes = userModel.ListUsersTypes();
+                ViewBag.ListSpecialties = userModel.ListSpecialties();
                 return View();
             }else
             {
-                ViewBag.MessagePopUP = "No se ha registrado el usuario.";
+                ViewBag.BoxMessage = "No se ha registrado el usuario.";
+                ViewBag.ListUsersTypes = userModel.ListUsersTypes();
+                ViewBag.ListSpecialties = userModel.ListSpecialties();
                 return View();
             }
         }
 
-
-
-
-
-
-
-
-
-
-
+        /**********************TABLE/STATUS/UPDATE/RECOVER**********************/
         [HttpGet]
         public ActionResult UsersTable()
         {
@@ -110,6 +109,72 @@ namespace SAEE_Web.Controllers
             return View(datos);
         }
 
-        
+        [HttpGet]
+        public ActionResult ChangeStatusUser(long q)
+        {
+            var user = new UserEnt();
+            user.Id = (int)q;
+
+            user.activeUser = (int)Session["ActiveId"];//For action register
+
+            var resp = userModel.ChangeStatusUser(user);
+
+            if (resp == "OK")
+            {
+                return RedirectToAction("UsersTable", "User");
+            }
+            else
+            {
+                ViewBag.BoxMessage = "No se pudo modificar el estado del usuario.";
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult UpdateUser(long q)
+        {
+            var data = userModel.UserData(q);
+            return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateUser(UserEnt user)
+        {
+            user.activeUser = (int)Session["ActiveId"];//For action register
+
+            var resp = userModel.UpdateUser(user);
+
+            if (resp == "OK")
+            {
+                return RedirectToAction("UsersTable", "User");
+            }
+            else
+            {
+                ViewBag.BoxMessage = "No se pudo actualizar el usuario.";
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult RecoverPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult RecoverPassword(UserEnt user)
+        {
+            var resp = userModel.RecoverPassword(user);
+
+            if (resp == "OK")
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                ViewBag.BoxMessage = "No se ha podido recuperar la cuenta, verifique que los datos sean correctos.";
+                return View();
+            }
+        }
     }
 }

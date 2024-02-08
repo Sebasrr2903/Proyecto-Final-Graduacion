@@ -9,18 +9,32 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Inicio de Sesión</h2>
+                <h2 class="contacts_form-header_title">Registro de Usuarios</h2>
             </div>
-            @if (ViewBag.MessagePopUP != null)
+            @if (ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-danger" role="alert" style="text-align:center">
-                    @ViewBag.MessagePopUP
+                    @ViewBag.BoxMessage
                 </div>
             }
 
             @using (Html.BeginForm("RegisterUser", "User", FormMethod.Post, new { @class = "contacts_form-form" }))
             {
-                EDITAR AQUI
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Nombre:</label>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Nombre" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Apellidos:</label>
+                    @Html.TextBoxFor(m => m.Lastname, new { @class = "field required", @type = "text", @placeholder = "Apellidos" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 20rem;">Fecha de nacimiento:</label>
+                    @Html.TextBoxFor(m => m.Birthdate, new { @class = "field required", @type = "date", @placeholder = "Fecha de nacimiento" })
+                </div>
+
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Email:</label>
                     @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "email", @placeholder = "Email" })
@@ -28,18 +42,29 @@
                     @* ALERT *@
                     @if (ViewBag.MessageMail != null)
                     {
-                        <p style="color:red;margin-right:15rem;">@ViewBag.MessageMail</p>
+                        <p style="color: red;margin-right:15rem;">@ViewBag.MessageMail</p>
                     }
                 </div>
-                <div class="form-group">
-                    <label style="margin-right: 52rem;">Password:</label>
-                    @Html.TextBoxFor(m => m.Password, new { @class = "field required", @type = "password", @placeholder = "Password" })
 
-                    @* ALERT *@
-                    @if (ViewBag.MessagePass != null)
-                    {
-                        <p style="color: red;margin-right:15rem;">@ViewBag.MessagePass</p>
-                    }
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Número:</label>
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "field required", @type = "number", @placeholder = "Número" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 23rem;">Tipo de usuario:</label>
+                    @Html.DropDownListFor(m => m.UserType, ViewBag.ListUsersTypes as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType" })
+                </div>
+
+                //If they are a teacher
+                <div class="form-group" id="divSpecialty" style="display: none;">
+                    <label style="margin-right: 53rem;">Especialidad:</label>
+                    @Html.DropDownListFor(m => m.Specialty, ViewBag.ListSpecialties as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Especialidad" })
+                </div>
+
+                <div class="form-group" id="divExperienceYears" style="display: none;">
+                    <label style="margin-right: 21rem;">Años de experiencia:</label>
+                    @Html.TextBoxFor(m => m.ExperienceYears, new { @class = "field required", @type = "number", @placeholder = "Años de experiencia" })
                 </div>
 
                 <div class="contacts_form-form_footer">
@@ -51,3 +76,16 @@
 </main>
 
 
+<script>
+    $(document).ready(function () {
+        $("#UserType").change(function () {
+            if ($(this).val() == 2) {
+                $("#divSpecialty").show();
+                $("#divExperienceYears").show();
+            } else {
+                $("#divSpecialty").hide();
+                $("#divExperienceYears").hide();
+            }
+        });
+    });
+</script>

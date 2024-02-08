@@ -20,8 +20,8 @@ namespace SAEE_Web.Models
             using (var client = new HttpClient())
             {
                 string url = urlAPI + "Login";
-                JsonContent contenido = JsonContent.Create(user);
-                var resp = client.PostAsync(url, contenido).Result;
+                JsonContent content = JsonContent.Create(user);
+                var resp = client.PostAsync(url, content).Result;
                 return resp.Content.ReadFromJsonAsync<UserEnt>().Result;
             }
         }
@@ -31,8 +31,51 @@ namespace SAEE_Web.Models
             using (var client = new HttpClient())
             {
                 string url = urlAPI + "RegisterUser";
-                JsonContent contenido = JsonContent.Create(user);
-                var resp = client.PostAsync(url, contenido).Result;
+                JsonContent content = JsonContent.Create(user);
+                var resp = client.PostAsync(url, content).Result; 
+                return resp.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
+        public string ChangeStatusUser(UserEnt user)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = urlAPI + "ChangeStatusUser";
+                JsonContent content = JsonContent.Create(user);
+                var resp = client.PutAsync(url, content).Result;
+                return resp.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
+        public UserEnt UserData(long q)
+        {
+            using (var client = new HttpClient())
+            {
+                var url = urlAPI + "UserData?q=" + q;
+                var resp = client.GetAsync(url).Result;
+                return resp.Content.ReadFromJsonAsync<UserEnt>().Result;
+            }
+        }
+
+        public string UpdateUser(UserEnt user)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = urlAPI + "UpdateUser";
+                JsonContent content = JsonContent.Create(user);
+                var resp = client.PutAsync(url, content).Result;
+                return resp.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
+        public string RecoverPassword(UserEnt user)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = urlAPI + "RecoverPassword";
+                JsonContent content = JsonContent.Create(user);
+                var resp = client.PostAsync(url, content).Result;
                 return resp.Content.ReadFromJsonAsync<string>().Result;
             }
         }

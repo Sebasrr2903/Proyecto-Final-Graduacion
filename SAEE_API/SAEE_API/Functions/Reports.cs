@@ -10,7 +10,7 @@ namespace SAEE_API.Entities
         //FILL IN ERROR TABLE AFTER FALLING INTO A CATCH
         public void ErrorReport(string errorDescription, int activeUser, string origin)
         {
-            using (var context = new EntitiesSAEE())
+            using (var context = new SAEEEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
 
@@ -29,7 +29,7 @@ namespace SAEE_API.Entities
         //FILL IN ACTION TABLE AFTER AFTER YOU MAKE ANY CHANGES
         public void ActionReport(string actionDescription, int activeUser, string origin)
         {
-            using (var context = new EntitiesSAEE())
+            using (var context = new SAEEEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
 

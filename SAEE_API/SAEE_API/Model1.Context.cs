@@ -15,10 +15,10 @@ namespace SAEE_API
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class EntitiesSAEE : DbContext
+    public partial class SAEEEntities : DbContext
     {
-        public EntitiesSAEE()
-            : base("name=EntitiesSAEE")
+        public SAEEEntities()
+            : base("name=SAEEEntities")
         {
         }
     
@@ -137,7 +137,7 @@ namespace SAEE_API
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Login_Result>("SP_Login", emailParameter, passwordParameter);
         }
     
-        public virtual ObjectResult<string> SP_RegisterUser(string name, string lastname, string email, string phoneNumber, string password, string profilePicture, Nullable<int> userType, Nullable<int> specialty, Nullable<int> experienceYears)
+        public virtual ObjectResult<string> SP_RegisterUser(string name, string lastname, Nullable<System.DateTime> birthdate, string email, string phoneNumber, string password, string profilePicture, Nullable<int> userType, Nullable<int> specialty, Nullable<int> experienceYears)
         {
             var nameParameter = name != null ?
                 new ObjectParameter("Name", name) :
@@ -146,6 +146,10 @@ namespace SAEE_API
             var lastnameParameter = lastname != null ?
                 new ObjectParameter("Lastname", lastname) :
                 new ObjectParameter("Lastname", typeof(string));
+    
+            var birthdateParameter = birthdate.HasValue ?
+                new ObjectParameter("Birthdate", birthdate) :
+                new ObjectParameter("Birthdate", typeof(System.DateTime));
     
             var emailParameter = email != null ?
                 new ObjectParameter("Email", email) :
@@ -175,7 +179,7 @@ namespace SAEE_API
                 new ObjectParameter("ExperienceYears", experienceYears) :
                 new ObjectParameter("ExperienceYears", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_RegisterUser", nameParameter, lastnameParameter, emailParameter, phoneNumberParameter, passwordParameter, profilePictureParameter, userTypeParameter, specialtyParameter, experienceYearsParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_RegisterUser", nameParameter, lastnameParameter, birthdateParameter, emailParameter, phoneNumberParameter, passwordParameter, profilePictureParameter, userTypeParameter, specialtyParameter, experienceYearsParameter);
         }
     
         public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)

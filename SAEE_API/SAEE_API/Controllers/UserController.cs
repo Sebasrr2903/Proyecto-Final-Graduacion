@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Text;
+using System.IO;
 
 namespace SAEE_API.Controllers
 {
@@ -24,7 +25,7 @@ namespace SAEE_API.Controllers
         {
             try
             {
-                using (var context = new EntitiesSAEE())
+                using (var context = new SAEEEntities())
                 {
                     //Generate password
                     string pass = GeneratePassword(); 
@@ -34,8 +35,9 @@ namespace SAEE_API.Controllers
                     string resp;
                     resp = context.SP_RegisterUser(
                         user.Name, 
-                        user.Lastname, 
-                        user.Email, 
+                        user.Lastname,
+                        user.Birthdate,
+                        user.Email,
                         user.PhoneNumber,
                         encryptPass, 
                         user.ProfilePicture, 
@@ -46,15 +48,17 @@ namespace SAEE_API.Controllers
 
                     if (resp == "OK")
                     {
+                        //Add report of the action performed
                         reports.ActionReport("RegisterUserDone", user.activeUser, "RegisterUser");
 
-                        //Enviar un correo a la cuenta creada con las credenciales
-                        //string urlHtml = AppDomain.CurrentDomain.BaseDirectory + "Templates\\RecuperacionContrasena.html";
-                        //string html = File.ReadAllText(urlHtml);
-                        //html = html.Replace("@@Nombre", datos.nombre + " " + datos.apellidoUno + " " + datos.apellidoDos);
-                        //html = html.Replace("@@Contrasena", datos.contrasena);
+                        //Send an email to the account created with the credentials
+                        string urlHtml = AppDomain.CurrentDomain.BaseDirectory + "Templates\\TemporaryCredentials.html";
+                        string html = File.ReadAllText(urlHtml);
+                        html = html.Replace("@@Name", user.Name + " " + user.Lastname);
+                        html = html.Replace("@@Email", user.Email);
+                        html = html.Replace("@@Password", pass);
 
-                        //mailService.SendEmail(datos.correo, "Recuperar Contraseña", html);
+                        mailService.SendEmail(user.Email, "Credenciales SAEE-ELEC", html);
 
                         return resp;
                     }
@@ -80,7 +84,7 @@ namespace SAEE_API.Controllers
         {
             try
             {
-                using (var context = new EntitiesSAEE())
+                using (var context = new SAEEEntities())
                 {
                     string encryptPass = EncryptPassword(user.Password);
 
@@ -96,6 +100,147 @@ namespace SAEE_API.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("ChangeStatusUser")]
+        public string ChangeStatusUser(UserEnt user)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    var data = (from x in context.Users
+                                 where x.id == user.Id
+                                 select x).FirstOrDefault();
+
+                    if (data != null)
+                    {
+                        data.active = (data.active == true ? false : true);
+                        context.SaveChanges();
+                    }
+
+                    reports.ActionReport("ChangeStatusUserDone", user.activeUser, "ChangeStatusUser");
+                    return "OK";
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 0, "ChangeStatusUser");
+
+                return string.Empty;
+            }
+        }
+
+        [HttpGet]
+        [Route("UserData")]
+        public Users UserData(long q)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    var datos = (from x in context.Users
+                                 where x.id == q
+                                 select x).FirstOrDefault();
+
+                    return datos;
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 0, "UserData");
+
+                return null;
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateUser")]
+        public string UpdateUser(UserEnt user)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    var data = (from x in context.Users
+                                 where x.id == user.Id
+                                 select x).FirstOrDefault();
+
+                    if (data != null)
+                    {
+                        //De momento se hace por Linq, es mejor hacer un SP y así poder actualizar el tipo de usuario tambien
+                        data.name = user.Name;
+                        data.lastname = user.Lastname;
+                        data.email = user.Email;
+                        data.phoneNumber = user.PhoneNumber;
+
+                        context.SaveChanges();
+                    }
+
+                    reports.ActionReport("UpdateUserDone", user.activeUser, "UpdateUser");
+                    return "OK";
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 0, "UpdateUser");
+
+                return string.Empty;
+            }
+        }
+
+        [HttpPost]
+        [Route("RecoverPassword")]
+        public string RecoverPassword(UserEnt user)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    var data = (from x in context.Users
+                                 where x.email == user.Email
+                                 && x.phoneNumber == user.PhoneNumber
+                                 && x.birthdate == user.Birthdate
+                                 select x).FirstOrDefault();
+
+
+                    //Generate password
+                    string pass = GeneratePassword();
+                    //Encrypt password
+                    string encryptPass = EncryptPassword(pass);
+
+                    data.password = encryptPass;
+                    context.SaveChanges();
+
+                    if (data != null)
+                    {
+                        //Send an email to recover the password
+                        string urlHtml = AppDomain.CurrentDomain.BaseDirectory + "Templates\\RecoverPassword.html";
+                        string html = File.ReadAllText(urlHtml);
+                        html = html.Replace("@@Name", data.name + " " + data.lastname);
+                        html = html.Replace("@@Password", pass);
+
+                        mailService.SendEmail(user.Email, "Recuperación de contraseña SAEE-ELEC", html);
+
+                        return "OK";
+                    }
+
+                    return string.Empty;
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 0, "RecoverPassword");
+
+                return string.Empty;
+            }
+        }
+
+
         /***********************Users List***********************/
         [HttpGet]
         [Route("UsersList")]
@@ -103,7 +248,7 @@ namespace SAEE_API.Controllers
         {
             try
             {
-                using (var context = new EntitiesSAEE())
+                using (var context = new SAEEEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     return (from x in context.Users
@@ -127,7 +272,7 @@ namespace SAEE_API.Controllers
         {
             try
             {
-                using (var context = new EntitiesSAEE())
+                using (var context = new SAEEEntities())
                 {
                     var data = (from x in context.UsersTypes select x).ToList();
                     var list = new List<System.Web.Mvc.SelectListItem>();
@@ -154,7 +299,7 @@ namespace SAEE_API.Controllers
         {
             try
             {
-                using (var context = new EntitiesSAEE())
+                using (var context = new SAEEEntities())
                 {
                     var data = (from x in context.Specialties select x).ToList();
                     var list = new List<System.Web.Mvc.SelectListItem>();
@@ -177,14 +322,22 @@ namespace SAEE_API.Controllers
 
 
 
-
+   
         /***********************Methods***********************/
         private static string GeneratePassword()
         {
-            //Crear una contraseña aleatorea que luego el usuario pueda cambiar
-            // ya que la cuenta va a ser creada por un administrador
-            string pass = "Hola123"; //De momento se define esta por defecto para pruebas
-            return pass;
+            //Create a random password that the user can then change since the account will be created by an administrator
+            const string characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder pass = new StringBuilder();
+            Random random = new Random();
+
+            for (int i = 0; i < 8; i++)
+            {
+                int index = random.Next(characters.Length);
+                pass.Append(characters[index]);
+            }
+
+            return pass.ToString();
         }
 
         private static string EncryptPassword(string password)

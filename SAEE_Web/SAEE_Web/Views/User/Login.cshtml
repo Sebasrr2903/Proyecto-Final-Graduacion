@@ -11,10 +11,10 @@
             <div class="contacts_form-header">
                 <h2 class="contacts_form-header_title">Inicio de Sesión</h2>
             </div>
-            @if (ViewBag.MessagePopUP != null)
+            @if (ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-danger" role="alert" style="text-align:center">
-                    @ViewBag.MessagePopUP
+                    @ViewBag.BoxMessage
                 </div>
             }
 
@@ -22,7 +22,7 @@
             {
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Email:</label>
-                    @Html.TextBoxFor(m => m.Email, new { @class="field required", @type = "email", @placeholder = "Email" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "email", @placeholder = "Email" })
 
                     @* ALERT *@
                     @if (ViewBag.MessageMail != null)
@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group">
                     <label style="margin-right: 52rem;">Password:</label>
-                    @Html.TextBoxFor(m => m.Password, new { @class="field required", @type = "password", @placeholder = "Password" })
+                    @Html.TextBoxFor(m => m.Password, new { @class = "field required", @type = "password", @placeholder = "Password" })
 
                     @* ALERT *@
                     @if (ViewBag.MessagePass != null)
@@ -43,6 +43,10 @@
 
                 <div class="contacts_form-form_footer">
                     <input type="submit" class="btn btn--login" style="color:white;" value="INICIAR SESIÓN">
+                </div>
+
+                <div class="text-center mt-4 font-weight-light">
+                    ¿Olvidaste tu contraseña? <a href="@Url.Action("RecoverPassword","User")" class="text-primary">Recuperar</a>
                 </div>
             }
         </div>

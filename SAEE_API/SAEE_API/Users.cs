@@ -17,6 +17,7 @@ namespace SAEE_API
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Users()
         {
+            this.ActionReport = new HashSet<ActionReport>();
             this.AssignmentGrading = new HashSet<AssignmentGrading>();
             this.CourseReport = new HashSet<CourseReport>();
             this.EnrolledCourses = new HashSet<EnrolledCourses>();
@@ -27,6 +28,7 @@ namespace SAEE_API
         public int id { get; set; }
         public string name { get; set; }
         public string lastname { get; set; }
+        public Nullable<System.DateTime> birthdate { get; set; }
         public string email { get; set; }
         public string phoneNumber { get; set; }
         public string password { get; set; }
@@ -34,7 +36,8 @@ namespace SAEE_API
         public string profilePicture { get; set; }
         public int userType { get; set; }
     
-        public virtual ActionReport ActionReport { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ActionReport> ActionReport { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssignmentGrading> AssignmentGrading { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

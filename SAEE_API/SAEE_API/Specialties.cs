@@ -14,9 +14,16 @@ namespace SAEE_API
     
     public partial class Specialties
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Specialties()
+        {
+            this.TeacherData = new HashSet<TeacherData>();
+        }
+    
         public int id { get; set; }
         public string description { get; set; }
     
-        public virtual TeacherData TeacherData { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeacherData> TeacherData { get; set; }
     }
 }

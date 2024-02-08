@@ -184,6 +184,7 @@
     <Content Include="Content\general.css" />
     <Content Include="Content\preload.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="Functions\HideShowForm.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\ELEC.png" />
@@ -414,10 +415,11 @@
     <Content Include="Views\Shared\_HeadPartial.cshtml" />
     <Content Include="Views\Shared\_FooterPartial.cshtml" />
     <Content Include="Views\User\RegisterUser.cshtml" />
+    <Content Include="Views\User\UpdateUser.cshtml" />
+    <Content Include="Views\User\RecoverPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Functions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

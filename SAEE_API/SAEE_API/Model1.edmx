@@ -132,9 +132,10 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="lastname" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="birthdate" Type="datetime" />
           <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="phoneNumber" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="password" Type="varchar" MaxLength="300" />
+          <Property Name="password" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="active" Type="bit" Nullable="false" />
           <Property Name="profilePicture" Type="varchar" MaxLength="300" />
           <Property Name="userType" Type="int" Nullable="false" />
@@ -148,13 +149,13 @@
         </EntityType>
         <Association Name="FK_actionReport_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="ActionReport" Type="Self.ActionReport" Multiplicity="0..1" />
+          <End Role="ActionReport" Type="Self.ActionReport" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="ActionReport">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="userId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -316,13 +317,13 @@
         </Association>
         <Association Name="FK_TeacherData_Specialties">
           <End Role="Specialties" Type="Self.Specialties" Multiplicity="1" />
-          <End Role="TeacherData" Type="Self.TeacherData" Multiplicity="0..1" />
+          <End Role="TeacherData" Type="Self.TeacherData" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Specialties">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="TeacherData">
-              <PropertyRef Name="teacherId" />
+              <PropertyRef Name="specialty" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -382,6 +383,7 @@
         <Function Name="SP_RegisterUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="Lastname" Type="varchar" Mode="In" />
+          <Parameter Name="Birthdate" Type="datetime" Mode="In" />
           <Parameter Name="Email" Type="varchar" Mode="In" />
           <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
@@ -638,9 +640,10 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="lastname" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="birthdate" Type="DateTime" Precision="3" />
           <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="phoneNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="active" Type="Boolean" Nullable="false" />
           <Property Name="profilePicture" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="userType" Type="Int32" Nullable="false" />
@@ -663,13 +666,13 @@
         </EntityType>
         <Association Name="FK_actionReport_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="ActionReport" Type="Self.ActionReport" Multiplicity="0..1" />
+          <End Role="ActionReport" Type="Self.ActionReport" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="ActionReport">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="userId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -831,13 +834,13 @@
         </Association>
         <Association Name="FK_TeacherData_Specialties">
           <End Role="Specialties" Type="Self.Specialties" Multiplicity="1" />
-          <End Role="TeacherData" Type="Self.TeacherData" Multiplicity="0..1" />
+          <End Role="TeacherData" Type="Self.TeacherData" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Specialties">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="TeacherData">
-              <PropertyRef Name="teacherId" />
+              <PropertyRef Name="specialty" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -865,7 +868,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="EntitiesSAEE" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SAEEEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ActionReport" EntityType="Self.ActionReport" />
           <EntitySet Name="AssignmentGrading" EntityType="Self.AssignmentGrading" />
           <EntitySet Name="CourseAvailable" EntityType="Self.CourseAvailable" />
@@ -980,6 +983,7 @@
           <FunctionImport Name="SP_RegisterUser" ReturnType="Collection(String)">
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="Lastname" Mode="In" Type="String" />
+            <Parameter Name="Birthdate" Mode="In" Type="DateTime" />
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="PhoneNumber" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
@@ -1012,7 +1016,7 @@
           <Property Type="String" Name="lastname" Nullable="false" MaxLength="80" />
           <Property Type="String" Name="email" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="phoneNumber" Nullable="false" MaxLength="30" />
-          <Property Type="String" Name="password" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="300" />
           <Property Type="Boolean" Name="active" Nullable="false" />
           <Property Type="String" Name="profilePicture" Nullable="true" MaxLength="300" />
           <Property Type="Int32" Name="userType" Nullable="false" />
@@ -1022,7 +1026,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SAEEModelStoreContainer" CdmEntityContainer="EntitiesSAEE">
+        <EntityContainerMapping StorageEntityContainer="SAEEModelStoreContainer" CdmEntityContainer="SAEEEntities">
           <EntitySetMapping Name="ActionReport">
             <EntityTypeMapping TypeName="SAEEModel.ActionReport">
               <MappingFragment StoreEntitySet="ActionReport">
@@ -1162,6 +1166,7 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
                 <ScalarProperty Name="password" ColumnName="password" />
