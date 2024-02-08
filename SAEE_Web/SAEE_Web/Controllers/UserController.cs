@@ -168,7 +168,9 @@ namespace SAEE_Web.Controllers
 
             if (resp == "OK")
             {
-                return RedirectToAction("Login", "User");
+                ViewBag.BoxMessage = "Se ha enviado un correo electrónico para la recuperación de su cuenta.";               
+                return View();
+                //Hacer que se redirija al login luego de mostrar el mensaje
             }
             else
             {
