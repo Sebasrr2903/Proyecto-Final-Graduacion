@@ -34,44 +34,93 @@
                     <li class="header_nav-list_item">
                         <a class="nav-item" href="@Url.Action("Index", "Home")" data-page="home">Inicio</a>
                     </li>
-                    <li class="header_nav-list_item dropdown">
-                        <a class="nav-link nav-item dropdown-toggle d-inline-flex align-items-center"
-                           href="@Url.Action("AllCourses", "Course")"
-                           data-bs-toggle="collapse"
-                           data-bs-target="#coursesMenu"
-                           data-trigger="dropdown"
-                           aria-expanded="false"
-                           aria-controls="coursesMenu"
-                           data-page="courses">
-                            Todos los cursos
-                            <i class="icon-angle-down icon"></i>
-                        </a>
-                        <div class="dropdown-menu collapse" id="coursesMenu">
-                            <ul class="dropdown-list">
-                                @* Acá se cargarían dinamicamente los cursos que el estudiante tenga activos *@
-                                <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 1</a>
-                                </li>
-                                <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 2</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="header_nav-list_item">
-                        <a class="nav-item" href="~/Template/about.html" data-page="about">Preguntas frecuentes</a>
-                    </li>
-                    <li class="header_nav-list_item">
-                        <a class="nav-item" href="@Url.Action("UsersTable","User")" data-page="about">Estudiantes(admin)</a>
-                    </li>
-                    <li class="header_nav-list_item">
-                        <a class="nav-item" href="@Url.Action("GeneralReport","Report")" data-page="about">Reportes(admin)</a>
-                    </li>
-                    <li class="header_nav-list_item">
-                        <a class="btn btn--gradient" href="@Url.Action("Login","User")">
-                            <span class="text">Iniciar Sesión</span>
-                        </a>
-                    </li>
+                    @if (Session["ActiveId"] != null)
+                    {
+                        if ((int)Session["UserType"] == 1) //Admin
+                        {
+                            <li class="header_nav-list_item">
+                                <a class="nav-item" href="@Url.Action("UsersTable", "User")" data-page="about">Estudiantes</a>
+                            </li>
+                            <li class="header_nav-list_item">
+                                <a class="nav-item" href="@Url.Action("GeneralReport", "Report")" data-page="about">Reportes</a>
+                            </li>
+                        }
+                        else if ((int)Session["UserType"] == 3) //Student
+                        {
+                            <li class="header_nav-list_item dropdown">
+                                <a class="nav-link nav-item dropdown-toggle d-inline-flex align-items-center"
+                                   href="@Url.Action("AllCourses", "Course")"
+                                   data-bs-toggle="collapse"
+                                   data-bs-target="#coursesMenu"
+                                   data-trigger="dropdown"
+                                   aria-expanded="false"
+                                   aria-controls="coursesMenu"
+                                   data-page="courses">
+                                    Todos los cursos
+                                    <i class="icon-angle-down icon"></i>
+                                </a>
+                                <div class="dropdown-menu collapse" id="coursesMenu">
+                                    <ul class="dropdown-list">
+                                        @* Acá se cargarían dinamicamente los cursos que el estudiante tenga activos *@
+                                        <li class="list-item">
+                                            <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 1</a>
+                                        </li>
+                                        <li class="list-item">
+                                            <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 2</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                        else //Teacher
+                        {
+                            <li class="header_nav-list_item dropdown">
+                                <a class="nav-link nav-item dropdown-toggle d-inline-flex align-items-center"
+                                   href="@Url.Action("AllCourses", "Course")"
+                                   data-bs-toggle="collapse"
+                                   data-bs-target="#coursesMenu"
+                                   data-trigger="dropdown"
+                                   aria-expanded="false"
+                                   aria-controls="coursesMenu"
+                                   data-page="courses">
+                                    Todos los cursos
+                                    <i class="icon-angle-down icon"></i>
+                                </a>
+                                <div class="dropdown-menu collapse" id="coursesMenu">
+                                    <ul class="dropdown-list">
+                                        @* Acá se cargarían dinamicamente los cursos que el profesor tenga activos *@
+                                        <li class="list-item">
+                                            <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 1</a>
+                                        </li>
+                                        <li class="list-item">
+                                            <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 2</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                        <li class="header_nav-list_item">
+                            <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("Logout","User")">
+                                <span class="text">Cerrar Sesión</span>
+                            </a>
+                        </li>
+
+                        <li class="header_nav-list_item">
+                            <h5 style="color:black">@Session["Name"]</h5>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="header_nav-list_item">
+                            <a class="nav-item" href="~/Template/about.html" data-page="about">Preguntas frecuentes</a>
+                        </li>
+                        <li class="header_nav-list_item">
+                            <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("Login","User")">
+                                <span class="text">Iniciar Sesión</span>
+                            </a>
+                        </li>
+                    }
+
                 </ul>
             </nav>
         </div>

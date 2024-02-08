@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4605bc91e78345ad96000065643cfca4" Name="Diagram1">
+        <EntityTypeShape EntityType="SAEEModel.ActionReport" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.AssignmentGrading" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.CourseAvailable" Width="1.5" PointX="10.5" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.CourseReport" Width="1.5" PointX="7.5" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.Courses" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.CourseTasks" Width="1.5" PointX="12.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.EnrolledCourses" Width="1.5" PointX="8.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.ErrorReport" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.Proceedings" Width="1.5" PointX="5.25" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.Schedule" Width="1.5" PointX="8.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.Specialties" Width="1.5" PointX="6" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.TeacherData" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.Users" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAEEModel.UsersTypes" Width="1.5" PointX="0.75" PointY="11.625" IsExpanded="true" />
+        <AssociationConnector Association="SAEEModel.FK_actionReport_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_AssignmentGrading_CourseTasks" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_AssignmentGrading_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_CourseAvailable_Courses" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_CourseAvailable_Schedule" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_CourseAvailable_TeacherData" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_CourseReport_Courses" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_CourseTasks_Courses" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_EnrolledCourses_CourseAvailable" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_CourseReport_Proceedings" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_CourseReport_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_EnrolledCourses_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_ErrorReport_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_Proceedings_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_TeacherData_Specialties" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_TeacherData_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="SAEEModel.FK_Users_UsersTypes" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
