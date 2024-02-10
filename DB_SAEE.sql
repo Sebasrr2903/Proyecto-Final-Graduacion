@@ -61,6 +61,7 @@ CREATE TABLE [dbo].[Courses](
 	[name] [varchar](50) NOT NULL,
 	[description] [varchar](250) NOT NULL,
 	[availableQuota] [int] NOT NULL,
+	[active] [bit] NOT NULL,
  CONSTRAINT [PK_Courses] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -197,9 +198,9 @@ SET IDENTITY_INSERT [dbo].[CourseAvailable] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Courses] ON 
 GO
-INSERT [dbo].[Courses] ([id], [name], [description], [availableQuota]) VALUES (4, N'Español Básico I', N'Curso enfocado en estudiantes con un manejo nulo del idioma', 15)
+INSERT [dbo].[Courses] ([id], [name], [description], [availableQuota], [active]) VALUES (4, N'Español Básico I', N'Curso enfocado en estudiantes con un manejo nulo del idioma', 15, 1)
 GO
-INSERT [dbo].[Courses] ([id], [name], [description], [availableQuota]) VALUES (6, N'Español Básico II', N'Curso enfocado en estudiantes con un manejo regular del idioma', 15)
+INSERT [dbo].[Courses] ([id], [name], [description], [availableQuota], [active]) VALUES (6, N'Español Básico II', N'Curso enfocado en estudiantes con un manejo regular del idioma', 15, 1)
 GO
 SET IDENTITY_INSERT [dbo].[Courses] OFF
 GO
