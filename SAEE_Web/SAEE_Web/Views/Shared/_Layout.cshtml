@@ -43,6 +43,9 @@
                             </li>
                             <li class="header_nav-list_item">
                                 <a class="nav-item" href="@Url.Action("GeneralReport", "Report")" data-page="about">Reportes</a>
+                            </li>  
+                            <li class="header_nav-list_item">
+                                <a class="nav-item" href="@Url.Action("CoursesTable", "Course")" data-page="about">Cursos</a>
                             </li>
                         }
                         else if ((int)Session["UserType"] == 3) //Student
