@@ -10,16 +10,13 @@
 namespace SAEE_API
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class ErrorReport
+    public partial class sp_helpdiagrams_Result
     {
-        public int id { get; set; }
-        public System.DateTime date { get; set; }
-        public int userId { get; set; }
-        public string errorDescription { get; set; }
-        public string origin { get; set; }
-    
-        public virtual Users Users { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }
