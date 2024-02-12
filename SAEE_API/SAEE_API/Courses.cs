@@ -24,7 +24,7 @@ namespace SAEE_API
         public string name { get; set; }
         public string description { get; set; }
         public int availableQuota { get; set; }
-        public Nullable<bool> active { get; set; }
+        public bool active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CourseAvailable> CourseAvailable { get; set; }
