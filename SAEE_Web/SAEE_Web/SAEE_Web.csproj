@@ -151,15 +151,20 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CourseAvailableController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Entities\CourseAvailableEnt.cs" />
     <Compile Include="Entities\CoursesEnt.cs" />
+    <Compile Include="Entities\ScheduleEnt.cs" />
+    <Compile Include="Entities\TeacherDataEnt.cs" />
     <Compile Include="Entities\UserEnt.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CourseAvailableModel.cs" />
     <Compile Include="Models\CourseModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -423,9 +428,11 @@
     <Content Include="Views\Course\RegisterCourse.cshtml" />
     <Content Include="Views\Course\UpdateCourse.cshtml" />
     <Content Include="Views\User\ProfileUser.cshtml" />
+    <Content Include="Views\CourseAvailable\RegisterCourseAvailable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
