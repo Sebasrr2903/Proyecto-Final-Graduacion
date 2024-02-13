@@ -422,6 +422,7 @@
     <Content Include="Views\Course\CoursesTable.cshtml" />
     <Content Include="Views\Course\RegisterCourse.cshtml" />
     <Content Include="Views\Course\UpdateCourse.cshtml" />
+    <Content Include="Views\User\ProfileUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

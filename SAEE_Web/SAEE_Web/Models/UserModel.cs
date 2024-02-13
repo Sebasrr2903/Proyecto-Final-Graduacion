@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace SAEE_Web.Models
 {
@@ -65,6 +66,16 @@ namespace SAEE_Web.Models
                 string url = urlAPI + "UpdateUser";
                 JsonContent content = JsonContent.Create(user);
                 var resp = client.PutAsync(url, content).Result;
+                return resp.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
+        public string ProfileUser(UserEnt user)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = urlAPI + "ProfileUser";
+                var resp = client.GetAsync(url).Result;
                 return resp.Content.ReadFromJsonAsync<string>().Result;
             }
         }

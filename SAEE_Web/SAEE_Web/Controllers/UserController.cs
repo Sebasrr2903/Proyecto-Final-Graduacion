@@ -3,10 +3,12 @@ using SAEE_Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+
 
 namespace SAEE_Web.Controllers
 {
@@ -29,7 +31,8 @@ namespace SAEE_Web.Controllers
             {
                 ViewBag.MessageMail = "Ingrese el correo electrónico.";
                 return View();
-            }else if (user.Password == null)
+            }
+            else if (user.Password == null)
             {
                 ViewBag.MessagePass = "Ingrese la contraseña.";
                 return View();
@@ -53,7 +56,7 @@ namespace SAEE_Web.Controllers
                     ViewBag.BoxMessage = "Compruebe la información de sus credenciales.";
                     return View();
                 }
-            }  
+            }
         }
 
         [HttpGet]
@@ -91,7 +94,8 @@ namespace SAEE_Web.Controllers
                 ViewBag.ListUsersTypes = userModel.ListUsersTypes();
                 ViewBag.ListSpecialties = userModel.ListSpecialties();
                 return View();
-            }else
+            }
+            else
             {
                 ViewBag.BoxMessage = "No se ha registrado el usuario.";
                 ViewBag.ListUsersTypes = userModel.ListUsersTypes();
@@ -100,7 +104,7 @@ namespace SAEE_Web.Controllers
             }
         }
 
-        /**********************TABLE/STATUS/UPDATE/RECOVER**********************/
+        /**********************TABLE/STATUS/UPDATE/RECOVER/PROFILE**********************/
         [HttpGet]
         public ActionResult UsersTable()
         {
@@ -168,7 +172,7 @@ namespace SAEE_Web.Controllers
 
             if (resp == "OK")
             {
-                ViewBag.BoxMessage = "Se ha enviado un correo electrónico para la recuperación de su cuenta.";               
+                ViewBag.BoxMessage = "Se ha enviado un correo electrónico para la recuperación de su cuenta.";
                 return View();
                 //Hacer que se redirija al login luego de mostrar el mensaje
             }
@@ -178,5 +182,30 @@ namespace SAEE_Web.Controllers
                 return View();
             }
         }
+        [HttpGet]
+        public ActionResult ProfileUser(long q)
+        {
+            var data = userModel.UserData(q);
+            return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult ProfileUser(UserEnt user)
+        {
+            user.activeUser = (int)Session["ActiveId"];//For action register
+
+            var resp = userModel.UpdateUser(user);
+
+            if (resp == "OK")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewBag.BoxMessage = "No se pudo actualizar el usuario.";
+                return View();
+            }
+        }
+
     }
 }

@@ -1,0 +1,52 @@
+﻿@model SAEE_Web.Entities.UserEnt
+
+@{
+    ViewBag.Title = "ProfileUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="contacts">
+    <section class="contacts_form">
+        <div class="container">
+            <div class="contacts_form-header">
+                <h2 class="contacts_form-header_title">Perfil de Usuario</h2>
+            </div>
+            @if (ViewBag.BoxMessage != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align:center">
+                    @ViewBag.BoxMessage
+                </div>
+            }
+
+            @using (Html.BeginForm("ProfileUser", "User", FormMethod.Post, new { @class = "contacts_form-form" }))
+            {
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Nombre:</label>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Nombre" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Apellidos:</label>
+                    @Html.TextBoxFor(m => m.Lastname, new { @class = "field required", @type = "text", @placeholder = "Apellidos" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Email:</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "email", @placeholder = "Email" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Número:</label>
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "field required", @type = "number", @placeholder = "Número" })
+                </div>
+
+                <div class="contacts_form-form_footer">
+                    <input type="submit" class="btn btn--login" style="color:white;" value="Actualizar">
+                </div>
+            }
+        </div>
+    </section>
+</main>
+

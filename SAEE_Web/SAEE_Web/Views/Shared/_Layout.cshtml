@@ -35,15 +35,20 @@
                         <a class="nav-item" href="@Url.Action("Index", "Home")" data-page="home">Inicio</a>
                     </li>
                     @if (Session["ActiveId"] != null)
-                    {
+                    {                  
+                        <li class="header_nav-list_item">
+                            <a class="nav-item" href="@Url.Action("ProfileUser", "User", new { q = @Session["ActiveId"] })" data-page="about">Perfil</a>
+                        </li>
                         if ((int)Session["UserType"] == 1) //Admin
                         {
+
                             <li class="header_nav-list_item">
                                 <a class="nav-item" href="@Url.Action("UsersTable", "User")" data-page="about">Estudiantes</a>
                             </li>
                             <li class="header_nav-list_item">
                                 <a class="nav-item" href="@Url.Action("GeneralReport", "Report")" data-page="about">Reportes</a>
-                            </li>  
+                            </li>
+
                             <li class="header_nav-list_item">
                                 <a class="nav-item" href="@Url.Action("CoursesTable", "Course")" data-page="about">Cursos</a>
                             </li>
@@ -110,7 +115,8 @@
 
                         <li class="header_nav-list_item">
                             <h5 style="color:black">@Session["Name"]</h5>
-                        </li>   
+                        </li>
+
                     }
                     else
                     {
