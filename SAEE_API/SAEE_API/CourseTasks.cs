@@ -28,6 +28,5 @@ namespace SAEE_API
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssignmentGrading> AssignmentGrading { get; set; }
-        public virtual CourseAvailable CourseAvailable { get; set; }
     }
 }

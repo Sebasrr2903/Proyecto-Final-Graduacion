@@ -29,16 +29,12 @@
                 <span class="line"></span>
             </button>
             <nav class="header_nav collapse" id="headerMenu">
-                @* En toda esta lista se deben agregar validaciones para decidir que mostrar según su sesion y rol *@
                 <ul class="header_nav-list">
                     <li class="header_nav-list_item">
                         <a class="nav-item" href="@Url.Action("Index", "Home")" data-page="home">Inicio</a>
                     </li>
                     @if (Session["ActiveId"] != null)
-                    {                  
-                        <li class="header_nav-list_item">
-                            <a class="nav-item" href="@Url.Action("ProfileUser", "User", new { q = @Session["ActiveId"] })" data-page="about">Perfil</a>
-                        </li>
+                    {
                         if ((int)Session["UserType"] == 1) //Admin
                         {
 
@@ -114,7 +110,7 @@
                         </li>
 
                         <li class="header_nav-list_item">
-                            <h5 style="color:black">@Session["Name"]</h5>
+                            <a class="nav-item" href="@Url.Action("ProfileUser", "User", new { q = @Session["ActiveId"] })" data-page="about">@Session["Name"]</a>
                         </li>
 
                     }
@@ -131,7 +127,6 @@
                     }
 
                 </ul>
-            </nav>
             </nav>
         </div>
     </header>

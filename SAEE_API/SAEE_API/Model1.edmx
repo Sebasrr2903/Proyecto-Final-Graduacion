@@ -220,18 +220,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CourseReport_Courses">
-          <End Role="CourseAvailable" Type="Self.CourseAvailable" Multiplicity="1" />
-          <End Role="CourseReport" Type="Self.CourseReport" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CourseAvailable">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CourseReport">
-              <PropertyRef Name="courseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CourseReport_Proceedings">
           <End Role="Proceedings" Type="Self.Proceedings" Multiplicity="1" />
           <End Role="CourseReport" Type="Self.CourseReport" Multiplicity="*" />
@@ -256,39 +244,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CourseTasks_Courses">
-          <End Role="CourseAvailable" Type="Self.CourseAvailable" Multiplicity="1" />
-          <End Role="CourseTasks" Type="Self.CourseTasks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CourseAvailable">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CourseTasks">
-              <PropertyRef Name="courseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EnrolledCourses_CourseAvailable">
-          <End Role="CourseAvailable" Type="Self.CourseAvailable" Multiplicity="1" />
-          <End Role="EnrolledCourses" Type="Self.EnrolledCourses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CourseAvailable">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="EnrolledCourses">
-              <PropertyRef Name="courseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EnrolledCourses_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="CourseAvailable" Type="Self.CourseAvailable" Multiplicity="1" />
           <End Role="EnrolledCourses" Type="Self.EnrolledCourses" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="CourseAvailable">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="EnrolledCourses">
-              <PropertyRef Name="studentId" />
+              <PropertyRef Name="courseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -439,10 +403,6 @@
             <End Role="TeacherData" EntitySet="TeacherData" />
             <End Role="CourseAvailable" EntitySet="CourseAvailable" />
           </AssociationSet>
-          <AssociationSet Name="FK_CourseReport_Courses" Association="Self.FK_CourseReport_Courses">
-            <End Role="CourseAvailable" EntitySet="CourseAvailable" />
-            <End Role="CourseReport" EntitySet="CourseReport" />
-          </AssociationSet>
           <AssociationSet Name="FK_CourseReport_Proceedings" Association="Self.FK_CourseReport_Proceedings">
             <End Role="Proceedings" EntitySet="Proceedings" />
             <End Role="CourseReport" EntitySet="CourseReport" />
@@ -451,16 +411,8 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="CourseReport" EntitySet="CourseReport" />
           </AssociationSet>
-          <AssociationSet Name="FK_CourseTasks_Courses" Association="Self.FK_CourseTasks_Courses">
-            <End Role="CourseAvailable" EntitySet="CourseAvailable" />
-            <End Role="CourseTasks" EntitySet="CourseTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EnrolledCourses_CourseAvailable" Association="Self.FK_EnrolledCourses_CourseAvailable">
-            <End Role="CourseAvailable" EntitySet="CourseAvailable" />
-            <End Role="EnrolledCourses" EntitySet="EnrolledCourses" />
-          </AssociationSet>
           <AssociationSet Name="FK_EnrolledCourses_Users" Association="Self.FK_EnrolledCourses_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="CourseAvailable" EntitySet="CourseAvailable" />
             <End Role="EnrolledCourses" EntitySet="EnrolledCourses" />
           </AssociationSet>
           <AssociationSet Name="FK_ErrorReport_Users" Association="Self.FK_ErrorReport_Users">
@@ -524,9 +476,7 @@
           <NavigationProperty Name="Courses" Relationship="Self.FK_CourseAvailable_Courses" FromRole="CourseAvailable" ToRole="Courses" />
           <NavigationProperty Name="Schedule" Relationship="Self.FK_CourseAvailable_Schedule" FromRole="CourseAvailable" ToRole="Schedule" />
           <NavigationProperty Name="TeacherData" Relationship="Self.FK_CourseAvailable_TeacherData" FromRole="CourseAvailable" ToRole="TeacherData" />
-          <NavigationProperty Name="CourseReport" Relationship="Self.FK_CourseReport_Courses" FromRole="CourseAvailable" ToRole="CourseReport" />
-          <NavigationProperty Name="CourseTasks" Relationship="Self.FK_CourseTasks_Courses" FromRole="CourseAvailable" ToRole="CourseTasks" />
-          <NavigationProperty Name="EnrolledCourses" Relationship="Self.FK_EnrolledCourses_CourseAvailable" FromRole="CourseAvailable" ToRole="EnrolledCourses" />
+          <NavigationProperty Name="EnrolledCourses" Relationship="Self.FK_EnrolledCourses_Users" FromRole="CourseAvailable" ToRole="EnrolledCourses" />
         </EntityType>
         <EntityType Name="CourseReport">
           <Key>
@@ -538,7 +488,6 @@
           <Property Name="proceedingId" Type="Int32" Nullable="false" />
           <Property Name="finalScore" Type="Double" Nullable="false" />
           <Property Name="performanceDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="CourseAvailable" Relationship="Self.FK_CourseReport_Courses" FromRole="CourseReport" ToRole="CourseAvailable" />
           <NavigationProperty Name="Proceedings" Relationship="Self.FK_CourseReport_Proceedings" FromRole="CourseReport" ToRole="Proceedings" />
           <NavigationProperty Name="Users" Relationship="Self.FK_CourseReport_Users" FromRole="CourseReport" ToRole="Users" />
         </EntityType>
@@ -563,7 +512,6 @@
           <Property Name="deadline" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="courseId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AssignmentGrading" Relationship="Self.FK_AssignmentGrading_CourseTasks" FromRole="CourseTasks" ToRole="AssignmentGrading" />
-          <NavigationProperty Name="CourseAvailable" Relationship="Self.FK_CourseTasks_Courses" FromRole="CourseTasks" ToRole="CourseAvailable" />
         </EntityType>
         <EntityType Name="EnrolledCourses">
           <Key>
@@ -572,8 +520,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="courseId" Type="Int32" Nullable="false" />
           <Property Name="studentId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CourseAvailable" Relationship="Self.FK_EnrolledCourses_CourseAvailable" FromRole="EnrolledCourses" ToRole="CourseAvailable" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_EnrolledCourses_Users" FromRole="EnrolledCourses" ToRole="Users" />
+          <NavigationProperty Name="CourseAvailable" Relationship="Self.FK_EnrolledCourses_Users" FromRole="EnrolledCourses" ToRole="CourseAvailable" />
         </EntityType>
         <EntityType Name="ErrorReport">
           <Key>
@@ -652,7 +599,6 @@
           <NavigationProperty Name="ActionReport" Relationship="Self.FK_actionReport_Users" FromRole="Users" ToRole="ActionReport" />
           <NavigationProperty Name="AssignmentGrading" Relationship="Self.FK_AssignmentGrading_Users" FromRole="Users" ToRole="AssignmentGrading" />
           <NavigationProperty Name="CourseReport" Relationship="Self.FK_CourseReport_Users" FromRole="Users" ToRole="CourseReport" />
-          <NavigationProperty Name="EnrolledCourses" Relationship="Self.FK_EnrolledCourses_Users" FromRole="Users" ToRole="EnrolledCourses" />
           <NavigationProperty Name="ErrorReport" Relationship="Self.FK_ErrorReport_Users" FromRole="Users" ToRole="ErrorReport" />
           <NavigationProperty Name="Proceedings" Relationship="Self.FK_Proceedings_Users" FromRole="Users" ToRole="Proceedings" />
           <NavigationProperty Name="TeacherData" Relationship="Self.FK_TeacherData_Users" FromRole="Users" ToRole="TeacherData" />
@@ -738,31 +684,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CourseReport_Courses">
-          <End Role="CourseAvailable" Type="Self.CourseAvailable" Multiplicity="1" />
-          <End Role="CourseReport" Type="Self.CourseReport" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CourseAvailable">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CourseReport">
-              <PropertyRef Name="courseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CourseTasks_Courses">
-          <End Role="CourseAvailable" Type="Self.CourseAvailable" Multiplicity="1" />
-          <End Role="CourseTasks" Type="Self.CourseTasks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CourseAvailable">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CourseTasks">
-              <PropertyRef Name="courseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EnrolledCourses_CourseAvailable">
+        <Association Name="FK_EnrolledCourses_Users">
           <End Role="CourseAvailable" Type="Self.CourseAvailable" Multiplicity="1" />
           <End Role="EnrolledCourses" Type="Self.EnrolledCourses" Multiplicity="*" />
           <ReferentialConstraint>
@@ -794,18 +716,6 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="CourseReport">
-              <PropertyRef Name="studentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EnrolledCourses_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="EnrolledCourses" Type="Self.EnrolledCourses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="EnrolledCourses">
               <PropertyRef Name="studentId" />
             </Dependent>
           </ReferentialConstraint>
@@ -910,15 +820,7 @@
             <End Role="TeacherData" EntitySet="TeacherData" />
             <End Role="CourseAvailable" EntitySet="CourseAvailable" />
           </AssociationSet>
-          <AssociationSet Name="FK_CourseReport_Courses" Association="Self.FK_CourseReport_Courses">
-            <End Role="CourseAvailable" EntitySet="CourseAvailable" />
-            <End Role="CourseReport" EntitySet="CourseReport" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CourseTasks_Courses" Association="Self.FK_CourseTasks_Courses">
-            <End Role="CourseAvailable" EntitySet="CourseAvailable" />
-            <End Role="CourseTasks" EntitySet="CourseTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EnrolledCourses_CourseAvailable" Association="Self.FK_EnrolledCourses_CourseAvailable">
+          <AssociationSet Name="FK_EnrolledCourses_Users" Association="Self.FK_EnrolledCourses_Users">
             <End Role="CourseAvailable" EntitySet="CourseAvailable" />
             <End Role="EnrolledCourses" EntitySet="EnrolledCourses" />
           </AssociationSet>
@@ -929,10 +831,6 @@
           <AssociationSet Name="FK_CourseReport_Users" Association="Self.FK_CourseReport_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="CourseReport" EntitySet="CourseReport" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EnrolledCourses_Users" Association="Self.FK_EnrolledCourses_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="EnrolledCourses" EntitySet="EnrolledCourses" />
           </AssociationSet>
           <AssociationSet Name="FK_ErrorReport_Users" Association="Self.FK_ErrorReport_Users">
             <End Role="Users" EntitySet="Users" />

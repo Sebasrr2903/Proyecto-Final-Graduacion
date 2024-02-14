@@ -171,6 +171,7 @@
     </Compile>
     <Compile Include="Controllers\CourseAvailableController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\EnrolledCoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="CourseAvailable.cs">
@@ -190,6 +191,7 @@
     </Compile>
     <Compile Include="Entities\CourseAvailableEnt.cs" />
     <Compile Include="Entities\CoursesEnt.cs" />
+    <Compile Include="Entities\EnrolledCoursesEnt.cs" />
     <Compile Include="ErrorReport.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

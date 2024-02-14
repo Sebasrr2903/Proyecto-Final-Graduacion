@@ -196,6 +196,10 @@ namespace SAEE_Web.Controllers
 
             var resp = userModel.UpdateUser(user);
 
+            Session["Name"] = user.Name;
+            Session["Lastname"] = user.Lastname;
+            Session["PhoneNumber"] = user.PhoneNumber;
+
             if (resp == "OK")
             {
                 return RedirectToAction("Index", "Home");

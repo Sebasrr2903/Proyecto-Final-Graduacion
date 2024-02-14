@@ -20,7 +20,6 @@ namespace SAEE_API
             this.ActionReport = new HashSet<ActionReport>();
             this.AssignmentGrading = new HashSet<AssignmentGrading>();
             this.CourseReport = new HashSet<CourseReport>();
-            this.EnrolledCourses = new HashSet<EnrolledCourses>();
             this.ErrorReport = new HashSet<ErrorReport>();
             this.Proceedings = new HashSet<Proceedings>();
         }
@@ -42,8 +41,6 @@ namespace SAEE_API
         public virtual ICollection<AssignmentGrading> AssignmentGrading { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CourseReport> CourseReport { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EnrolledCourses> EnrolledCourses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ErrorReport> ErrorReport { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

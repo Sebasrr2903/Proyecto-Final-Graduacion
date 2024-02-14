@@ -1,88 +1,47 @@
-﻿@model SAEE_Web.Entities.CoursesEnt
+﻿@model SAEE_Web.Entities.CourseAvailableEnt
 
 @{
-    ViewBag.Title = "RegisterCourse";
+    ViewBag.Title = "RegisterCourseAvailable";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 <main class="contacts">
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Registro de Cursos</h2>
+                <h2 class="contacts_form-header_title">Habilitar Cursos</h2>
             </div>
             @if (ViewBag.BoxMessage != null)
             {
-                <div class="alert alert-danger" role="alert" style="text-align:center">
+                <div class="alert alert-info" role="alert" style="text-align:center">
                     @ViewBag.BoxMessage
                 </div>
             }
 
-            @using (Html.BeginForm("RegisterCourse", "Course", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
+            @using (Html.BeginForm("RegisterCourseAvailable", "CourseAvailable", FormMethod.Post, new { @class = "contacts_form-form" }))
             {
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Nombre:</label>
-                    @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Nombre" })
+                    <label style="margin-right: 23rem;">Profesor:</label>
+                    @Html.DropDownListFor(m => m.TeacherId, ViewBag.SelectListTeacher as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType" })
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Descripcion:</label>
-                    @Html.TextBoxFor(m => m.Description, new { @class = "field required", @type = "text", @placeholder = "Descripcion" })
-                </div>
-                <div class="form-group">
-                    <label style="margin-right: 53rem;">Cupos:</label>
-                    @Html.TextBoxFor(m => m.AvailableQuota, new { @class = "field required", @type = "number", @placeholder = "Cupos" })
+                    <label style="margin-right: 23rem;">Curso:</label>
+                    @Html.DropDownListFor(m => m.CourseId, ViewBag.SelectListCourses as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType" })
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Estado:</label>
-                    @Html.DropDownListFor(m => m.Active, new List<SelectListItem>
-                    {
-                        new SelectListItem { Text = "Activo", Value = "True" },
-                        new SelectListItem { Text = "Inactivo", Value = "False" }
-                    }, "Seleccione", new { @class = "form-control" })
+                    <label style="margin-right: 23rem;">Horario:</label>
+                    @Html.DropDownListFor(m => m.ScheduleId, ViewBag.SelectListSchedule as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType" })
                 </div>
-
 
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">REGISTRAR</button>
+                    <input type="submit" class="btn btn--login" style="color:white;" value="REGISTRAR">
                 </div>
             }
         </div>
     </section>
 </main>
 
-<!-- Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Confirmación de Registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p id="courseName"></p>
-                <p>¿Está seguro de agregar el curso?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary" onclick="submitForm()">Aceptar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function showConfirmation() {
-        var courseName = $('#Name').val();
-        $('#courseName').text('Nombre del curso: ' + courseName);
-        $('#confirmationModal').modal('show');
-    }
-
-    function submitForm() {
-        $('#registerForm').submit();
-    }
-</script>
 

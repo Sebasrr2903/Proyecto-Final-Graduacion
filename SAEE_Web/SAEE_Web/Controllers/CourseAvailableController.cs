@@ -15,10 +15,40 @@ namespace SAEE_Web.Controllers
         [HttpGet]
         public ActionResult RegisterCourseAvailable()
         {
-            ViewBag.ListSelectCourses = courseAvailableModel.SelectListCourses();
-            ViewBag.ListSelectTeacher = courseAvailableModel.SelectListTeacher();
-            ViewBag.SelectSchedule = courseAvailableModel.SelectListSchedule();
+            ViewBag.SelectListCourses = courseAvailableModel.SelectListCourses();
+            ViewBag.SelectListTeacher = courseAvailableModel.SelectListTeacher();
+            ViewBag.SelectListSchedule = courseAvailableModel.SelectListSchedule();
             return View();
         }
+
+        [HttpPost]
+        public ActionResult RegisterCourseAvailable(CourseAvailableEnt courseAvailable)
+        {
+            //user.activeUser = (int)Session["ActiveId"];//For action register
+
+            ViewBag.SelectListCourses = courseAvailableModel.SelectListCourses();
+            ViewBag.SelectListTeacher = courseAvailableModel.SelectListTeacher();
+            ViewBag.SelectListSchedule = courseAvailableModel.SelectListSchedule();
+
+            var resp = courseAvailableModel.RegisterCourseAvailable(courseAvailable);
+
+            if (resp == "OK")
+            {
+                ViewBag.BoxMessage = "Curso creado.";
+                return View();
+            }
+            else
+            {
+                ViewBag.BoxMessage = "No se ha creado el curso.";
+                ViewBag.SelectListCourses = courseAvailableModel.SelectListCourses();
+                ViewBag.SelectListTeacher = courseAvailableModel.SelectListTeacher();
+                ViewBag.SelectListSchedule = courseAvailableModel.SelectListSchedule();
+                return View();
+            }
+        }
+
+
+
+
     }
 }

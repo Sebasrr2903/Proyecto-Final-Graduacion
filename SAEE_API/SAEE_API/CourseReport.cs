@@ -21,7 +21,6 @@ namespace SAEE_API
         public double finalScore { get; set; }
         public string performanceDescription { get; set; }
     
-        public virtual CourseAvailable CourseAvailable { get; set; }
         public virtual Proceedings Proceedings { get; set; }
         public virtual Users Users { get; set; }
     }

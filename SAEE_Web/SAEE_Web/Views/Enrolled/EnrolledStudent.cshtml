@@ -1,0 +1,54 @@
+﻿@model SAEE_Web.Entities.EnrolledCoursesEnt
+
+@{
+    ViewBag.Title = "EnrolledStudent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<main class="contacts">
+    <section class="contacts_form">
+        <div class="container">
+            <div class="contacts_form-header">
+                <h2 class="contacts_form-header_title">Matrícula de Estudiantes</h2>
+            </div>
+            @if (ViewBag.BoxMessage != null)
+            {
+                if (ViewBag.BoxMessage == "Estudiante matriculado.")
+                {
+                    <div class="alert alert-info" role="alert" style="text-align:center">
+                        @ViewBag.BoxMessage
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center">
+                        @ViewBag.BoxMessage
+                    </div>
+                }
+
+            }
+
+            @using (Html.BeginForm("EnrolledStudent", "Enrolled", FormMethod.Post, new { @class = "contacts_form-form" }))
+            {
+                <div class="form-group">
+                    <label style="margin-right: 23rem;">Estudiante:</label>
+                    @Html.DropDownListFor(m => m.StudentId, ViewBag.SelectListStudents as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 23rem;">Curso:</label>
+                    @Html.DropDownListFor(m => m.CourseId, ViewBag.SelectListCoursesAvailable as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType" })
+                </div>
+
+                <div class="contacts_form-form_footer">
+                    <input type="submit" class="btn btn--login" style="color:white;" value="MATRICULAR">
+                </div>
+            }
+        </div>
+    </section>
+</main>
+
+
+
+
