@@ -19,5 +19,6 @@ namespace SAEE_API
         public int studentId { get; set; }
     
         public virtual CourseAvailable CourseAvailable { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

@@ -17,6 +17,8 @@ namespace SAEE_API
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CourseAvailable()
         {
+            this.CourseReport = new HashSet<CourseReport>();
+            this.CourseTasks = new HashSet<CourseTasks>();
             this.EnrolledCourses = new HashSet<EnrolledCourses>();
         }
     
@@ -29,6 +31,10 @@ namespace SAEE_API
         public virtual Courses Courses { get; set; }
         public virtual Schedule Schedule { get; set; }
         public virtual TeacherData TeacherData { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CourseReport> CourseReport { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CourseTasks> CourseTasks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EnrolledCourses> EnrolledCourses { get; set; }
     }
