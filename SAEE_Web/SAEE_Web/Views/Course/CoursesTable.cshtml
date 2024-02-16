@@ -4,96 +4,100 @@
     ViewBag.Title = "CoursesTable";
 }
 
-<div style="text-align: center;">
-    <h2>Cursos</h2>
-    <br>
-    <div style="display:flex;">
-        &nbsp;&nbsp;
-        <div style="text-align:left">
-            <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("RegisterCourse","Course")">
-                <span class="text">Agregar Curso</span>
-            </a>
+<main style="margin: 20px auto; max-width: 1000px; flex-grow: 1;">
+    <div style="text-align: center;">
+        <h2>Cursos</h2>
+        <hr />
+        <br>
+        <div style="display:flex;">
+            &nbsp;&nbsp;
+            <div style="text-align:left">
+                <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("RegisterCourse","Course")">
+                    <span class="text">Agregar Curso</span>
+                </a>
+            </div>
+            &nbsp;&nbsp;
+            <div style="text-align:left">
+                <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("RegisterCourseAvailable", "CourseAvailable")">
+                    <span class="text">Habilitar Curso</span>
+                </a>
+            </div>
+            &nbsp;&nbsp;
+            <div style="text-align:left">
+                <a class="btn btn--rlogin" style="display:flex; height:40px" href="#">
+                    <span class="text">Descargar reporte</span>
+                </a>
+            </div>
         </div>
-        &nbsp;&nbsp;
-        <div style="text-align:left">
-            <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("RegisterCourseAvailable", "CourseAvailable")">
-                <span class="text">Habilitar Curso</span>
-            </a>
-        </div>
-        &nbsp;&nbsp;
-        <div style="text-align:left">
-            <a class="btn btn--rlogin" style="display:flex; height:40px" href="#">
-                <span class="text">Descargar reporte</span>
-            </a>
-        </div>
-    </div>
-    <br />
-    @if (Model.Count() > 0)
-    {
-        if (ViewBag.BoxMessage != null)
+        <br />
+        @if (Model.Count() > 0)
         {
-            <div class="alert alert-danger" role="alert" style="text-align:center">
-                @ViewBag.BoxMessage
+            if (ViewBag.BoxMessage != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align:center">
+                    @ViewBag.BoxMessage
+                </div>
+            }
+
+            <table id="tableData" class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th id="Bar" scope="col">Nombre</th>
+                        <th id="Bar" scope="col">Descripcion</th>
+                        <th id="Bar" scope="col">Cupos</th>
+                        <th id="Bar" scope="col">Estado</th>
+                        <th id="Bar" scope="col">Cambiar Estado</th>
+                        <th id="Bar" scope="col">Actualizar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th>@item.Name</th>
+                            <td>@item.Description</td>
+                            <td>@item.AvailableQuota</td>
+
+
+                            @if (item.Active)
+                            {
+                                <td>Activo</td>
+                            }
+                            else
+                            {
+                                <td>Inactivo</td>
+                            }
+
+                            <td style="text-align:center">
+                                <a href="@Url.Action("ChangeStatusCourse","Course", new { q = item.Id })"><i class="icon-edit-solid"></i></a>
+                            </td>
+                            <td style="text-align:center">
+                                <a href="@Url.Action("UpdateCourse","Course", new { q = item.Id })"><i class="icon-arrow-right-solid"></i></a>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info col-12" role="alert" style="text-align:center; margin-top:5%; font-size:18pt;">
+                No hay usuarios registrados en este momento.
             </div>
         }
+    </div>
+    <hr />
+</main>
 
-        <table id="tableData" class="table">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripcion</th>
-                    <th scope="col">Cupos</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Cambiar Estado</th>
-                    <th scope="col">Actualizar</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <th>@item.Name</th>
-                        <td>@item.Description</td>
-                        <td>@item.AvailableQuota</td>
-                
 
-                        @if (item.Active)
-                        {
-                            <td>Activo</td>
-                        }
-                        else
-                        {
-                            <td>Inactivo</td>
-                        }
-
-                        <td style="text-align:center">
-                            <a href="@Url.Action("ChangeStatusCourse","Course", new { q = item.Id })"><i class="icon-edit-solid"></i></a>
-                        </td>
-                        <td style="text-align:center">
-                            <a href="@Url.Action("UpdateCourse","Course", new { q = item.Id })"><i class="icon-arrow-right-solid"></i></a>
-                        </td>
-                    </tr>
-
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <div class="alert alert-info col-12" role="alert" style="text-align:center; margin-top:5%; font-size:18pt;">
-            No hay usuarios registrados en este momento.
-        </div>
-    }
-</div>
-
-@* DATATABLES *@
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script>
     $(document).ready(function () {
         $('#tableData').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-            }
+            },
+            "paging": true // Habilita la paginación
         });
     });
 </script>

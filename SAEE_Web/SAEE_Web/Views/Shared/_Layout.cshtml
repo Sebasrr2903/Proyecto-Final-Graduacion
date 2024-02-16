@@ -110,7 +110,7 @@
                         </li>
 
                         <li class="header_nav-list_item">
-                            <a class="nav-item" href="@Url.Action("ProfileUser", "User", new { q = @Session["ActiveId"] })" data-page="about">@Session["Name"]</a>
+                            <a class="nav-item" style="color:#401ade; font-size:larger;"  shref="@Url.Action("ProfileUser", "User", new { q = @Session["ActiveId"] })" data-page="about">@Session["Name"]</a>
                         </li>
 
                     }
@@ -131,13 +131,13 @@
         </div>
     </header>
     <!-- homepage content start -->
-    <main style="margin: 20px auto; max-width: 1000px; flex-grow: 1;">
+
 
 
         @RenderBody()
 
 
-    </main>
+  
 
     @Html.Partial("_FooterPartial")
 

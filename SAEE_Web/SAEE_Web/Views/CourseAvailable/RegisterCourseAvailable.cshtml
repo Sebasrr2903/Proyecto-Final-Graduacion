@@ -12,32 +12,41 @@
             <div class="contacts_form-header">
                 <h2 class="contacts_form-header_title">Habilitar Cursos</h2>
             </div>
+            <hr />
             @if (ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-info" role="alert" style="text-align:center">
                     @ViewBag.BoxMessage
                 </div>
             }
+            <div class="back-button-container">
+                <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </div>
 
-            @using (Html.BeginForm("RegisterCourseAvailable", "CourseAvailable", FormMethod.Post, new { @class = "contacts_form-form" }))
+
+
+            @using (Html.BeginForm("RegisterCourseAvailable", "CourseAvailable", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
             {
                 <div class="form-group">
-                    <label style="margin-right: 23rem;">Profesor:</label>
+                    <label style="margin-right: 53rem;">Profesor:</label>
                     @Html.DropDownListFor(m => m.TeacherId, ViewBag.SelectListTeacher as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType" })
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 23rem;">Curso:</label>
+                    <label style="margin-right: 53rem;">Curso:</label>
                     @Html.DropDownListFor(m => m.CourseId, ViewBag.SelectListCourses as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType" })
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 23rem;">Horario:</label>
+                    <label style="margin-right: 53rem;">Horario:</label>
                     @Html.DropDownListFor(m => m.ScheduleId, ViewBag.SelectListSchedule as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType" })
                 </div>
 
+                <hr />
                 <div class="contacts_form-form_footer">
-                    <input type="submit" class="btn btn--login" style="color:white;" value="REGISTRAR">
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">REGISTRAR</button>
                 </div>
             }
         </div>
@@ -45,3 +54,42 @@
 </main>
 
 
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center align-items-center" style="background: rgba(37,117,252,.83); color:aliceblue">
+                <h5 class="modal-title mr-auto" id="confirmationModalLabel">Confirmación de Registro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center align-content-center">
+                <div style="display: inline-block;">
+                    <img src="~/Images/checklist.png" style="width: 100px;" />
+                </div>
+                <p id="Enrolled" style="font-size: 24px; font-weight: bold;"></p>
+                <h5 class="modal-title mr-auto" id="confirmationModalLabel">¿Está seguro desea habilitar el curso?</h5>
+            </div>
+            <div class="modal-footer d-flex justify-content-center" style="background:rgba(37,117,252,.83) ; color:aliceblue">
+                <!-- Añadido d-flex justify-content-center -->
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success" onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    function showConfirmation() {
+        var Enrolled = $('#TeacherId').val();
+        $('#Enrolled').text('"'+Enrolled+'"');
+        $('#confirmationModal').modal('show');
+    }
+
+    function submitForm() {
+        $('#registerForm').submit();
+    }
+</script>

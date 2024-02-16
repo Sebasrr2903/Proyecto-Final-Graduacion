@@ -190,6 +190,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\icomoon.css" />
+    <Content Include="Content\index.min.css" />
     <Content Include="Content\libs.min.css" />
     <Content Include="Content\general.css" />
     <Content Include="Content\preload.min.css" />
@@ -197,6 +198,7 @@
     <Content Include="Functions\HideShowForm.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\checklist.png" />
     <Content Include="Images\ELEC.png" />
     <Content Include="Images\librosEj.jpg" />
     <Content Include="Images\logoELEC.png" />
@@ -252,6 +254,7 @@
     <Content Include="Template\fonts\icomoon.svg" />
     <Content Include="Template\img\placeholder.jpg" />
     <Content Include="Template\js\common.js" />
+    <Content Include="Template\js\commonExe.js" />
     <Content Include="Template\js\common.min.js" />
     <Content Include="Template\js\courses.js" />
     <Content Include="Template\js\courses.min.js" />
@@ -433,6 +436,7 @@
     <Content Include="Views\User\ProfileUser.cshtml" />
     <Content Include="Views\CourseAvailable\RegisterCourseAvailable.cshtml" />
     <Content Include="Views\Enrolled\EnrolledStudent.cshtml" />
+    <Content Include="Views\Shared\_Alerts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
