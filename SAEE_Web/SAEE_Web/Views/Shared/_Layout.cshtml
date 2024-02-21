@@ -10,11 +10,11 @@
         <div class="container d-flex flex-wrap justify-content-between align-items-center">
             <div class="logo header_logo">
                 <a class="d-inline-flex align-items-center" href="@Url.Action("Index", "Home")">
-                    <span class="logo_picture">
+                    <span class="logo_picture"style="color:aqua;">
                         <img src="~/Images/ELEC.png" alt="ELEC" />
                     </span>
                     <span class="text">
-                        <span class="brand">ELEC</span>
+                        <span class="brand" style="color: rgb(48, 120, 252); ">ELEC</span>
                         <span class="text_secondary">Spanish School</span>
                     </span>
                 </a>
@@ -110,7 +110,7 @@
                         </li>
 
                         <li class="header_nav-list_item">
-                            <a class="nav-item" style="color:#401ade; font-size:larger;"  shref="@Url.Action("ProfileUser", "User", new { q = @Session["ActiveId"] })" data-page="about">@Session["Name"]</a>
+                            <a class="nav-item" style="color:#401ade; font-size:larger;"  href="@Url.Action("ProfileUser", "User", new { q = @Session["ActiveId"] })" data-page="about">@Session["Name"]</a>
                         </li>
 
                     }

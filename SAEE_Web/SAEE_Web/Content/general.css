@@ -11,6 +11,83 @@
  * @support         help@merkulov.design
  **/
 
+ /*css datable*/
+div.dataTables_wrapper div.dataTables_length label {
+    margin-top: 10px;
+    margin-right: 100%;
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap;
+}
+
+                        
+    div .dataTables_wrapper div.dataTables_length select {
+    border: 1px solid #d5d5d5;
+    border-radius: 12px;
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+    font-weight: 600;
+    white-space: nowrap;
+    text-align: left;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+    height: 40px;
+    background: #fff;
+    border: 1px solid #d5d5d5;
+    border-radius: 12px;
+    width: 70%;
+    font-size: 16px;
+    line-height: 1;
+}
+/*css datable*/
+
+
+.btn--rAdd {
+    border-color: rgb(156, 187, 152);
+    height: 30px;
+    background: rgb(156, 187, 152);
+    position: relative;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: .3s ease-in-out;
+    -o-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    -webkit-box-shadow: 0 2px 4px rgba(43,53,67,0);
+    box-shadow: 0 2px 4px rgba(43,53,67,0) ;
+}
+.btn--rAvailable {
+    border-color: rgb(133, 133, 204);
+    height: 30px;
+    background: rgb(133, 133, 204);
+    position: relative;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: .3s ease-in-out;
+    -o-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    -webkit-box-shadow: 0 2px 4px rgba(43,53,67,0);
+    box-shadow: 0 2px 4px rgba(43,53,67,0);
+}
+
+.btn--rReport {
+    border-color: rgb(246, 125, 117);
+    height: 30px;
+    background: rgb(246, 125, 117);
+    position: relative;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: .3s ease-in-out;
+    -o-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    -webkit-box-shadow: 0 2px 4px rgba(43,53,67,0);
+    box-shadow: 0 2px 4px rgba(43,53,67,0);
+}
+
 
 #Bar {
     background: #007bff;
@@ -360,6 +437,7 @@ main {
 }
 
     .btn .text {
+        color:#ffffff;
         line-height: 1;
         position: relative;
         top: 1px

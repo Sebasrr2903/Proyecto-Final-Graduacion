@@ -17,8 +17,12 @@
                     @ViewBag.BoxMessage
                 </div>
             }
-
-            @using (Html.BeginForm("UpdateUser", "User", FormMethod.Post, new { @class = "contacts_form-form" }))
+            <div class="back-button-container">
+                <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </div>
+            @using (Html.BeginForm("UpdateUser", "User", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
             {
                 @Html.HiddenFor(m => m.Id)
 
@@ -43,10 +47,53 @@
                 </div>
 
                 <div class="contacts_form-form_footer">
-                    <input type="submit" class="btn btn--login" style="color:white;" value="Actualizar">
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">ACTUALIZAR</button>
                 </div>
             }
         </div>
     </section>
 
+</main>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center align-items-center" style="background: rgb(61, 89, 255); color: aliceblue; border-block-color: rgb(61, 89, 255);">
+                <h5 class="modal-title mr-auto" id="confirmationModalLabel">Confirmación de Registro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color:#ffffff">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center align-content-center">
+                <div style="display: inline-block;">
+                    <img src="~/Images/checklist.png" style="width: 100px;" />
+                </div>
+                <p id="userName" style="font-size: 24px; font-weight: bold;"></p>
+                <h5 class="modal-title mr-auto" id="confirmationModalLabel">¿Está seguro desea actualizar este usuario?</h5>
+            </div>
+            <div class="modal-footer d-flex justify-content-center" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
+                <!-- Añadido d-flex justify-content-center -->
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn " style="background-color: rgb(127, 167, 118); color:#ffff;" onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    function showConfirmation() {
+        var userName = $('#Name').val();
+        $('#userName').text('Nombre del Usuario: ' + userName);
+        $('#confirmationModal').modal('show');
+    }
+
+    function submitForm() {
+        $('#registerForm').submit();
+    }
+</script>

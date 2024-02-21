@@ -21,7 +21,7 @@
             @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "contacts_form-form" }))
             {
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Email:</label>
+                    <label style="margin-right: 26rem;">Correo electronico:</label>
                     @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "email", @placeholder = "Email" })
 
                     @* ALERT *@
@@ -31,7 +31,7 @@
                     }
                 </div>
                 <div class="form-group">
-                    <label style="margin-right: 52rem;">Password:</label>
+                    <label style="margin-right: 52rem;">Contraseña:</label>
                     @Html.TextBoxFor(m => m.Password, new { @class = "field required", @type = "password", @placeholder = "Contraseña" })
 
                     @* ALERT *@

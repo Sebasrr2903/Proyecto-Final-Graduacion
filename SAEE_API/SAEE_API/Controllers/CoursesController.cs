@@ -149,7 +149,7 @@ namespace SAEE_API.Controllers
                 {
                     var courses = new Courses();
                     courses.description = course.Description;
-                    courses.active = course.Active;
+                    courses.active = true;
                     courses.name = course.Name; 
                     courses.availableQuota = course.AvailableQuota;
 

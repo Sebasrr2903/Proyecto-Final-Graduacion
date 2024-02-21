@@ -3,8 +3,8 @@
     ViewBag.Title = "UsersTable";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
+ 
+  
 <main style="margin: 20px auto; max-width: 1000px; flex-grow: 1;">
     <div style="text-align: center;">
         <h2>Estudiantes matriculados</h2>
@@ -13,14 +13,20 @@
         <div style="display:flex;">
             &nbsp;&nbsp;
             <div style="text-align:left">
-                <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("RegisterUser","User")">
+                <a class="btn btn--rAdd" style="display:flex; height:40px" href="@Url.Action("RegisterUser","User")">
                     <span class="text">Crear cuenta</span>
                 </a>
             </div>
             &nbsp;&nbsp;
             <div style="text-align:left">
-                <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("EnrolledStudent", "Enrolled")">
+                <a class="btn btn--rAvailable" style="display:flex; height:40px" href="@Url.Action("EnrolledStudent", "Enrolled")">
                     <span class="text">Matricular Estudiante</span>
+                </a>
+            </div>
+            &nbsp;&nbsp;
+            <div style="text-align:left">
+                <a class="btn btn--rReport" id="" style="display:flex; height:40px" href="#">
+                    <span class="text">Descargar reporte</span>
                 </a>
             </div>
         </div>
@@ -36,7 +42,7 @@
 
             <table id="tableData" class="table" style="">
                 <thead class="thead-light" style="">
-                    <tr >
+                    <tr>
                         <th id="Bar" scope="col">Nombre</th>
                         <th id="Bar" scope="col">Apellidos</th>
                         <th id="Bar" scope="col">Fecha de nacimiento</th>
@@ -99,17 +105,17 @@
             </div>
         }
     </div>
-       <hr />
-    </main>
+    <hr />
+</main>
 
-    @* DATATABLES *@
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#tableData').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                }
-            });
+@* DATATABLES *@
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#tableData').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            }
         });
-    </script>
+    });
+</script>
