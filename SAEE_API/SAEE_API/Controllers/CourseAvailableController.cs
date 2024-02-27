@@ -37,7 +37,7 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 0, "SelectListCourses");
+                reports.ErrorReport(errorDescription, 1, "SelectListCourses");
 
                 return new List<System.Web.Mvc.SelectListItem>();
             }
@@ -72,7 +72,7 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 0, "SelectListTeacher");
+                reports.ErrorReport(errorDescription, 1, "SelectListTeacher");
 
                 return new List<System.Web.Mvc.SelectListItem>();
             }
@@ -99,7 +99,7 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 0, "SelectListSchedule");
+                reports.ErrorReport(errorDescription, 1, "SelectListSchedule");
 
                 return new List<System.Web.Mvc.SelectListItem>();
             }
@@ -118,10 +118,25 @@ namespace SAEE_API.Controllers
                     course.teacherId = courseAvailable.TeacherId;
                     course.courseId = courseAvailable.CourseId;
                     course.scheduleId = courseAvailable.ScheduleId;
+                    course.enrolledStudents = 0; //Newly created (has no students yet)
+                    course.durationInWeeks = courseAvailable.DurationInWeeks;
                     course.active = true;
 
                     context.CourseAvailable.Add(course);
                     context.SaveChanges();
+
+                    int courseAvailableId = course.id;
+                    //Create default course weeks
+                    for (global::System.Int32 i = 0; i < courseAvailable.DurationInWeeks + 1; i++)
+                    {
+                        //Week 0 corresponds to the introduction and the rest will have content as appropriate
+                        var week = new Weeks();
+                        week.weekNum = i;
+                        week.courseAvailableId = courseAvailableId;
+
+                        context.Weeks.Add(week);
+                        context.SaveChanges();
+                    }
 
                     return "OK";
                 }
@@ -129,7 +144,7 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 0, "RegisterCourseAvailable");
+                reports.ErrorReport(errorDescription, 1, "RegisterCourseAvailable");
 
                 return string.Empty;
             }

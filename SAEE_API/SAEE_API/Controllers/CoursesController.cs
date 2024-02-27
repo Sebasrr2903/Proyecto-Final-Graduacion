@@ -41,8 +41,6 @@ namespace SAEE_API.Controllers
             }
         }
 
-
-
         [HttpPut]
         [Route("ChangeStatusCourses")]
         public string ChangeStatusCourse(CoursesEnt course)
@@ -74,9 +72,6 @@ namespace SAEE_API.Controllers
             }
         }
 
-
-
-
         [HttpGet]
         [Route("CourseData")]
         public Courses CourseData(long q)
@@ -101,6 +96,7 @@ namespace SAEE_API.Controllers
                 return null;
             }
         }
+
         [HttpPut]
         [Route("UpdateCourse")]
         public string UpdateCourse(CoursesEnt course)
@@ -121,7 +117,6 @@ namespace SAEE_API.Controllers
                         data.availableQuota = course.AvailableQuota;
                         data.active = course.Active;
                   
-
                         context.SaveChanges();
                     }
 
@@ -138,12 +133,11 @@ namespace SAEE_API.Controllers
             }
         }
 
-
         [HttpPost]
         [Route("RegisterCourse")]
         public string RegisterCourse(CoursesEnt course)
         {
-              try
+            try
             {
                 using (var context = new SAEEEntities())
                 {
@@ -168,5 +162,10 @@ namespace SAEE_API.Controllers
             }
 
         }
+
+        
+
+
+
     }
 }

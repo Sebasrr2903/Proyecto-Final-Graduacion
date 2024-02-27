@@ -422,7 +422,6 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Course\AllCourses.cshtml" />
     <Content Include="Views\Course\SpecificCourse.cshtml" />
-    <Content Include="Views\Shared\_Layout_Course.cshtml" />
     <Content Include="Views\User\UsersTable.cshtml" />
     <Content Include="Views\Report\GeneralReport.cshtml" />
     <Content Include="Views\Shared\_HeadPartial.cshtml" />
@@ -437,6 +436,7 @@
     <Content Include="Views\CourseAvailable\RegisterCourseAvailable.cshtml" />
     <Content Include="Views\Enrolled\EnrolledStudent.cshtml" />
     <Content Include="Views\Shared\_Alerts.cshtml" />
+    <Content Include="Views\User\ProfileData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

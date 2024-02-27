@@ -51,73 +51,41 @@
                         }
                         else if ((int)Session["UserType"] == 3) //Student
                         {
-                            <li class="header_nav-list_item dropdown">
-                                <a class="nav-link nav-item dropdown-toggle d-inline-flex align-items-center"
-                                   href="@Url.Action("AllCourses", "Course")"
-                                   data-bs-toggle="collapse"
-                                   data-bs-target="#coursesMenu"
-                                   data-trigger="dropdown"
-                                   aria-expanded="false"
-                                   aria-controls="coursesMenu"
-                                   data-page="courses">
-                                    Todos los cursos
-                                    <i class="icon-angle-down icon"></i>
-                                </a>
-                                <div class="dropdown-menu collapse" id="coursesMenu">
-                                    <ul class="dropdown-list">
-                                        @* Acá se cargarían dinamicamente los cursos que el estudiante tenga activos *@
-                                        <li class="list-item">
-                                            <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 1</a>
-                                        </li>
-                                        <li class="list-item">
-                                            <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 2</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <li class="header_nav-list_item">
+                                <a class="nav-item" href="@Url.Action("AllCourses", "Course")" data-page="about">Mis Cursos</a>
                             </li>
                         }
                         else //Teacher
                         {
-                            <li class="header_nav-list_item dropdown">
-                                <a class="nav-link nav-item dropdown-toggle d-inline-flex align-items-center"
-                                   href="@Url.Action("AllCourses", "Course")"
-                                   data-bs-toggle="collapse"
-                                   data-bs-target="#coursesMenu"
-                                   data-trigger="dropdown"
-                                   aria-expanded="false"
-                                   aria-controls="coursesMenu"
-                                   data-page="courses">
-                                    Todos los cursos
-                                    <i class="icon-angle-down icon"></i>
-                                </a>
-                                <div class="dropdown-menu collapse" id="coursesMenu">
-                                    <ul class="dropdown-list">
-                                        @* Acá se cargarían dinamicamente los cursos que el profesor tenga activos *@
-                                        <li class="list-item">
-                                            <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 1</a>
-                                        </li>
-                                        <li class="list-item">
-                                            <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 2</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <li class="header_nav-list_item">
+                                <a class="nav-item" href="#" data-page="about">Mis Cursos</a>
                             </li>
                         }
+                        <li class="header_nav-list_item">
+                            <a class="nav-item" style="color:#401ade; font-size:larger;" href="@Url.Action("ProfileData", "User")" data-page="about">@Session["Name"]</a>
+                        </li>
+
+                        <li class="header_nav-list_item">
+                            @if (Session["ProfileImageB64"] == null)
+                            {
+                                <img class="img-xs rounded-circle" src="https://cdn-icons-png.flaticon.com/512/2550/2550383.png" style="max-width:3rem" alt="profilePicture">
+                            }
+                            else
+                            {
+                                <img class="img-xs rounded-circle" src="data:image/jpeg;base64,@Session["ProfileImageB64"]" style="max-width:3rem;" alt="profilePicture">
+                            }
+                        </li>
+
                         <li class="header_nav-list_item">
                             <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("Logout","User")">
                                 <span class="text">Cerrar Sesión</span>
                             </a>
                         </li>
-
-                        <li class="header_nav-list_item">
-                            <a class="nav-item" style="color:#401ade; font-size:larger;"  href="@Url.Action("ProfileUser", "User", new { q = @Session["ActiveId"] })" data-page="about">@Session["Name"]</a>
-                        </li>
-
                     }
                     else
                     {
                         <li class="header_nav-list_item">
-                            <a class="nav-item" href="~/Template/about.html" data-page="about">Preguntas frecuentes</a>
+                            <a class="nav-item" href="#" data-page="about">Preguntas frecuentes</a>
                         </li>
                         <li class="header_nav-list_item">
                             <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("Login","User")">
@@ -125,7 +93,6 @@
                             </a>
                         </li>
                     }
-
                 </ul>
             </nav>
         </div>

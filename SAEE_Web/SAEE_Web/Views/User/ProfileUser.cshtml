@@ -24,7 +24,7 @@
                     <i class="fas fa-arrow-left"></i> Volver
                 </button>
             </div>
-            @using (Html.BeginForm("ProfileUser", "User", FormMethod.Post, new { @class = "contacts_form-form", id="registerForm" }))
+            @using (Html.BeginForm("ProfileUser", "User", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm", @enctype = "multipart/form-data" }))
             {
                 @Html.HiddenFor(m => m.Id)
 
@@ -40,17 +40,21 @@
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Email:</label>
-                    @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "email", @placeholder = "Email" })
+                    @Html.TextBoxFor(m => m.Email, new { @readonly = "@readonly", @class = "field required", @type = "email", @placeholder = "Email" })
                 </div>
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Número:</label>
                     @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "field required", @type = "number", @placeholder = "Número" })
                 </div>
-               <hr />
-               <div class="contacts_form-form_footer">
-                   <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">ACTUALIZAR</button>
-               </div>
+                <div class="form-group">
+                    <label style="margin-right: 28rem;">Foto de perfil:</label>
+                    <input type="file" class="form-control" id="ProfileImg" name="ProfileImg">
+                </div>
+                <hr />
+                <div class="contacts_form-form_footer">
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">ACTUALIZAR</button>
+                </div>
             }
         </div>
     </section>

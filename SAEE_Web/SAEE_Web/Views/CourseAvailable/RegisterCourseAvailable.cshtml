@@ -43,6 +43,10 @@
                     <label style="margin-right: 53rem;">Horario:</label>
                     @Html.DropDownListFor(m => m.ScheduleId, ViewBag.SelectListSchedule as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType" })
                 </div>
+                <div class="form-group">
+                    <label style="margin-right: 25rem;">Duración en semanas:</label>
+                    @Html.TextBoxFor(m => m.DurationInWeeks, new { @class = "field required", @type = "number", @placeholder = "Duración en semanas" })
+                </div>
 
                 <hr />
                 <div class="contacts_form-form_footer">

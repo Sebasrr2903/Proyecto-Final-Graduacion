@@ -33,7 +33,7 @@ namespace SAEE_API
         public string phoneNumber { get; set; }
         public string password { get; set; }
         public bool active { get; set; }
-        public string profilePicture { get; set; }
+        public byte[] profilePicture { get; set; }
         public int userType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

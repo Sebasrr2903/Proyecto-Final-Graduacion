@@ -18,14 +18,16 @@ namespace SAEE_API
         public CourseAvailable()
         {
             this.CourseReport = new HashSet<CourseReport>();
-            this.CourseTasks = new HashSet<CourseTasks>();
             this.EnrolledCourses = new HashSet<EnrolledCourses>();
+            this.Weeks = new HashSet<Weeks>();
         }
     
         public int id { get; set; }
         public int teacherId { get; set; }
         public int courseId { get; set; }
         public int scheduleId { get; set; }
+        public int enrolledStudents { get; set; }
+        public int durationInWeeks { get; set; }
         public bool active { get; set; }
     
         public virtual Courses Courses { get; set; }
@@ -34,8 +36,8 @@ namespace SAEE_API
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CourseReport> CourseReport { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CourseTasks> CourseTasks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EnrolledCourses> EnrolledCourses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Weeks> Weeks { get; set; }
     }
 }

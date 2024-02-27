@@ -45,6 +45,24 @@ namespace SAEE_Web.Models
             }
         }
 
-
+        public List<EnrolledCoursesEnt> EnrolledCoursesPerStudent(int q)
+        {
+            using (var client = new HttpClient())
+            {
+                var url = urlAPI + "EnrolledCoursesPerStudent?q=" + q;
+                var res = client.GetAsync(url).Result;
+                return res.Content.ReadFromJsonAsync<List<EnrolledCoursesEnt>>().Result;
+            }
+        }
+        
+        public List<EnrolledCoursesEnt> SpecificCourse(int q)
+        {
+            using (var client = new HttpClient())
+            {
+                var url = urlAPI + "SpecificCourse?q=" + q;
+                var res = client.GetAsync(url).Result;
+                return res.Content.ReadFromJsonAsync<List<EnrolledCoursesEnt>>().Result;
+            }
+        }
     }
 }

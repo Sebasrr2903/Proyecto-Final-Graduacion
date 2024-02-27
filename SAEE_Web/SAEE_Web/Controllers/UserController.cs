@@ -2,12 +2,15 @@
 using SAEE_Web.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using System.Web.UI.WebControls;
+using System.Drawing;
 
 
 namespace SAEE_Web.Controllers
@@ -48,6 +51,17 @@ namespace SAEE_Web.Controllers
                     Session["Email"] = resp.Email;
                     Session["PhoneNumber"] = resp.PhoneNumber;
                     Session["UserType"] = resp.UserType;
+
+                    Session["SelectedWeekNum"] = 0;
+
+                    if (resp.ProfilePicture != null)
+                    {
+                        byte[] bytes = resp.ProfilePicture;
+
+                        string base64String = Convert.ToBase64String(bytes);
+
+                        Session["ProfileImageB64"] = base64String;
+                    }
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -142,7 +156,7 @@ namespace SAEE_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateUser(UserEnt user)
+        public ActionResult UpdateUser( UserEnt user)
         {
             user.activeUser = (int)Session["ActiveId"];//For action register
 
@@ -182,6 +196,13 @@ namespace SAEE_Web.Controllers
                 return View();
             }
         }
+
+        [HttpGet]
+        public ActionResult ProfileData()
+        {
+            return View();
+        }
+
         [HttpGet]
         public ActionResult ProfileUser(long q)
         {
@@ -190,9 +211,23 @@ namespace SAEE_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProfileUser(UserEnt user)
+        public ActionResult ProfileUser(HttpPostedFileBase ProfileImg, UserEnt user)
         {
             user.activeUser = (int)Session["ActiveId"];//For action register
+
+            if (ProfileImg != null && ProfileImg.ContentLength > 0)
+            {
+                byte[] imageBytes;
+                using (BinaryReader reader = new BinaryReader(ProfileImg.InputStream))
+                {
+                    imageBytes = reader.ReadBytes(ProfileImg.ContentLength);
+                }
+
+                user.ProfilePicture = imageBytes;
+
+                string base64String = Convert.ToBase64String(imageBytes);
+                Session["ProfileImageB64"] = base64String;
+            }
 
             var resp = userModel.UpdateUser(user);
 
@@ -202,7 +237,7 @@ namespace SAEE_Web.Controllers
 
             if (resp == "OK")
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("ProfileData", "User");
             }
             else
             {
@@ -210,6 +245,31 @@ namespace SAEE_Web.Controllers
                 return View();
             }
         }
+
+        [HttpGet]
+        public ActionResult DeleteProfilePicture(long q)
+        {
+            var user = new UserEnt();
+            user.Id = (int)q;
+
+            var resp = userModel.DeleteProfilePicture(user);
+            Session["ProfileImageB64"] = null;
+
+            if (resp == "OK") //Error al entrar a esta respuesta
+            {
+                Session["ProfileImageB64"] = null;
+                return RedirectToAction("ProfileData", "User");
+            }
+            else
+            {
+                ViewBag.BoxMessage = "No se pudo eliminar la foto de perfil.";
+                return RedirectToAction("ProfileData", "User");
+            }
+        }
+
+
+        
+
 
     }
 }

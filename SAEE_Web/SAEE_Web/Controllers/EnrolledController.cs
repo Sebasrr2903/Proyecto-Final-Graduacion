@@ -34,7 +34,16 @@ namespace SAEE_Web.Controllers
 
             if (resp == "OK")
             {
+                ViewBag.SelectListCoursesAvailable = enrolledCoursesModel.SelectListCoursesAvailable();
+                ViewBag.SelectListStudents = enrolledCoursesModel.SelectListStudents();
                 ViewBag.BoxMessage = "Estudiante matriculado.";
+                return View();
+            }
+            else if (resp == "El curso no tiene cupo disponible.")
+            {
+                ViewBag.SelectListCoursesAvailable = enrolledCoursesModel.SelectListCoursesAvailable();
+                ViewBag.SelectListStudents = enrolledCoursesModel.SelectListStudents();
+                ViewBag.BoxMessage = "El curso no tiene cupo disponible.";
                 return View();
             }
             else
@@ -44,6 +53,13 @@ namespace SAEE_Web.Controllers
                 ViewBag.SelectListStudents = enrolledCoursesModel.SelectListStudents();
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateSessionWeek(string key, int value)
+        {
+            Session["SelectedWeekNum"] = value;
+            return View();
         }
     }
 }

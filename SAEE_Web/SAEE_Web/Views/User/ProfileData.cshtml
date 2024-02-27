@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "ProfileData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="width: 80%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; ">
+    <br />
+    <br />
+    <div class="list-group">
+        <div class="list-group-item-light list-group-item-action active" style="height:10rem;">
+            <br />
+
+            <div class="d-flex w-100 justify-content-lg-start" style="margin-left:20px;">
+                @if (Session["ProfileImageB64"] == null)
+                {
+                    <img class="img-xs rounded-circle" src="https://cdn-icons-png.flaticon.com/512/2550/2550383.png" style="max-width:7rem;" alt="profilePicture">
+                }
+                else
+                {
+                    <img class="img-xs rounded-circle" src="data:image/jpeg;base64,@Session["ProfileImageB64"]" style="max-width:7rem;" alt="profilePicture">
+                }
+                &nbsp;
+                &nbsp;
+                <h2 class="mb-1">@Session["Name"] @Session["Lastname"]</h2>
+            </div>
+            
+            <a class="nav-item" style="color:#401ade; font-size:small; margin-right:65rem;" href="@Url.Action("DeleteProfilePicture", "User", new { q = @Session["ActiveId"] })" >Eliminar foto</a>
+        </div>
+
+        <div class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h4 class="mb-1" style="font-weight:bold;">Mis Datos</h4>
+            </div>
+            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
+
+                @if ((int)Session["UserType"] == 1)
+                {
+                    <p class="mb-1" style="font-weight:bold;">Tipo de cuenta:</p>
+                    <p class="mb-1">Administrador</p>
+                }
+                else if ((int)Session["UserType"] == 2)
+                {
+                    <p class="mb-1" style="font-weight:bold;">Tipo de cuenta:</p>
+                    <p class="mb-1">Profesor</p>
+                }
+                else
+                {
+                    <p class="mb-1" style="font-weight:bold;">Tipo de cuenta:</p>
+                    <p class="mb-1">Estudiante</p>
+                }
+
+                <p class="mb-1" style="font-weight:bold;">Email:</p>
+                <p class="mb-1">@Session["Email"]</p>
+
+                <p class="mb-1" style="font-weight:bold;">Número de teléfono:</p>
+                <p class="mb-1">@Session["PhoneNumber"]</p>
+
+                <br />
+                <br />
+
+                <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("ProfileUser", "User", new { q = @Session["ActiveId"] })">
+                    <span class="text">Editar Perfil</span>
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>

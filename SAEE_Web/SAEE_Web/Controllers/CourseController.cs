@@ -1,4 +1,5 @@
-﻿using SAEE_Web.Entities;
+﻿using Newtonsoft.Json.Linq;
+using SAEE_Web.Entities;
 using SAEE_Web.Models;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,16 @@ namespace SAEE_Web.Controllers
     {
 
         CourseModel coursesModel =  new CourseModel();
-
-
-
+        EnrolledCoursesModel enrolledCoursesModel =  new EnrolledCoursesModel();
 
         [HttpGet]
         public ActionResult AllCourses()
         {
-            return View();
+            Session["SelectedWeekNum"] = 0; //Para iniciar en semana introduccion
+            int q = (int)Session["ActiveId"];
+            var datos = enrolledCoursesModel.EnrolledCoursesPerStudent(q);
+            return View(datos);
         }
-
 
         /**********************TABLE/STATUS/UPDATE/RECOVER**********************/
         [HttpGet]
@@ -53,7 +54,6 @@ namespace SAEE_Web.Controllers
             }
         }
 
-
         [HttpGet]
         public ActionResult RegisterCourse()
         {
@@ -82,7 +82,6 @@ namespace SAEE_Web.Controllers
             }
         }
 
-
         [HttpGet]
         public ActionResult UpdateCourse(long q)
         {
@@ -108,14 +107,11 @@ namespace SAEE_Web.Controllers
             }
         }
 
-
-
-
-
         [HttpGet]
-        public ActionResult SpecificCourse()
+        public ActionResult SpecificCourse(int q)
         {
-            return View();
+            var datos = enrolledCoursesModel.SpecificCourse(q);
+            return View(datos);
         }
     }
 }

@@ -11,16 +11,12 @@ namespace SAEE_API
 {
     using System;
     
-    public partial class SP_Login_Result
+    public partial class sp_helpdiagrams_Result
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string lastname { get; set; }
-        public string email { get; set; }
-        public string phoneNumber { get; set; }
-        public string password { get; set; }
-        public bool active { get; set; }
-        public byte[] profilePicture { get; set; }
-        public int userType { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

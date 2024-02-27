@@ -10,17 +10,14 @@
 namespace SAEE_API
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SP_Login_Result
+    public partial class sysdiagrams
     {
-        public int id { get; set; }
         public string name { get; set; }
-        public string lastname { get; set; }
-        public string email { get; set; }
-        public string phoneNumber { get; set; }
-        public string password { get; set; }
-        public bool active { get; set; }
-        public byte[] profilePicture { get; set; }
-        public int userType { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

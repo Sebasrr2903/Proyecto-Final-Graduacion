@@ -49,6 +49,17 @@ namespace SAEE_Web.Models
             }
         }
 
+        public string DeleteProfilePicture(UserEnt user)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = urlAPI + "DeleteProfilePicture";
+                JsonContent content = JsonContent.Create(user);
+                var resp = client.PutAsync(url, content).Result;
+                return resp.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
         public UserEnt UserData(long q)
         {
             using (var client = new HttpClient())

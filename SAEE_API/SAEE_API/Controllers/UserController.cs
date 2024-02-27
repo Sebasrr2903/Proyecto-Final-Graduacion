@@ -40,7 +40,6 @@ namespace SAEE_API.Controllers
                         user.Email,
                         user.PhoneNumber,
                         encryptPass, 
-                        user.ProfilePicture, 
                         user.UserType, 
                         user.Specialty, 
                         user.ExperienceYears
@@ -94,7 +93,7 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 0, "Login");
+                reports.ErrorReport(errorDescription, 1, "Login");
 
                 return null;
             }
@@ -125,7 +124,38 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 0, "ChangeStatusUser");
+                reports.ErrorReport(errorDescription, 1, "ChangeStatusUser");
+
+                return string.Empty;
+            }
+        }
+
+        [HttpPut]
+        [Route("DeleteProfilePicture")]
+        public string DeleteProfilePicture(UserEnt user)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    var data = (from x in context.Users
+                                where x.id == user.Id
+                                select x).FirstOrDefault();
+
+                    if (data != null)
+                    {
+                        data.profilePicture = null;
+                        context.SaveChanges();
+                    }
+
+                    reports.ActionReport("DeleteProfilePictureDone", user.activeUser, "DeleteProfilePicture");
+                    return "OK";
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 1, "DeleteProfilePicture");
 
                 return string.Empty;
             }
@@ -150,7 +180,7 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 0, "UserData");
+                reports.ErrorReport(errorDescription, 1, "UserData");
 
                 return null;
             }
@@ -176,6 +206,12 @@ namespace SAEE_API.Controllers
                         data.email = user.Email;
                         data.phoneNumber = user.PhoneNumber;
 
+                        if (user.ProfilePicture != null)
+                        {
+                            data.profilePicture = user.ProfilePicture;
+                        }
+
+
                         context.SaveChanges();
                     }
 
@@ -186,7 +222,7 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 0, "UpdateUser");
+                reports.ErrorReport(errorDescription, 1, "UpdateUser");
 
                 return string.Empty;
             }
@@ -234,7 +270,7 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 0, "RecoverPassword");
+                reports.ErrorReport(errorDescription, 1, "RecoverPassword");
 
                 return string.Empty;
             }
@@ -258,7 +294,7 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 0, "UsersList");
+                reports.ErrorReport(errorDescription, 1, "UsersList");
 
                 return new List<Users>();
             }
@@ -287,7 +323,7 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 0, "ListUsersTypes");
+                reports.ErrorReport(errorDescription, 1, "ListUsersTypes");
 
                 return new List<System.Web.Mvc.SelectListItem>();
             }
@@ -314,7 +350,7 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 0, "ListSpecialties");
+                reports.ErrorReport(errorDescription, 1, "ListSpecialties");
 
                 return new List<System.Web.Mvc.SelectListItem>();
             }

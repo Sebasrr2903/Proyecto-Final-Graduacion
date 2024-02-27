@@ -1,100 +1,46 @@
-﻿
+﻿@model List<SAEE_Web.Entities.EnrolledCoursesEnt>
+
 @{
     ViewBag.Title = "AllCourses";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<main class="features_list d-md-flex flex-wrap" style="display:flex; justify-content:space-around;">
+@if (Model.Count() > 0)
+{
+    <br />
+    <div class="contacts_form-header">
+        <h2 class="contacts_form-header_title">Mis Cursos</h2>
+    </div>
+    <hr />
+    <main class="features_list d-md-flex flex-wrap" style="display:flex; justify-content:center; max-width: 960px; margin: 0 auto;">
+        @foreach (var item in Model)
+        {
 
-    <div class="features_list-item col-md-4" data-order="1" data-aos="fade-up">
-        <div class="card" style="width: 18rem; padding: 20px;">
-            <div class="content">
-        
-                    <img class="card-img-top" src="~/Images/librosEj.jpg" alt="Ejemplo Curso">
-      
-                <div class="card_main">
-                    <h5 class="card_main-title">Español Básico I</h5>
-                    <p class="card_main-text">Bases del idioma español para principiantes.</p>
-                    <a href="@Url.Action("SpecificCourse", "Course")" id="btnCurso" class="btn btn-primary">Ir al curso</a>
+            <div class="features_list-item col-md-4" data-order="1" data-aos="fade-up" style="margin-bottom: 20px; margin-right: 60px;">
+                <div class="card" style="width: 18rem; padding: 20px; height:30rem;">
+                    <div class="content">
+
+                        <img class="card-img-top" src="~/Images/librosEj.jpg" alt="Ejemplo Curso">
+
+                        <div class="card_main">
+                            <h5 class="card_main-title">@item.CourseName</h5>
+                            <p class="card_main-text">@item.CourseDescription</p>
+                            <p class="card_main-text">@item.TechearName</p>
+                            <a href="@Url.Action("SpecificCourse", "Course", new { q = item.CourseId })" id="btnCurso" class="btn btn-primary">Ir al curso</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+        }
+    </main>
+    <br />
+}
+else
+{
+    <div style="display: flex; justify-content: center; align-items: center; height: 60vh;">
+        <div class="alert alert-info" role="alert" style="text-align: center; max-width: 960px; font-size: 15pt">
+            No hay cursos matriculados en este momento.
         </div>
     </div>
-
-    <div class="features_list-item col-md-4" data-order="2" data-aos="fade-up">
-        <div class="card" style="width: 18rem; padding: 20px;">
-            <div class="content">
-
-                    <img class="card-img-top" src="~/Images/librosEj.jpg" alt="Ejemplo Curso">
-                
-                <div class="card_main">
-                    <h5 class="card_main-title">Español Básico II</h5>
-                    <p class="card_main-text">Español intermedio para personas que dominen ligeramente el idioma.</p>
-                    <a href="@Url.Action("SpecificCourse", "Course")" id="btnCurso" class="btn btn-primary">Ir al curso</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="features_list-item col-md-4" data-order="3" data-aos="fade-up">
-        <div class="card" style="width: 18rem; padding: 20px;">
-            <div class="content">
-              
-                    <img class="card-img-top" src="~/Images/librosEj.jpg" alt="Ejemplo Curso">
-              
-                <div class="card_main">
-                    <h5 class="card_main-title">Español Básico III</h5>
-                    <p class="card_main-text">Idioma español avanzado, enfocado en prácticas conversacionales.</p>
-                    <a href="@Url.Action("SpecificCourse", "Course")" id="btnCurso" class="btn btn-primary">Ir al curso</a>
-                </div>
-            </div>
-        </div>
-    </div>  
-        <div class="features_list-item col-md-4" data-order="3" data-aos="fade-up">
-          <div class="card" style="width: 18rem; padding: 20px;">
-            <div class="content">
-              
-                    <img class="card-img-top" src="~/Images/librosEj.jpg" alt="Ejemplo Curso">
-              
-                <div class="card_main">
-                    <h5 class="card_main-title">Español Básico III</h5>
-                    <p class="card_main-text">Idioma español avanzado, enfocado en prácticas conversacionales.</p>
-                    <a href="@Url.Action("SpecificCourse", "Course")" id="btnCurso" class="btn btn-primary">Ir al curso</a>
-                </div>
-            </div>
-        </div>
-    </div>  
-       <div class="features_list-item col-md-4" data-order="3" data-aos="fade-up">
-           <div class="card" style="width: 18rem; padding: 20px;">
-               <div class="content">
-
-                   <img class="card-img-top" src="~/Images/librosEj.jpg" alt="Ejemplo Curso">
-
-                   <div class="card_main">
-                       <h5 class="card_main-title">Español Básico III</h5>
-                       <p class="card_main-text">Idioma español avanzado, enfocado en prácticas conversacionales.</p>
-                       <a href="@Url.Action("SpecificCourse", "Course")" id="btnCurso" class="btn btn-primary">Ir al curso</a>
-                   </div>
-               </div>
-           </div>
-      </div>  
-          <div class="features_list-item col-md-4" data-order="3" data-aos="fade-up">
-              <div class="card" style="width: 18rem; padding: 20px;">
-                 <div class="content">
-              
-                    <img class="card-img-top" src="~/Images/librosEj.jpg" alt="Ejemplo Curso">
-              
-                <div class="card_main">
-                    <h5 class="card_main-title">Español Básico III</h5>
-                    <p class="card_main-text">Idioma español avanzado, enfocado en prácticas conversacionales.</p>
-                    <a href="@Url.Action("SpecificCourse", "Course")" id="btnCurso" class="btn btn-primary">Ir al curso</a>
-                </div>
-            </div>
-        </div>
-    </div>  
-
-</main>
-
-
-<br />
-
+}

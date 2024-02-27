@@ -10,17 +10,15 @@
 namespace SAEE_API
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SP_Login_Result
+    public partial class ContentPerWeek
     {
         public int id { get; set; }
-        public string name { get; set; }
-        public string lastname { get; set; }
-        public string email { get; set; }
-        public string phoneNumber { get; set; }
-        public string password { get; set; }
-        public bool active { get; set; }
-        public byte[] profilePicture { get; set; }
-        public int userType { get; set; }
+        public int weekId { get; set; }
+        public string header { get; set; }
+        public string content { get; set; }
+    
+        public virtual Weeks Weeks { get; set; }
     }
 }

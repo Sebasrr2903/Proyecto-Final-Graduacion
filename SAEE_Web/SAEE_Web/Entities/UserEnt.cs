@@ -15,7 +15,7 @@ namespace SAEE_Web.Entities
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
         public bool Active { get; set; }
-        public string ProfilePicture { get; set; }
+        public byte[] ProfilePicture { get; set; }
         public int UserType { get; set; }
 
         //For Teacher

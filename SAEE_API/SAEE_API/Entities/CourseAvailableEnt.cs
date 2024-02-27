@@ -11,7 +11,8 @@ namespace SAEE_API.Entities
         public int TeacherId { get; set; }
         public int CourseId { get; set; }
         public int ScheduleId { get; set; }
-
+        public int EnrolledStudents { get; set; }
+        public int DurationInWeeks { get; set; }
         public bool Active { get; set; }
     }
 }

@@ -23,21 +23,24 @@ namespace SAEE_API.Controllers
             {
                 using (var context = new SAEEEntities())
                 {
-                    var data = (from course in context.CourseAvailable
-                                join courseN in context.Courses on course.courseId equals courseN.id
-                                join schedule in context.Schedule on course.scheduleId equals schedule.id
+                    var data = (from courseAvailable in context.CourseAvailable
+                                join courses in context.Courses on courseAvailable.courseId equals courses.id
+                                join schedule in context.Schedule on courseAvailable.scheduleId equals schedule.id
+                                join teacherData in context.Users on courseAvailable.teacherId equals teacherData.id
                                 select new
                                 {
-                                    CourseName = courseN.name,
-                                    CourseId = course.id,
-                                    CourseSchedule = schedule.day + " " + schedule.startTime + " " + schedule.endTime
+                                    CourseName = courses.name,
+                                    CourseId = courseAvailable.id,
+                                    CourseSchedule = schedule.day + " " + schedule.startTime + " " + schedule.endTime,
+                                    TechearName = teacherData.name + " " + teacherData.lastname,
+                                    AvailableQuota = courses.availableQuota - courseAvailable.enrolledStudents
                                 }).ToList();
 
                     var list = new List<System.Web.Mvc.SelectListItem>();
 
                     foreach (var x in data)
                     {
-                        list.Add(new System.Web.Mvc.SelectListItem { Value = x.CourseId.ToString(), Text = x.CourseName + " " + x.CourseSchedule});
+                        list.Add(new System.Web.Mvc.SelectListItem { Value = x.CourseId.ToString(), Text = x.CourseName + " || " + x.CourseSchedule + " || " + x.TechearName + " || " + x.AvailableQuota });
                     }
                     return list;
                 }
@@ -91,15 +94,43 @@ namespace SAEE_API.Controllers
             {
                 using (var context = new SAEEEntities())
                 {
-                    var enrolledCourses = new EnrolledCourses();
-                    enrolledCourses.courseId = enrolledCourse.CourseId;
-                    enrolledCourses.studentId = enrolledCourse.StudentId;
-                    
+                    var actualCount = (from x in context.CourseAvailable
+                                      where x.id == enrolledCourse.CourseId
+                                      select x).FirstOrDefault();
 
-                    context.EnrolledCourses.Add(enrolledCourses);
-                    context.SaveChanges();
+                    var totalCount = (from x in context.Courses
+                                       where x.id == actualCount.courseId
+                                       select x).FirstOrDefault();
 
-                    return "OK";
+                    var availableQuota = totalCount.availableQuota - actualCount.enrolledStudents;
+
+                    if (availableQuota > 0)
+                    {
+                        var enrolledCourses = new EnrolledCourses();
+                        enrolledCourses.courseId = enrolledCourse.CourseId;
+                        enrolledCourses.studentId = enrolledCourse.StudentId;
+
+
+                        context.EnrolledCourses.Add(enrolledCourses);
+                        context.SaveChanges();
+                        
+                        //Update EnrolledStudents in CourseAvailable
+                        var CourseAvailable = (from x in context.CourseAvailable
+                                           where x.id == enrolledCourse.CourseId
+                                           select x).FirstOrDefault();
+
+                        if (CourseAvailable != null)
+                        {
+                            CourseAvailable.enrolledStudents = CourseAvailable.enrolledStudents + 1;
+                            context.SaveChanges();
+                        }
+
+                        return "OK";
+                    }
+                    else
+                    {
+                        return "El curso no tiene cupo disponible.";
+                    }                  
                 }
             }
             catch (Exception e)
@@ -110,6 +141,82 @@ namespace SAEE_API.Controllers
                 return string.Empty;
             }
 
+        }
+
+        [HttpGet]
+        [Route("EnrolledCoursesPerStudent")]
+        public object EnrolledCoursesPerStudent(int q)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+
+                    return (from enrolledCourses in context.EnrolledCourses
+                                join courseAvailable in context.CourseAvailable on enrolledCourses.courseId equals courseAvailable.id
+                                join courses in context.Courses on courseAvailable.courseId equals courses.id
+                                join teacherData in context.Users on courseAvailable.teacherId equals teacherData.id
+                                where enrolledCourses.studentId == q
+                                select new
+                                {
+                                    CourseId = enrolledCourses.courseId, //Course Available
+                                    CourseOriginId = courseAvailable.courseId, //Courses
+                                    CourseName = courses.name,
+                                    CourseDescription = courses.description,
+                                    TechearName = teacherData.name + " " + teacherData.lastname
+                                }).ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 1, "EnrolledCoursesPerStudent");
+
+                return new List<EnrolledCoursesEnt>();
+            }
+        }
+
+        [HttpGet]
+        [Route("SpecificCourse")]
+        public object SpecificCourse(int q)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+
+                    return (from courseAvailable in context.CourseAvailable
+                            join week in context.Weeks on courseAvailable.id equals week.courseAvailableId
+                            join contentPerWeek in context.ContentPerWeek on week.id equals contentPerWeek.weekId
+                            join courses in context.Courses on courseAvailable.courseId equals courses.id
+                            join teacher in context.Users on courseAvailable.teacherId equals teacher.id
+                            join teacherData in context.TeacherData on courseAvailable.teacherId equals teacherData.teacherId
+                            join specialties in context.Specialties on teacherData.specialty equals specialties.id
+                            join schedule in context.Schedule on courseAvailable.scheduleId equals schedule.id
+                            where courseAvailable.id == q
+                            select new
+                            {
+                                CourseName = courses.name,
+                                CourseDescription = courses.description,
+                                TechearName = teacher.name + " " + teacher.lastname,
+                                WeekNum = week.weekNum,
+                                Header = contentPerWeek.header,
+                                Content = contentPerWeek.content,
+                                CourseSchedule = schedule.day + " " + schedule.startTime + " " + schedule.endTime,
+                                TeacherExperience = teacherData.experienceYears,
+                                TeacherSpecialty = specialties.description
+                            }).ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 1, "SpecificCourse");
+
+                return new List<EnrolledCoursesEnt>();
+            }
         }
 
     }
