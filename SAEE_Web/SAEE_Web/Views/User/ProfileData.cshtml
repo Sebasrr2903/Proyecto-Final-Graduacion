@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style="width: 80%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; ">
+<div style="width: 50%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; ">
     <br />
     <br />
     <div class="list-group">
@@ -25,7 +25,7 @@
                 <h2 class="mb-1">@Session["Name"] @Session["Lastname"]</h2>
             </div>
             
-            <a class="nav-item" style="color:#401ade; font-size:small; margin-right:65rem;" href="@Url.Action("DeleteProfilePicture", "User", new { q = @Session["ActiveId"] })" >Eliminar foto</a>
+            <a class="nav-item" style="color:#401ade; font-size:small; display:flex; justify-content:start; margin-left:2.5rem;" href="@Url.Action("DeleteProfilePicture", "User", new { q = @Session["ActiveId"] })" >Eliminar foto</a>
         </div>
 
         <div class="list-group-item list-group-item-action">
@@ -56,7 +56,6 @@
                 <p class="mb-1" style="font-weight:bold;">Número de teléfono:</p>
                 <p class="mb-1">@Session["PhoneNumber"]</p>
 
-                <br />
                 <br />
 
                 <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("ProfileUser", "User", new { q = @Session["ActiveId"] })">
