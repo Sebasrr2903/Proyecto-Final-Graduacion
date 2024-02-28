@@ -11,7 +11,6 @@
  * @support         help@merkulov.design
  **/
 [data-aos][data-aos][data-aos-duration="50"], body[data-aos-duration="50"] [data-aos] {
-
     -webkit-transition-duration: 50ms;
     -o-transition-duration: 50ms;
     transition-duration: 50ms
@@ -1192,7 +1191,7 @@
     }
 
         html:not(.no-js) [data-aos^=fade][data-aos^=fade].aos-animate {
-            padding:1%;
+            padding: 1%;
             opacity: 1;
             -webkit-transform: none;
             -ms-transform: none;
@@ -1659,8 +1658,6 @@
 
 .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
     width: 100%;
-
-
 }
 
 @media (min-width:576px) {
@@ -7447,7 +7444,7 @@
 
 .custom-select-option {
     padding: 8px 18px;
-    background: #f9d423;
+    background: linear-gradient(111.41deg,#ff8b67 24.85%,#ff0844 95.39%);
     cursor: pointer;
     -webkit-transition: .3s ease-in-out;
     -o-transition: .3s ease-in-out;

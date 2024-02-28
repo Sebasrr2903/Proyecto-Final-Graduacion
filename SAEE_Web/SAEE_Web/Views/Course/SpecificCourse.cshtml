@@ -1,51 +1,140 @@
-﻿
+﻿@model List<SAEE_Web.Entities.EnrolledCoursesEnt>
+
 @{
     ViewBag.Title = "SpecificCourse";
-    Layout = "~/Views/Shared/_Layout_Course.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style="width: 70%; margin-left: auto; margin-right:50rem; text-align: center;">
+@foreach (var item in Model)
+{
+    if (item.WeekNum == (int)Session["SelectedWeekNum"])
+    {
+        <br />
+        <div style="margin-left:15%;">
+            <h3> @item.CourseName || @item.CourseSchedule</h3>
+        </div>
+    }
+}
+
+
+<div style="width: 70%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; ">
     <br />
     @* SECONDARY NAV *@
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="display:flex; justify-content:flex-start;">
-        @* Estas semanas se cargarán dinamicamente según tenga el curso accesado *@
-        @* Tienen varios saltos "quemados" para orden pero se hará correctamente al cargarlos dinamicamente *@
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="navbar-brand" href="#">Introducción</a> &nbsp;&nbsp;&nbsp;
-        <a class="navbar-brand" href="#">Semana 1</a> &nbsp;&nbsp;&nbsp;
-        <a class="navbar-brand" href="#">Semana 2</a> &nbsp;&nbsp;&nbsp;
-        <a class="navbar-brand" href="#">Semana 3</a> &nbsp;&nbsp;&nbsp;
-        <a class="navbar-brand" href="#">Semana 4</a> &nbsp;&nbsp;&nbsp;
-        <a class="navbar-brand" href="#">Semana 5</a> &nbsp;&nbsp;&nbsp;
+        @foreach (var item in Model)
+        {
+            if (item.WeekNum == 0)
+            {
+                <a class="navbar-brand choicebtn" href="#" onclick="updateSessionWeek(0)">Introducción</a>
+            }
+            else
+            {
+                <a class="navbar-brand choicebtn" href="#" onclick="updateSessionWeek(@item.WeekNum)">Semana @item.WeekNum</a>
+            }
+        }
     </nav>
 
-    @* Content (tambien será cargado dinamicamente según cada curso)*@
-    <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action active">
-            <div class="d-flex w-100 justify-content-between">
-                <h2 class="mb-1">Curso español ejemplo</h2>
-            </div>
-            <p class="mb-1">Bases del idioma español para principiantes.</p>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-                <h4 class="mb-1">Profesor Fernando Pérez</h4>
-            </div>
-            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
-                <p class="mb-1" style="font-weight:bold;">Acerca del profesor:</p>
-                <p class="mb-1">Licenciado en español</p>
-                <p class="mb-1">10 años de experiencia</p>
-                <p class="mb-1">Multiples escuelas públicas y privadas.</p>
-            </div>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-                <h4 class="mb-1">Información del curso:</h4>
-            </div>
-            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
-                <p class="mb-1">Clases todas las semanas de 6:00pm a 9:00pm</p>
-                <p class="mb-1">Programa del curso (enlace)</p> @*Seran descargas*@
-                <p class="mb-1">Indicaciones Proyecto final</p> @*Seran descargas*@
-            </div>
-        </a>
+    @* Content *@
+    <div id="content-container">
+        @foreach (var item in Model)
+        {
+            if (item.WeekNum == (int)Session["SelectedWeekNum"])
+            {
+                <div class="list-group">
+                    <div class="list-group-item list-group-item-action active">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h2 class="mb-1">@item.Header</h2>
+                        </div>
+                        <p class="mb-1"></p>
+                    </div>
+                    @if (item.WeekNum == 0)
+                    {
+
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h4 class="mb-1">@item.TechearName</h4>
+                            </div>
+                            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
+                                <p class="mb-1" style="font-weight:bold;">Acerca del profesor:</p>
+                                <p class="mb-1">@item.TeacherSpecialty</p>
+                                <p class="mb-1">@item.TeacherExperience años de experiencia</p>
+                            </div>
+                        </div>
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h4 class="mb-1">Información del curso:</h4>
+                            </div>
+                            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
+                                <p class="mb-1">@item.CourseDescription</p>
+                                <p class="mb-1">Horario: @item.CourseSchedule</p>
+                                <p class="mb-1">Programa del curso (Ejemplo Descargas)</p> @*Seran descargas*@
+                                <p class="mb-1">Indicaciones Proyecto final (Ejemplo Descargas)</p> @*Seran descargas*@
+                            </div>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h4 class="mb-1">Contenido:</h4>
+                            </div>
+                            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
+                                <p class="mb-1">@item.Content</p>
+                            </div>
+                        </div>
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h4 class="mb-1">Descargas:</h4>
+                            </div>
+                            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
+                                <p class="mb-1">Programa del curso (Ejemplo Descargas)</p> @*Seran descargas*@
+                                <p class="mb-1">Indicaciones Proyecto final (Ejemplo Descargas)</p> @*Seran descargas*@
+                            </div>
+                        </div>
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h4 class="mb-1">Tareas:</h4>
+                            </div>
+                            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
+                                <p class="mb-1">Subir tarea 1 (Ejemplo)</p>
+                                <p class="mb-1">Subir tarea 1 (Ejemplo)</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        }
     </div>
 </div>
+
+<script>
+    function updateSessionWeek(weekNum) {
+    fetch('@Url.Action("UpdateSessionWeek", "Enrolled")', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ key: 'SelectedWeekNum', value: weekNum })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error('There was a problem with your fetch operation:', error);
+    });
+    }
+
+
+    // Función para recargar la página
+    function reloadPage() {
+        location.reload();
+    }
+    var reloadButtons = document.getElementsByClassName('choicebtn');
+    for (var i = 0; i < reloadButtons.length; i++) {
+        reloadButtons[i].addEventListener('click', reloadPage);
+    }
+</script>

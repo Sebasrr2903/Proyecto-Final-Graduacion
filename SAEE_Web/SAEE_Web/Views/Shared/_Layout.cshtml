@@ -10,11 +10,11 @@
         <div class="container d-flex flex-wrap justify-content-between align-items-center">
             <div class="logo header_logo">
                 <a class="d-inline-flex align-items-center" href="@Url.Action("Index", "Home")">
-                    <span class="logo_picture">
+                    <span class="logo_picture"style="color:aqua;">
                         <img src="~/Images/ELEC.png" alt="ELEC" />
                     </span>
                     <span class="text">
-                        <span class="brand">ELEC</span>
+                        <span class="brand" style="color: rgb(48, 120, 252); ">ELEC</span>
                         <span class="text_secondary">Spanish School</span>
                     </span>
                 </a>
@@ -29,61 +29,82 @@
                 <span class="line"></span>
             </button>
             <nav class="header_nav collapse" id="headerMenu">
-                @* En toda esta lista se deben agregar validaciones para decidir que mostrar según su sesion y rol *@
                 <ul class="header_nav-list">
                     <li class="header_nav-list_item">
                         <a class="nav-item" href="@Url.Action("Index", "Home")" data-page="home">Inicio</a>
                     </li>
-                    <li class="header_nav-list_item dropdown">
-                        <a class="nav-link nav-item dropdown-toggle d-inline-flex align-items-center"
-                           href="@Url.Action("AllCourses", "Course")"
-                           data-bs-toggle="collapse"
-                           data-bs-target="#coursesMenu"
-                           data-trigger="dropdown"
-                           aria-expanded="false"
-                           aria-controls="coursesMenu"
-                           data-page="courses">
-                            Todos los cursos
-                            <i class="icon-angle-down icon"></i>
-                        </a>
-                        <div class="dropdown-menu collapse" id="coursesMenu">
-                            <ul class="dropdown-list">
-                                @* Acá se cargarían dinamicamente los cursos que el estudiante tenga activos *@
-                                <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 1</a>
-                                </li>
-                                <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="course" href="~/Template/course.html">Curso Ejemplo 2</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="header_nav-list_item">
-                        <a class="nav-item" href="~/Template/about.html" data-page="about">Preguntas frecuentes</a>
-                    </li>
-                    <li class="header_nav-list_item">
-                        <a class="nav-item" href="@Url.Action("UsersTable","User")" data-page="about">Estudiantes(admin)</a>
-                    </li>
-                    <li class="header_nav-list_item">
-                        <a class="nav-item" href="@Url.Action("GeneralReport","Report")" data-page="about">Reportes(admin)</a>
-                    </li>
-                    <li class="header_nav-list_item">
-                        <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("Login","User")">
-                            <span class="text">Iniciar Sesión</span>
-                        </a>
-                    </li>
+                    @if (Session["ActiveId"] != null)
+                    {
+                        if ((int)Session["UserType"] == 1) //Admin
+                        {
+
+                            <li class="header_nav-list_item">
+                                <a class="nav-item" href="@Url.Action("UsersTable", "User")" data-page="about">Estudiantes</a>
+                            </li>
+                            <li class="header_nav-list_item">
+                                <a class="nav-item" href="@Url.Action("GeneralReport", "Report")" data-page="about">Reportes</a>
+                            </li>
+
+                            <li class="header_nav-list_item">
+                                <a class="nav-item" href="@Url.Action("CoursesTable", "Course")" data-page="about">Cursos</a>
+                            </li>
+                        }
+                        else if ((int)Session["UserType"] == 3) //Student
+                        {
+                            <li class="header_nav-list_item">
+                                <a class="nav-item" href="@Url.Action("AllCourses", "Course")" data-page="about">Mis Cursos</a>
+                            </li>
+                        }
+                        else //Teacher
+                        {
+                            <li class="header_nav-list_item">
+                                <a class="nav-item" href="#" data-page="about">Mis Cursos</a>
+                            </li>
+                        }
+                        <li class="header_nav-list_item">
+                            <a class="nav-item" style="color:#401ade; font-size:larger;" href="@Url.Action("ProfileData", "User")" data-page="about">@Session["Name"]</a>
+                        </li>
+
+                        <li class="header_nav-list_item">
+                            @if (Session["ProfileImageB64"] == null)
+                            {
+                                <img class="img-xs rounded-circle" src="https://cdn-icons-png.flaticon.com/512/2550/2550383.png" style="max-width:3rem" alt="profilePicture">
+                            }
+                            else
+                            {
+                                <img class="img-xs rounded-circle" src="data:image/jpeg;base64,@Session["ProfileImageB64"]" style="max-width:3rem;" alt="profilePicture">
+                            }
+                        </li>
+
+                        <li class="header_nav-list_item">
+                            <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("Logout","User")">
+                                <span class="text">Cerrar Sesión</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="header_nav-list_item">
+                            <a class="nav-item" href="#" data-page="about">Preguntas frecuentes</a>
+                        </li>
+                        <li class="header_nav-list_item">
+                            <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("Login","User")">
+                                <span class="text">Iniciar Sesión</span>
+                            </a>
+                        </li>
+                    }
                 </ul>
             </nav>
         </div>
     </header>
     <!-- homepage content start -->
-    <main style="margin: 20px auto; max-width: 1000px; flex-grow: 1;">
+
 
 
         @RenderBody()
 
 
-    </main>
+  
 
     @Html.Partial("_FooterPartial")
 

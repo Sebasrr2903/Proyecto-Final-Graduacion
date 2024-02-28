@@ -1,0 +1,86 @@
+﻿@model SAEE_Web.Entities.CoursesEnt
+
+@{
+    ViewBag.Title = "UpdateUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="contacts">
+    <section class="contacts_form">
+        <div class="container">
+            <div class="contacts_form-header">
+                <h2 class="contacts_form-header_title">Actualizar Usuario</h2>
+            </div>
+            @if (ViewBag.BoxMessage != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align:center">
+                    @ViewBag.BoxMessage
+                </div>
+            }
+
+            @using (Html.BeginForm("UpdateCourse", "Course", FormMethod.Post, new { @class = "contacts_form-form", id = "updateForm" }))
+            {
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Nombre:</label>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Nombre" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Apellidos:</label>
+                    @Html.TextBoxFor(m => m.Description, new { @class = "field required", @type = "text", @placeholder = "Apellidos" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Email:</label>
+                    @Html.TextBoxFor(m => m.AvailableQuota, new { @class = "field required", @type = "number", @placeholder = "Email" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Estado:</label>
+                    @Html.DropDownListFor(m => m.Active, new SelectList(new[] {
+                        new { Value = true, Text = "Activo" },
+                        new { Value = false, Text = "Inactivo" }
+                    }, "Value", "Text"), "Seleccione", new { @class = "form-control" })
+                </div>
+
+                <div class="contacts_form-form_footer">
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">Actualizar</button>
+                </div>
+            }
+        </div>
+    </section>
+</main>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header"  style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); color:#fff;">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirmación de Actualización</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de actualizar el usuario?</p>
+            </div>
+            <div class="modal-footer"  style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" style="background-color: rgb(127, 167, 118); color: #ffff; "  onclick="submitForm()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showConfirmation() {
+        $('#confirmationModal').modal('show');
+    }
+
+    function submitForm() {
+        $('#updateForm').submit();
+    }
+</script>
+
