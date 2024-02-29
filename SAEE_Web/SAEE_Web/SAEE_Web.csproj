@@ -151,12 +151,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CourseTasksController.cs" />
     <Compile Include="Controllers\CourseAvailableController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\EnrolledController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Entities\CoursesTasksEnt.cs" />
     <Compile Include="Entities\CourseAvailableEnt.cs" />
     <Compile Include="Entities\CoursesEnt.cs" />
     <Compile Include="Entities\EnrolledCoursesEnt.cs" />
@@ -166,6 +168,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CourseTasksModel.cs" />
     <Compile Include="Models\CourseAvailableModel.cs" />
     <Compile Include="Models\CourseModel.cs" />
     <Compile Include="Models\EnrolledCoursesModel.cs" />
@@ -437,6 +440,7 @@
     <Content Include="Views\Enrolled\EnrolledStudent.cshtml" />
     <Content Include="Views\Shared\_Alerts.cshtml" />
     <Content Include="Views\User\ProfileData.cshtml" />
+    <Content Include="Views\CourseTasks\RegisterCoursetasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

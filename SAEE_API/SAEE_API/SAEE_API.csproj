@@ -172,6 +172,7 @@
     <Compile Include="ContentPerWeek.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\CourseTasksController.cs" />
     <Compile Include="Controllers\CourseAvailableController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\EnrolledCoursesController.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="EnrolledCourses.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\CoursesTasksEnt.cs" />
     <Compile Include="Entities\CourseAvailableEnt.cs" />
     <Compile Include="Entities\CoursesEnt.cs" />
     <Compile Include="Entities\EnrolledCoursesEnt.cs" />
@@ -231,16 +233,7 @@
     <Compile Include="Specialties.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="SP_Login_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="TeacherData.cs">

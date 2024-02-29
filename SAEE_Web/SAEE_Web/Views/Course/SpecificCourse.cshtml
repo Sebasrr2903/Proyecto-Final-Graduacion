@@ -67,6 +67,9 @@
                             <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
                                 <p class="mb-1">@item.CourseDescription</p>
                                 <p class="mb-1">Horario: @item.CourseSchedule</p>
+                                <a class="btn btn--rAdd" style="display:flex; height:40px" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
+                                    <span class="text">Agregar Tarea</span>
+                                </a>
                                 <p class="mb-1">Programa del curso (Ejemplo Descargas)</p> @*Seran descargas*@
                                 <p class="mb-1">Indicaciones Proyecto final (Ejemplo Descargas)</p> @*Seran descargas*@
                             </div>
@@ -97,6 +100,11 @@
                                 <h4 class="mb-1">Tareas:</h4>
                             </div>
                             <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
+                                <div style="text-align:left">
+                                    <a class="btn btn--rAdd" style="display:flex; height:40px" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
+                                        <span class="text">Agregar Tarea</span>
+                                    </a>
+                                </div>
                                 <p class="mb-1">Subir tarea 1 (Ejemplo)</p>
                                 <p class="mb-1">Subir tarea 1 (Ejemplo)</p>
                             </div>

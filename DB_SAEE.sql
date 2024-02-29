@@ -87,6 +87,7 @@ CREATE TABLE [dbo].[CourseTasks](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[name] [varchar](50) NOT NULL,
 	[description] [varchar](250) NOT NULL,
+	[File] [varbinary](max) NULL,
 	[deadline] [datetime] NOT NULL,
 	[weekId] [int] NOT NULL,
  CONSTRAINT [PK_CourseTasks] PRIMARY KEY CLUSTERED 
