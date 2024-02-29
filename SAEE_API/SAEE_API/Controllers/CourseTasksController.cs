@@ -23,15 +23,16 @@ namespace SAEE_API.Controllers
             {
                 using (var context = new SAEEEntities())
                 {
+                    //Agregar validacioines para que no se pueda subir 2 veces la tarea sino más bien se edite o elimine
                     var tasks = new CourseTasks();
                     tasks.name = courseTasks.Name;
                     tasks.description = courseTasks.Description;
                     tasks.file = courseTasks.File;
-                    tasks.deadline = DateTime.Now; 
+                    tasks.deliveredOn = DateTime.Now;
+                    tasks.assignmentId = courseTasks.AssignmentId;
+                    tasks.studentId = courseTasks.activeUser; 
 
-
-
-                   context.CourseTasks.Add(tasks);
+                    context.CourseTasks.Add(tasks);
                     context.SaveChanges();
 
                     return "OK";
@@ -43,6 +44,39 @@ namespace SAEE_API.Controllers
                 reports.ErrorReport(errorDescription, courseTasks.activeUser, "RegisterCourseTasks");
 
                 return string.Empty;
+            }
+        }
+
+        [HttpGet]
+        [Route("SpecificAssignment")]
+        public object SpecificAssignment(int q)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+
+                    return (from week in context.Weeks
+                            join courseAssignments in context.CourseAssignments on week.id equals courseAssignments.weekId
+                            where week.id == q
+                            select new
+                            {
+                                AssignmentId = courseAssignments.id,
+                                AssignmentName = courseAssignments.name,
+                                AssignmentDescription = courseAssignments.indications,
+                                AssignmentDeadline = courseAssignments.deadline,
+                                AssignmentActive = courseAssignments.active,
+                                AssignmentWeek = courseAssignments.weekId
+                            }).ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 1, "SpecificAssignment");
+
+                return new List<EnrolledCoursesEnt>();
             }
         }
     }

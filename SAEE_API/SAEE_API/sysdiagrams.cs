@@ -12,14 +12,12 @@ namespace SAEE_API
     using System;
     using System.Collections.Generic;
     
-    public partial class ErrorReport
+    public partial class sysdiagrams
     {
-        public int id { get; set; }
-        public System.DateTime date { get; set; }
-        public int userId { get; set; }
-        public string errorDescription { get; set; }
-        public string origin { get; set; }
-    
-        public virtual Users Users { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

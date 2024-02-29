@@ -198,6 +198,7 @@ namespace SAEE_API.Controllers
                             where courseAvailable.id == q
                             select new
                             {
+                                WeekId = week.id,
                                 CourseName = courses.name,
                                 CourseDescription = courses.description,
                                 TechearName = teacher.name + " " + teacher.lastname,

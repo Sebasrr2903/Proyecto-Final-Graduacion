@@ -17,6 +17,7 @@ namespace SAEE_Web.Entities
         public string TechearName { get; set; }
         public int CourseOriginId { get; set; }
 
+        public int WeekId { get; set; }
         public int WeekNum { get; set; }
         public string Header { get; set; }
         public string Content { get; set; }
@@ -24,5 +25,6 @@ namespace SAEE_Web.Entities
 
         public int TeacherExperience { get; set; }
         public string TeacherSpecialty { get; set; }
+
     }
 }

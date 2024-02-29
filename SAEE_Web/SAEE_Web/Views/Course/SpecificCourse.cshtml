@@ -1,11 +1,11 @@
-﻿@model List<SAEE_Web.Entities.EnrolledCoursesEnt>
+﻿@model SAEE_Web.Entities.ViewModelCourse_Task
 
 @{
     ViewBag.Title = "SpecificCourse";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@foreach (var item in Model)
+@foreach (var item in Model.EnrolledCourses)
 {
     if (item.WeekNum == (int)Session["SelectedWeekNum"])
     {
@@ -21,22 +21,22 @@
     <br />
     @* SECONDARY NAV *@
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="display:flex; justify-content:flex-start;">
-        @foreach (var item in Model)
+        @foreach (var item in Model.EnrolledCourses)
         {
             if (item.WeekNum == 0)
             {
-                <a class="navbar-brand choicebtn" href="#" onclick="updateSessionWeek(0)">Introducción</a>
+                <a class="navbar-brand choicebtn" href="#" onclick="updateSessionWeek(0, @item.WeekId, 0)">Introducción</a>
             }
             else
             {
-                <a class="navbar-brand choicebtn" href="#" onclick="updateSessionWeek(@item.WeekNum)">Semana @item.WeekNum</a>
+                <a class="navbar-brand choicebtn" href="#" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)">Semana @item.WeekNum</a>
             }
         }
     </nav>
 
     @* Content *@
     <div id="content-container">
-        @foreach (var item in Model)
+        @foreach (var item in Model.EnrolledCourses)
         {
             if (item.WeekNum == (int)Session["SelectedWeekNum"])
             {
@@ -49,6 +49,7 @@
                     </div>
                     @if (item.WeekNum == 0)
                     {
+                        Session["SelectedWeekId"] = item.WeekId;
 
                         <div class="list-group-item list-group-item-action">
                             <div class="d-flex w-100 justify-content-between">
@@ -60,6 +61,7 @@
                                 <p class="mb-1">@item.TeacherExperience años de experiencia</p>
                             </div>
                         </div>
+
                         <div class="list-group-item list-group-item-action">
                             <div class="d-flex w-100 justify-content-between">
                                 <h4 class="mb-1">Información del curso:</h4>
@@ -67,11 +69,41 @@
                             <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
                                 <p class="mb-1">@item.CourseDescription</p>
                                 <p class="mb-1">Horario: @item.CourseSchedule</p>
-                                <a class="btn btn--rAdd" style="display:flex; height:40px" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
-                                    <span class="text">Agregar Tarea</span>
-                                </a>
                                 <p class="mb-1">Programa del curso (Ejemplo Descargas)</p> @*Seran descargas*@
                                 <p class="mb-1">Indicaciones Proyecto final (Ejemplo Descargas)</p> @*Seran descargas*@
+                            </div>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h4 class="mb-1">Tareas:</h4>
+                            </div>
+                            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
+                                @if (Model.CourseAssignments.Count() <= 0)
+                                {
+                                    //Permitirle al profesor agregar una tarea acá
+                                    <p class="mb-1">No hay tareas pendientes.</p>
+                                }
+                                else
+                                {
+                                    foreach (var assignment in Model.CourseAssignments)
+                                    {
+                                        if (assignment.AssignmentWeek == item.WeekId)
+                                        {
+                                            //Permitirle al profesor editar o inactivar una tarea acá
+                                            //Se puede validar que sea profesor con la variable de session del rol
+                                            //Tambien acá se puede validar que a estudiantes solo se le muestren las tareas activas
+                                            <p class="mb-1">Subir @assignment.AssignmentName</p>
+
+                                            <div style="text-align:left">
+                                                <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
+                                                    <span class="text">Agregar Tarea</span>
+                                                </a>
+                                            </div>
+                                            <br />
+                                        }
+                                    }
+                                }
                             </div>
                         </div>
 
@@ -86,6 +118,7 @@
                                 <p class="mb-1">@item.Content</p>
                             </div>
                         </div>
+
                         <div class="list-group-item list-group-item-action">
                             <div class="d-flex w-100 justify-content-between">
                                 <h4 class="mb-1">Descargas:</h4>
@@ -95,18 +128,37 @@
                                 <p class="mb-1">Indicaciones Proyecto final (Ejemplo Descargas)</p> @*Seran descargas*@
                             </div>
                         </div>
+
                         <div class="list-group-item list-group-item-action">
                             <div class="d-flex w-100 justify-content-between">
                                 <h4 class="mb-1">Tareas:</h4>
                             </div>
                             <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
-                                <div style="text-align:left">
-                                    <a class="btn btn--rAdd" style="display:flex; height:40px" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
-                                        <span class="text">Agregar Tarea</span>
-                                    </a>
-                                </div>
-                                <p class="mb-1">Subir tarea 1 (Ejemplo)</p>
-                                <p class="mb-1">Subir tarea 1 (Ejemplo)</p>
+                                @if (Model.CourseAssignments.Count() <= 0)
+                                {
+                                    //Permitirle al profesor agregar una tarea acá
+                                    <p class="mb-1">No hay tareas pendientes.</p>
+                                }
+                                else 
+                                { 
+                                    foreach (var assignment in Model.CourseAssignments)
+                                    {
+                                        if (assignment.AssignmentWeek == item.WeekId)
+                                        {
+                                            //Permitirle al profesor editar o inactivar una tarea acá
+                                            //Se puede validar que sea profesor con la variable de session del rol
+                                            //Tambien acá se puede validar que a estudiantes solo se le muestren las tareas activas
+                                            <p class="mb-1">Subir @assignment.AssignmentName</p>
+
+                                            <div style="text-align:left">
+                                                <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
+                                                    <span class="text">Agregar Tarea</span>
+                                                </a>
+                                            </div>
+                                            <br />
+                                        }
+                                    }
+                                }
                             </div>
                         </div>
                     }
@@ -117,13 +169,17 @@
 </div>
 
 <script>
-    function updateSessionWeek(weekNum) {
+    function updateSessionWeek(weekNum, weekId, assignmentId) {
     fetch('@Url.Action("UpdateSessionWeek", "Enrolled")', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ key: 'SelectedWeekNum', value: weekNum })
+        body: JSON.stringify({
+            weekNum: weekNum,
+            weekId: weekId, 
+            assignmentId: assignmentId
+        })
     })
     .then(response => {
         if (!response.ok) {

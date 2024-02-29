@@ -17,6 +17,8 @@ namespace SAEE_API.Entities
         public string TechearName { get; set; }
         public int CourseOriginId { get; set; }
 
+        public int AssignmentId { get; set; }
+        public int WeekId { get; set; }
         public int WeekNum { get; set; }
         public string Header { get; set; }
         public string Content { get; set; }

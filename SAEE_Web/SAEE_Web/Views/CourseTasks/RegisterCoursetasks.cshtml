@@ -12,38 +12,43 @@
                 <h2 class="contacts_form-header_title">Enviar tarea</h2>
             </div>
             <hr />
-            @if (ViewBag.BoxMessage != null)
+
+            @if (ViewBag.BoxMessageDone != null)
+            {
+                <div class="alert alert-info" role="alert" style="text-align:center">
+                    @ViewBag.BoxMessageDone
+                </div>
+            }
+            else if(ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-danger" role="alert" style="text-align:center">
-                    @ViewBag.BoxMessage<br /> 
+                    @ViewBag.BoxMessage
                 </div>
-
             }
+
             <div class="back-button-container">
                 <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Volver
                 </button>
             </div>
 
-            @using (Html.BeginForm("RegisterCourseTasks", "CourseTasks", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
+            @using (Html.BeginForm("RegisterCourseTasks", "CourseTasks", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm", @enctype = "multipart/form-data" }))
             {
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Nombre de la Tarea:</label>
-                    @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Descripcion" })
+                    <label style="margin-right: 25rem;">Nombre de la Tarea:</label>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Nombre de la Tarea" })
                 </div>
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Archivo:</label>
-                    <input type="file"  name="FileNew"  class="field requiered"  placeholder="Archivo" />    
-                  
+                    <input type="file" id="FileNew" name="FileNew" class="field requiered" placeholder="Archivo" />
                 </div>
-
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Descripcion:</label>
-                    @Html.TextBoxFor(m => m.Description, new { @class = "field required", @type = "text", @placeholder = "Descripcion" })
+                    <label style="margin-right: 53rem;">Descripción:</label>
+                    @Html.TextBoxFor(m => m.Description, new { @class = "field required", @type = "text", @placeholder = "Descripción" })
                 </div>
-               
+
                 <hr />
                 <div class="contacts_form-form_footer">
                     <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">REGISTRAR</button>

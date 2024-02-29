@@ -56,9 +56,11 @@ namespace SAEE_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateSessionWeek(string key, int value)
+        public ActionResult UpdateSessionWeek(int weekNum, int weekId, int assignmentId)
         {
-            Session["SelectedWeekNum"] = value;
+            Session["SelectedWeekNum"] = weekNum;
+            Session["SelectedWeekId"] = weekId;
+            Session["SelectedAssignmentId"] = assignmentId;
             return View();
         }
     }

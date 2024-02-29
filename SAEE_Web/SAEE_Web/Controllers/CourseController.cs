@@ -14,13 +14,17 @@ namespace SAEE_Web.Controllers
 
         CourseModel coursesModel =  new CourseModel();
         EnrolledCoursesModel enrolledCoursesModel =  new EnrolledCoursesModel();
+        CourseTasksModel courseTasksModel = new CourseTasksModel();
 
         [HttpGet]
         public ActionResult AllCourses()
         {
             Session["SelectedWeekNum"] = 0; //Para iniciar en semana introduccion
+            Session["SelectedWeekId"] = 0;
+
             int q = (int)Session["ActiveId"];
             var datos = enrolledCoursesModel.EnrolledCoursesPerStudent(q);
+            
             return View(datos);
         }
 
@@ -110,8 +114,19 @@ namespace SAEE_Web.Controllers
         [HttpGet]
         public ActionResult SpecificCourse(int q)
         {
-            var datos = enrolledCoursesModel.SpecificCourse(q);
-            return View(datos);
+            var enrolledCoursesList = enrolledCoursesModel.SpecificCourse(q);
+
+            int assignnmentId = (int)Session["SelectedWeekId"];
+            var courseAssignmentsList = courseTasksModel.SpecificAssignment(assignnmentId);
+
+            var viewModel = new ViewModelCourse_Task
+            {
+                EnrolledCourses = enrolledCoursesList,
+                CourseAssignments = courseAssignmentsList
+            };
+
+            return View(viewModel);
+
         }
     }
 }

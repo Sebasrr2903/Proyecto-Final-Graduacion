@@ -12,21 +12,23 @@ namespace SAEE_API
     using System;
     using System.Collections.Generic;
     
-    public partial class TeacherData
+    public partial class CourseAssignments
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TeacherData()
+        public CourseAssignments()
         {
-            this.CourseAvailable = new HashSet<CourseAvailable>();
+            this.CourseTasks = new HashSet<CourseTasks>();
         }
     
-        public int teacherId { get; set; }
-        public int specialty { get; set; }
-        public int experienceYears { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public string indications { get; set; }
+        public System.DateTime deadline { get; set; }
+        public bool active { get; set; }
+        public int weekId { get; set; }
     
+        public virtual Weeks Weeks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CourseAvailable> CourseAvailable { get; set; }
-        public virtual Specialties Specialties { get; set; }
-        public virtual Users Users { get; set; }
+        public virtual ICollection<CourseTasks> CourseTasks { get; set; }
     }
 }

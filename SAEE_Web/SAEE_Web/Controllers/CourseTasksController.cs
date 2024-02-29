@@ -13,15 +13,11 @@ namespace SAEE_Web.Controllers
 {
     public class CourseTasksController : Controller
     {
-
-
-
-        CourseTasksModel CourseTaskssModel = new CourseTasksModel();
+        CourseTasksModel courseTasksModel = new CourseTasksModel();
         
         [HttpGet]
         public ActionResult RegisterCourseTasks()
         {
-
             return View();
         }
 
@@ -30,46 +26,41 @@ namespace SAEE_Web.Controllers
         {
             courseTasks.activeUser = (int)Session["ActiveId"]; // Para la acción de registro
 
-            var resp = CourseTaskssModel.RegisterCourseTasks(courseTasks);
+            courseTasks.AssignmentId = (int)Session["SelectedAssignmentId"];
+            courseTasks.StudentId = (int)Session["ActiveId"];
 
-            if (resp == "OK" && FileNew != null && FileNew.ContentLength > 0)
+            var resp = "";
+
+            if (FileNew != null && FileNew.ContentLength > 0)
             {
-                try
+                byte[] fileData;
+                using (BinaryReader reader = new BinaryReader(FileNew.InputStream))
                 {
-                    // Leer el contenido del archivo en un byte array
-                    byte[] fileData;
-                    using (BinaryReader reader = new BinaryReader(FileNew.InputStream))
-                    {
-                        fileData = reader.ReadBytes(FileNew.ContentLength);
-                    }
-
-                    // Asignar los datos del archivo al objeto de la tarea del curso
-                    courseTasks.File = fileData;
-
-                    // Guardar la tarea del curso (incluyendo el archivo) en la base de datos
-                    var result = CourseTaskssModel.RegisterCourseTasks(courseTasks);
-
-                    if (result == "OK")
-                    {
-                        return RedirectToAction("SpecificCourse", "Course");
-                    }
-                    else
-                    {
-                        ViewBag.BoxMessage = "No se ha registrado el curso correctamente.";
-                        return View();
-                    }
+                    fileData = reader.ReadBytes(FileNew.ContentLength);
                 }
-                catch (Exception ex)
-                {
-                    ViewBag.BoxMessage = "Error al guardar el archivo: " + ex.Message;
-                    return View();
-                }
+
+                // Asignar los datos del archivo al objeto de la tarea del curso
+                courseTasks.File = fileData;
+
+                //Ahora sí llamamos al metodo para insertar, una vez que está completo el objeto
+                resp = courseTasksModel.RegisterCourseTasks(courseTasks);
             }
             else
             {
-                ViewBag.BoxMessage = "No se ha proporcionado ningún archivo.";
+                ViewBag.BoxMessage = "No ha agregado el archivo.";
+                return View();
+            }
+
+            if (resp == "OK")
+            {
+                ViewBag.BoxMessageDone = "Tarea enviada correctamente.";
+                return View();
+            }
+            else
+            {
+                ViewBag.BoxMessage = "No se ha registrado la tarea correctamente.";
                 return View();
             }
         }
-       }
+    }
     }
