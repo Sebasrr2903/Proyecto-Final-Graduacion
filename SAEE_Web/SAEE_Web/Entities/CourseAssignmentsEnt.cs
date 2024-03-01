@@ -7,6 +7,10 @@ namespace SAEE_Web.Entities
 {
     public class CourseAssignmentsEnt
     {
+
+        //For reports
+        public int activeUser { get; set; }
+
         public int AssignmentId { get; set; }
         public string AssignmentName { get; set; }
         public string AssignmentDescription { get; set; }

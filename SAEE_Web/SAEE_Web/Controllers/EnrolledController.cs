@@ -61,7 +61,8 @@ namespace SAEE_Web.Controllers
             Session["SelectedWeekNum"] = weekNum;
             Session["SelectedWeekId"] = weekId;
             Session["SelectedAssignmentId"] = assignmentId;
-            return View();
+
+            return Json(new { success = true });
         }
     }
-}
+}                                                   

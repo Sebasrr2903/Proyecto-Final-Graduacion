@@ -6,14 +6,28 @@ using System.Net.Http.Json;
 using System.Net.Http;
 using System.Web;
 using System.Configuration;
+using System.Web.Mvc;
 
 
 namespace SAEE_Web.Models
 {
+    
     public class CourseTasksModel
     {
         public string urlAPI = ConfigurationManager.AppSettings["urlAPI"];
 
+
+
+
+        public CoursesTasksEnt TasksData(long q)
+        {
+            using (var client = new HttpClient())
+            {
+                var url = urlAPI + "TasksData?q=" + q;
+                var resp = client.GetAsync(url).Result;
+                return resp.Content.ReadFromJsonAsync<CoursesTasksEnt>().Result;
+            }
+        }
 
         public string RegisterCourseTasks(CoursesTasksEnt courseTasks)
         {

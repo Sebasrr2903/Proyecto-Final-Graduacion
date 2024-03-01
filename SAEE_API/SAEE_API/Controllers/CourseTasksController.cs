@@ -15,6 +15,33 @@ namespace SAEE_API.Controllers
         Reports reports = new Reports();
 
 
+        [HttpGet]
+        [Route("TasksData")]
+        public CourseTasks TasksData(long q)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    var datos = (from x in context.CourseTasks
+                                 where x.id == q
+                                 select x).FirstOrDefault();
+                                             
+                    return datos;
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 1, "TasksData");
+
+                return null;
+            }
+        }
+
+
+
         [HttpPost]
         [Route("RegisterCourseTasks")]
         public string RegisterCourseTasks(CoursesTasksEnt courseTasks)

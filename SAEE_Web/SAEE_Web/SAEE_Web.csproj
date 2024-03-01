@@ -151,6 +151,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CourseAssignmentController.cs" />
     <Compile Include="Controllers\CourseTasksController.cs" />
     <Compile Include="Controllers\CourseAvailableController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CourseAssignmentModel.cs" />
     <Compile Include="Models\CourseTasksModel.cs" />
     <Compile Include="Models\CourseAvailableModel.cs" />
     <Compile Include="Models\CourseModel.cs" />
@@ -443,6 +445,7 @@
     <Content Include="Views\Shared\_Alerts.cshtml" />
     <Content Include="Views\User\ProfileData.cshtml" />
     <Content Include="Views\CourseTasks\RegisterCoursetasks.cshtml" />
+    <Content Include="Views\CourseAssignment\RegisterAssignment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

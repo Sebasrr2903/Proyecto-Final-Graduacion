@@ -172,6 +172,7 @@
     <Compile Include="ContentPerWeek.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\CourseAssignmentController.cs" />
     <Compile Include="Controllers\CourseTasksController.cs" />
     <Compile Include="Controllers\CourseAvailableController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />

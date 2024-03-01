@@ -36,6 +36,7 @@
 
     @* Content *@
     <div id="content-container">
+
         @foreach (var item in Model.EnrolledCourses)
         {
             if (item.WeekNum == (int)Session["SelectedWeekNum"])
@@ -140,7 +141,15 @@
                                     //Se puede utilizar la variable de session con el weekId para el insert...
                                     //Es importante antes de enviar el formulario, actualizar dicha variable de session
                                     //Con el evento onclick creado
+
                                     <p class="mb-1">No hay tareas pendientes.</p>
+
+                                    <div style="text-align:left">
+                                        <a class="btn btn--rAvailable" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', )" href="@Url.Action("RegisterAssignment","CourseAssignment")">
+                                            <span class="text">Agregar Entregable</span>
+                                        </a>
+                                    </div>
+
                                 }
                                 else
                                 {
@@ -156,13 +165,29 @@
                                             //Permitirle al profesor editar o inactivar una tarea acá (tambien se puede usar la session)
                                             //Se puede validar que sea profesor con la variable de session del rol
                                             //Tambien acá se puede validar que a estudiantes solo se le muestren las tareas activas
+
+
                                             <p class="mb-1">Subir @assignment.AssignmentName</p>
+                                            <p class="mb-1">Indicaciones @assignment.AssignmentDescription</p>
+                                            <p class="mb-1">Fecha Limite @assignment.AssignmentDeadline</p>
 
                                             <div style="text-align:left">
                                                 <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
                                                     <span class="text">Agregar Tarea</span>
                                                 </a>
                                             </div>
+                                            if ((int)Session["UserType"] == 3)
+                                            { 
+                                                <div style="text-align:left">
+                                                    <a class="btn btn--rAvailable" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', )" href="@Url.Action("RegisterAssignment","CourseAssignment")">
+                                                        <span class="text">Agregar Entregable</span>
+                                                    </a>
+                                                </div>
+                                                
+                                            }//Admin
+
+
+
                                             <br />
                                         }
                                     }
@@ -178,6 +203,7 @@
 
 <script>
     function updateSessionWeek(weekNum, weekId, assignmentId) {
+
     fetch('@Url.Action("UpdateSessionWeek", "Enrolled")', {
         method: 'POST',
         headers: {
@@ -185,7 +211,7 @@
         },
         body: JSON.stringify({
             weekNum: weekNum,
-            weekId: weekId, 
+            weekId: weekId,
             assignmentId: assignmentId
         })
     })
@@ -198,6 +224,7 @@
     .catch(error => {
         console.error('There was a problem with your fetch operation:', error);
     });
+        return false;
     }
 
 
@@ -210,3 +237,19 @@
         reloadButtons[i].addEventListener('click', reloadPage);
     }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
