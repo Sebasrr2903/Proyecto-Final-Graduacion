@@ -11,13 +11,9 @@ using System.Web.Mvc;
 
 namespace SAEE_Web.Models
 {
-    
     public class CourseTasksModel
     {
         public string urlAPI = ConfigurationManager.AppSettings["urlAPI"];
-
-
-
 
         public CoursesTasksEnt TasksData(long q)
         {

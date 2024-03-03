@@ -1,4 +1,4 @@
-﻿@model SAEE_Web.Entities.ViewModelCourse_Task
+﻿@model SAEE_Web.Entities.ViewModelCourse_Task_Material
 
 @{
     ViewBag.Title = "SpecificCourse";
@@ -36,7 +36,6 @@
 
     @* Content *@
     <div id="content-container">
-
         @foreach (var item in Model.EnrolledCourses)
         {
             if (item.WeekNum == (int)Session["SelectedWeekNum"])
@@ -70,19 +69,73 @@
                             <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
                                 <p class="mb-1">@item.CourseDescription</p>
                                 <p class="mb-1">Horario: @item.CourseSchedule</p>
-                                <p class="mb-1">Programa del curso (Ejemplo Descargas)</p> @*Seran descargas*@
-                                <p class="mb-1">Indicaciones Proyecto final (Ejemplo Descargas)</p> @*Seran descargas*@
                             </div>
                         </div>
 
                         <div class="list-group-item list-group-item-action">
                             <div class="d-flex w-100 justify-content-between">
-                                <h4 class="mb-1">Tareas:</h4>
+                                <h4 class="mb-1">Material educativo:</h4>
+                                @if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
+                                {
+                                    <a class="btn btn--rAdd" style="margin-right: 10px; display: flex; height: 40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)" href="@Url.Action("RegisterMaterial","CourseMaterial")">
+                                        <span class="text">Agregar material</span>
+                                    </a>
+                                }
+                            </div>
+                            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;">
+                                @if (Model.WeekMaterial.Count() <= 0)
+                                {
+                                    <div style="text-align: left;">
+                                        <p class="mb-1">No hay material disponible.</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    foreach (var material in Model.WeekMaterial)
+                                    {
+                                        if (material.WeekId == item.WeekId)
+                                        {
+                                            if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
+                                            {
+                                                <div style="text-align: left; display: flex; flex-direction: row; margin-bottom: 10px;">
+                                                    <a href="@Url.Action("DownloadMaterial","CourseMaterial", new { q = material.MaterialId })">
+                                                        <span class="text" style="color: Dodgerblue;"> <i class="fa-solid fa-file" style="font-size: 20px;"> </i> Descargar @material.MaterialName</span>
+                                                    </a>
+
+                                                    <a style="margin-left: auto; margin-right:10px;" href="@Url.Action("DeleteMaterial","CourseMaterial", new { q = material.MaterialId })">
+                                                        <i class="fa-solid fa-trash" style="color: red;">  </i>
+                                                    </a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div style="text-align: left; margin-bottom: 10px;">
+                                                    <a href="@Url.Action("DownloadMaterial","CourseMaterial", new { q = material.MaterialId })">
+                                                        <span class="text" style="color: Dodgerblue;"> <i class="fa-solid fa-file" style="font-size: 20px;"> </i> Descargar @material.MaterialName</span>
+                                                    </a>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h4 class="mb-1">Entregables:</h4>
+                                @if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
+                                {
+                                    <div style="text-align:left; margin-top:5px">
+                                        <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)" href="@Url.Action("RegisterAssignment","CourseAssignment")">
+                                            <span class="text">Agregar Entregable</span>
+                                        </a>
+                                    </div>
+                                }
                             </div>
                             <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
                                 @if (Model.CourseAssignments.Count() <= 0)
                                 {
-                                    //Permitirle al profesor agregar una tarea acá
                                     <p class="mb-1">No hay tareas pendientes.</p>
                                 }
                                 else
@@ -91,29 +144,62 @@
                                     {
                                         if (assignment.AssignmentWeek == item.WeekId)
                                         {
-                                            //Permitirle al profesor editar o inactivar una tarea acá
-                                            //Se puede validar que sea profesor con la variable de session del rol
-                                            //Tambien acá se puede validar que a estudiantes solo se le muestren las tareas activas
-                                            <p class="mb-1">Subir @assignment.AssignmentName</p>
+                                            if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
+                                            {
+                                                <p class="mb-1" style="font-weight:bold;">@assignment.AssignmentName</p>
+                                                <p class="mb-1">Indicaciones: @assignment.AssignmentDescription</p>
 
-                                            <div style="text-align:left">
-                                                <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
-                                                    <span class="text">Agregar Tarea</span>
-                                                </a>
-                                            </div>
-                                            <br />
+                                                if (assignment.AssignmentActive == true)
+                                                {
+                                                    <p class="mb-1">Estado: Habilitada</p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="mb-1">Estado: Deshabilitada</p>
+                                                }
+
+                                                <div style="text-align: left; margin-bottom: 15px; display: flex; flex-direction: row;">
+                                                    <a class="btn btn--rAdd" style="margin-right: 10px; display: flex; height: 40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href=#>
+                                                        <span class="text">Editar Entregable</span>
+                                                    </a>
+
+                                                    <a class="btn btn--rAvailable" style="margin-right: 10px; display: flex; height: 40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href=#>
+                                                        <span class="text">Cambiar Estado</span>
+                                                    </a>
+
+                                                    <a class="btn btn--rReport" style="margin-right: 10px; display: flex; height: 40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href=#>
+                                                        <span class="text">Ver Entregas</span>
+                                                    </a>
+                                                </div>
+                                            }
+                                            else if ((int)Session["UserType"] == 3 && assignment.AssignmentActive == true)
+                                            {
+                                                <p class="mb-1" style="font-weight:bold;">@assignment.AssignmentName</p>
+                                                <p class="mb-1">Indicaciones: @assignment.AssignmentDescription</p>
+
+                                                <div style="text-align:left; margin-bottom:15px;">
+                                                    <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
+                                                        <span class="text">Subir Tarea</span>
+                                                    </a>
+                                                </div>
+                                            }
                                         }
                                     }
                                 }
                             </div>
                         </div>
-
                     }
                     else
                     {
                         <div class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
+                            <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
                                 <h4 class="mb-1">Contenido:</h4>
+                                @if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
+                                {
+                                    <a class="btn btn--rAdd" style="margin-right: 10px; display: flex; height: 40px" href="@Url.Action("UpdateContentPerWeek","ContentPerWeek", new { q = item.ContentPerWeekId })">
+                                        <span class="text">Editar Contenido</span>
+                                    </a>
+                                }
                             </div>
                             <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
                                 <p class="mb-1">@item.Content</p>
@@ -122,34 +208,69 @@
 
                         <div class="list-group-item list-group-item-action">
                             <div class="d-flex w-100 justify-content-between">
-                                <h4 class="mb-1">Descargas:</h4>
+                                <h4 class="mb-1">Material educativo:</h4>
+                                @if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
+                                {
+                                    <a class="btn btn--rAdd" style="margin-right: 10px; display: flex; height: 40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)" href="@Url.Action("RegisterMaterial","CourseMaterial")">
+                                        <span class="text">Agregar material</span>
+                                    </a>
+                                }
                             </div>
-                            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
-                                <p class="mb-1">Programa del curso (Ejemplo Descargas)</p> @*Seran descargas*@
-                                <p class="mb-1">Indicaciones Proyecto final (Ejemplo Descargas)</p> @*Seran descargas*@
+                            <div class="d-flex w-100 justify-content-end" style="flex-direction:column;">
+                                @if (Model.WeekMaterial.Count() <= 0)
+                                {
+                                    <div style="text-align: left;">
+                                        <p class="mb-1">No hay material disponible.</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    foreach (var material in Model.WeekMaterial)
+                                    {
+                                        if (material.WeekId == item.WeekId)
+                                        {
+                                            if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
+                                            {
+                                                <div style="text-align: left; display: flex; flex-direction: row; margin-bottom: 10px;">
+                                                    <a href="@Url.Action("DownloadMaterial","CourseMaterial", new { q = material.MaterialId })">
+                                                        <span class="text" style="color: Dodgerblue;"> <i class="fa-solid fa-file" style="font-size: 20px;"> </i> Descargar @material.MaterialName</span>
+                                                    </a>
+
+                                                    <a style="margin-left: auto; margin-right:10px;" href="@Url.Action("DeleteMaterial","CourseMaterial", new { q = material.MaterialId })">
+                                                        <i class="fa-solid fa-trash" style="color: red;">  </i>
+                                                    </a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div style="text-align: left; margin-bottom: 10px;">
+                                                    <a href="@Url.Action("DownloadMaterial","CourseMaterial", new { q = material.MaterialId })">
+                                                        <span class="text" style="color: Dodgerblue;"> <i class="fa-solid fa-file" style="font-size: 20px;"> </i> Descargar @material.MaterialName</span>
+                                                    </a>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                }
                             </div>
                         </div>
 
                         <div class="list-group-item list-group-item-action">
                             <div class="d-flex w-100 justify-content-between">
-                                <h4 class="mb-1">Tareas:</h4>
+                                <h4 class="mb-1">Entregables:</h4>
+                                @if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
+                                {
+                                    <div style="text-align:left; margin-top:5px">
+                                        <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)" href="@Url.Action("RegisterAssignment","CourseAssignment")">
+                                            <span class="text">Agregar Entregable</span>
+                                        </a>
+                                    </div>
+                                }
                             </div>
                             <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
                                 @if (Model.CourseAssignments.Count() <= 0)
                                 {
-                                    //Permitirle al profesor agregar una tarea acá - Es un insert a la tabla CourseAssignements
-                                    //Se puede utilizar la variable de session con el weekId para el insert...
-                                    //Es importante antes de enviar el formulario, actualizar dicha variable de session
-                                    //Con el evento onclick creado
-
                                     <p class="mb-1">No hay tareas pendientes.</p>
-
-                                    <div style="text-align:left">
-                                        <a class="btn btn--rAvailable" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', )" href="@Url.Action("RegisterAssignment","CourseAssignment")">
-                                            <span class="text">Agregar Entregable</span>
-                                        </a>
-                                    </div>
-
                                 }
                                 else
                                 {
@@ -157,38 +278,45 @@
                                     {
                                         if (assignment.AssignmentWeek == item.WeekId)
                                         {
-                                            //Permitirle al profesor agregar una tarea acá - Es un insert a la tabla CourseAssignements
-                                            //Se puede utilizar la variable de session con el weekId para el insert...
-                                            //Es importante antes de enviar el formulario, actualizar dicha variable de session
-                                            //Con el evento onclick creado
+                                            if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
+                                            {
+                                                <p class="mb-1" style="font-weight:bold;">@assignment.AssignmentName</p>
+                                                <p class="mb-1">Indicaciones: @assignment.AssignmentDescription</p>
 
-                                            //Permitirle al profesor editar o inactivar una tarea acá (tambien se puede usar la session)
-                                            //Se puede validar que sea profesor con la variable de session del rol
-                                            //Tambien acá se puede validar que a estudiantes solo se le muestren las tareas activas
+                                                if (assignment.AssignmentActive == true)
+                                                {
+                                                    <p class="mb-1">Estado: Habilitada</p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="mb-1">Estado: Deshabilitada</p>
+                                                }
 
+                                                <div style="text-align: left; margin-bottom: 15px; display: flex; flex-direction: row;">
+                                                    <a class="btn btn--rAdd" style="margin-right: 10px; display: flex; height: 40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href=#>
+                                                        <span class="text">Editar Entregable</span>
+                                                    </a>
 
-                                            <p class="mb-1">Subir @assignment.AssignmentName</p>
-                                            <p class="mb-1">Indicaciones @assignment.AssignmentDescription</p>
-                                            <p class="mb-1">Fecha Limite @assignment.AssignmentDeadline</p>
+                                                    <a class="btn btn--rAvailable" style="margin-right: 10px; display: flex; height: 40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href=#>
+                                                        <span class="text">Cambiar Estado</span>
+                                                    </a>
 
-                                            <div style="text-align:left">
-                                                <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
-                                                    <span class="text">Agregar Tarea</span>
-                                                </a>
-                                            </div>
-                                            if ((int)Session["UserType"] == 3)
-                                            { 
-                                                <div style="text-align:left">
-                                                    <a class="btn btn--rAvailable" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', )" href="@Url.Action("RegisterAssignment","CourseAssignment")">
-                                                        <span class="text">Agregar Entregable</span>
+                                                    <a class="btn btn--rReport" style="margin-right: 10px; display: flex; height: 40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href=#>
+                                                        <span class="text">Ver Entregas</span>
                                                     </a>
                                                 </div>
-                                                
-                                            }//Admin
+                                            }
+                                            else if ((int)Session["UserType"] == 3 && assignment.AssignmentActive == true)
+                                            {
+                                                <p class="mb-1" style="font-weight:bold;">@assignment.AssignmentName</p>
+                                                <p class="mb-1">Indicaciones: @assignment.AssignmentDescription</p>
 
-
-
-                                            <br />
+                                                <div style="text-align:left; margin-bottom:15px;">
+                                                    <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
+                                                        <span class="text">Subir Tarea</span>
+                                                    </a>
+                                                </div>
+                                            }
                                         }
                                     }
                                 }
@@ -203,28 +331,27 @@
 
 <script>
     function updateSessionWeek(weekNum, weekId, assignmentId) {
-
-    fetch('@Url.Action("UpdateSessionWeek", "Enrolled")', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            weekNum: weekNum,
-            weekId: weekId,
-            assignmentId: assignmentId
+        fetch('@Url.Action("UpdateSessionWeek", "Enrolled")', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                weekNum: weekNum,
+                weekId: weekId,
+                assignmentId: assignmentId
+            })
         })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .catch(error => {
-        console.error('There was a problem with your fetch operation:', error);
-    });
-        return false;
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .catch(error => {
+            console.error('There was a problem with your fetch operation:', error);
+        });
+            return false;
     }
 
 

@@ -151,7 +151,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ContentPerWeekController.cs" />
     <Compile Include="Controllers\CourseAssignmentController.cs" />
+    <Compile Include="Controllers\CourseMaterialController.cs" />
     <Compile Include="Controllers\CourseTasksController.cs" />
     <Compile Include="Controllers\CourseAvailableController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
@@ -159,8 +161,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Entities\ContentPerWeekEnt.cs" />
     <Compile Include="Entities\CourseAssignmentsEnt.cs" />
-    <Compile Include="Entities\ViewModelCourse_Task.cs" />
+    <Compile Include="Entities\MaterialPerWeekEnt.cs" />
+    <Compile Include="Entities\ViewModelCourse_Task_Material.cs" />
     <Compile Include="Entities\CoursesTasksEnt.cs" />
     <Compile Include="Entities\CourseAvailableEnt.cs" />
     <Compile Include="Entities\CoursesEnt.cs" />
@@ -171,11 +175,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContentPerWeekModel.cs" />
     <Compile Include="Models\CourseAssignmentModel.cs" />
     <Compile Include="Models\CourseTasksModel.cs" />
     <Compile Include="Models\CourseAvailableModel.cs" />
     <Compile Include="Models\CourseModel.cs" />
     <Compile Include="Models\EnrolledCoursesModel.cs" />
+    <Compile Include="Models\MaterialPerWeekModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -206,9 +212,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\checklist.png" />
+    <Content Include="Images\descarga.png" />
     <Content Include="Images\ELEC.png" />
     <Content Include="Images\librosEj.jpg" />
     <Content Include="Images\logoELEC.png" />
+    <Content Include="Images\placeholder.jpg" />
     <Content Include="Images\spanish.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -446,6 +454,8 @@
     <Content Include="Views\User\ProfileData.cshtml" />
     <Content Include="Views\CourseTasks\RegisterCoursetasks.cshtml" />
     <Content Include="Views\CourseAssignment\RegisterAssignment.cshtml" />
+    <Content Include="Views\CourseMaterial\RegisterMaterial.cshtml" />
+    <Content Include="Views\ContentPerWeek\UpdateContentPerWeek.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

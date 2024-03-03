@@ -15,6 +15,7 @@ namespace SAEE_Web.Controllers
         CourseModel coursesModel =  new CourseModel();
         EnrolledCoursesModel enrolledCoursesModel =  new EnrolledCoursesModel();
         CourseTasksModel courseTasksModel = new CourseTasksModel();
+        MaterialPerWeekModel materialPerWeekModel = new MaterialPerWeekModel();
 
         [HttpGet]
         public ActionResult AllCourses()
@@ -23,9 +24,17 @@ namespace SAEE_Web.Controllers
             Session["SelectedWeekId"] = 0;
 
             int q = (int)Session["ActiveId"];
-            var datos = enrolledCoursesModel.EnrolledCoursesPerStudent(q);
-            
-            return View(datos);
+
+            if ((int)Session["UserType"] == 2)
+            {
+                var datos = enrolledCoursesModel.EnrolledCoursesPerTeacher(q);
+                return View(datos);
+            }
+            else
+            {
+                var datos = enrolledCoursesModel.EnrolledCoursesPerStudent(q);
+                return View(datos);
+            }
         }
 
         /**********************TABLE/STATUS/UPDATE/RECOVER**********************/
@@ -116,13 +125,23 @@ namespace SAEE_Web.Controllers
         {
             var enrolledCoursesList = enrolledCoursesModel.SpecificCourse(q);
 
-            int assignnmentId = (int)Session["SelectedWeekId"];
-            var courseAssignmentsList = courseTasksModel.SpecificAssignment(assignnmentId);
+            int weekId = 0;
+            if ((int)Session["SelectedWeekId"] == 0)
+            {
+                weekId = enrolledCoursesList[0].WeekId;
+            }
+            else
+            {
+                weekId = (int)Session["SelectedWeekId"];
+            }
+            var courseAssignmentsList = courseTasksModel.SpecificAssignment(weekId);
+            var materialPerWeekList = materialPerWeekModel.SpecificMaterial(weekId);
 
-            var viewModel = new ViewModelCourse_Task
+            var viewModel = new ViewModelCourse_Task_Material
             {
                 EnrolledCourses = enrolledCoursesList,
-                CourseAssignments = courseAssignmentsList
+                CourseAssignments = courseAssignmentsList,
+                WeekMaterial = materialPerWeekList
             };
 
             return View(viewModel);

@@ -21,7 +21,6 @@
                 }
                 <a class="nav-item" style="color:#000000; font-size:small; display:flex; justify-content:start;" href="@Url.Action("DeleteProfilePicture", "User", new { q = @Session["ActiveId"] })">Eliminar foto</a>
 
-
                 <h2 class="mb-1">@Session["Name"] @Session["Lastname"]</h2>
             </div>
 
@@ -29,8 +28,8 @@
         </div>
 
         <div class="list-group-item list-group-item-action" style="text-align:center;">
-            <div class="d-flex w-100 justify-content-between">
-                <h4 class="" style="font-weight: bold; padding-left: 5rem;">Mis Datos:</h4>
+            <div class="d-flex w-100 justify-content-center">
+                <h4 class="" style="font-weight: bold;">Mis Datos:</h4>
             </div>
             <div>
                 @if ((int)Session["UserType"] == 1)

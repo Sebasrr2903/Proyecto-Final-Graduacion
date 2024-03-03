@@ -24,6 +24,7 @@ namespace SAEE_API
         public string name { get; set; }
         public string description { get; set; }
         public byte[] file { get; set; }
+        public string fileExtension { get; set; }
         public System.DateTime deliveredOn { get; set; }
         public int assignmentId { get; set; }
         public int studentId { get; set; }

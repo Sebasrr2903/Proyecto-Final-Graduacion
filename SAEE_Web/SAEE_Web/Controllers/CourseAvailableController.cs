@@ -34,7 +34,7 @@ namespace SAEE_Web.Controllers
 
             if (resp == "OK")
             {
-                ViewBag.BoxMessage = "Curso creado.";
+                ViewBag.BoxMessage = "Curso habilitado.";
                 return View();
             }
             else

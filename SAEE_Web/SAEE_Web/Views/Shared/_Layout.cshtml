@@ -10,7 +10,7 @@
         <div class="container d-flex flex-wrap justify-content-between align-items-center">
             <div class="logo header_logo">
                 <a class="d-inline-flex align-items-center" href="@Url.Action("Index", "Home")">
-                    <span class="logo_picture"style="color:aqua;">
+                    <span class="logo_picture" style="color:aqua;">
                         <img src="~/Images/ELEC.png" alt="ELEC" />
                     </span>
                     <span class="text">
@@ -23,7 +23,8 @@
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#headerMenu"
-                    aria-controls="headerMenu">
+                    aria-controls="headerMenu"
+                    title="Acciones">
                 <span class="line"></span>
                 <span class="line"></span>
                 <span class="line"></span>
@@ -42,11 +43,10 @@
                                 <a class="nav-item" href="@Url.Action("UsersTable", "User")" data-page="about">Estudiantes</a>
                             </li>
                             <li class="header_nav-list_item">
-                                <a class="nav-item" href="@Url.Action("GeneralReport", "Report")" data-page="about">Reportes</a>
-                            </li>
-
-                            <li class="header_nav-list_item">
                                 <a class="nav-item" href="@Url.Action("CoursesTable", "Course")" data-page="about">Cursos</a>
+                            </li>
+                            <li class="header_nav-list_item">
+                                <a class="nav-item" href="@Url.Action("GeneralReport", "Report")" data-page="about">Reportes</a>
                             </li>
                         }
                         else if ((int)Session["UserType"] == 3) //Student
@@ -58,7 +58,7 @@
                         else //Teacher
                         {
                             <li class="header_nav-list_item">
-                                <a class="nav-item" href="#" data-page="about">Mis Cursos</a>
+                                <a class="nav-item" href="@Url.Action("AllCourses", "Course")" data-page="about">Mis Cursos</a>
                             </li>
                         }
                         <li class="header_nav-list_item">
@@ -68,11 +68,11 @@
                         <li class="header_nav-list_item">
                             @if (Session["ProfileImageB64"] == null)
                             {
-                                <img class="img-xs rounded-circle" src="https://cdn-icons-png.flaticon.com/512/2550/2550383.png" style="max-width:3rem" alt="profilePicture">
+                                <img class="img-xs rounded-circle" src="https://cdn-icons-png.flaticon.com/512/2550/2550383.png" style="max-width:3rem" alt="Foto de Perfil Default">
                             }
                             else
                             {
-                                <img class="img-xs rounded-circle" src="data:image/jpeg;base64,@Session["ProfileImageB64"]" style="max-width:3rem;" alt="profilePicture">
+                                <img class="img-xs rounded-circle" src="data:image/jpeg;base64,@Session["ProfileImageB64"]" style="max-width:3rem;" alt="Foto de Perfil">
                             }
                         </li>
 
@@ -97,17 +97,14 @@
             </nav>
         </div>
     </header>
-    <!-- homepage content start -->
+    @* NAV END *@
 
+    <!-- content start -->
+    @RenderBody()
+    <!-- content end -->
 
-
-        @RenderBody()
-
-
-  
-
+    @* FOOTER *@
     @Html.Partial("_FooterPartial")
-
-
+    @* FOOTER END*@
 </body>
 </html>

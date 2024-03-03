@@ -19,6 +19,7 @@ namespace SAEE_API
         {
             this.ContentPerWeek = new HashSet<ContentPerWeek>();
             this.CourseAssignments = new HashSet<CourseAssignments>();
+            this.MaterialPerWeek = new HashSet<MaterialPerWeek>();
         }
     
         public int id { get; set; }
@@ -30,5 +31,7 @@ namespace SAEE_API
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CourseAssignments> CourseAssignments { get; set; }
         public virtual CourseAvailable CourseAvailable { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MaterialPerWeek> MaterialPerWeek { get; set; }
     }
 }

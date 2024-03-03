@@ -14,7 +14,6 @@ namespace SAEE_API.Controllers
         //To insert into errors and actions table
         Reports reports = new Reports();
 
-
         [HttpGet]
         [Route("TasksData")]
         public CourseTasks TasksData(long q)
@@ -40,8 +39,6 @@ namespace SAEE_API.Controllers
             }
         }
 
-
-
         [HttpPost]
         [Route("RegisterCourseTasks")]
         public string RegisterCourseTasks(CoursesTasksEnt courseTasks)
@@ -55,6 +52,7 @@ namespace SAEE_API.Controllers
                     tasks.name = courseTasks.Name;
                     tasks.description = courseTasks.Description;
                     tasks.file = courseTasks.File;
+                    tasks.fileExtension = courseTasks.FileExtension;
                     tasks.deliveredOn = DateTime.Now;
                     tasks.assignmentId = courseTasks.AssignmentId;
                     tasks.studentId = courseTasks.activeUser; 
@@ -106,5 +104,7 @@ namespace SAEE_API.Controllers
                 return new List<EnrolledCoursesEnt>();
             }
         }
+
+
     }
 }

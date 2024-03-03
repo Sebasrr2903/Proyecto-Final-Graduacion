@@ -1,7 +1,7 @@
-﻿@model SAEE_Web.Entities.UserEnt
+﻿@model SAEE_Web.Entities.ContentPerWeekEnt
 
 @{
-    ViewBag.Title = "ProfileUser";
+    ViewBag.Title = "UpdateContentPerWeek";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,56 +9,45 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Editar Perfil</h2>
+                <h2 class="contacts_form-header_title">Actualizar Usuario</h2>
             </div>
-            <hr />
             @if (ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-danger" role="alert" style="text-align:center">
                     @ViewBag.BoxMessage
                 </div>
             }
-
             <div class="back-button-container">
                 <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Volver
                 </button>
             </div>
-            @using (Html.BeginForm("ProfileUser", "User", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm", @enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("UpdateContentPerWeek", "ContentPerWeek", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
             {
                 @Html.HiddenFor(m => m.Id)
 
+                @Html.HiddenFor(m => m.WeekId)
+
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Nombre:</label>
-                    @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Nombre" })
+                    <label style="margin-right: 25rem;">Título de la semana:</label>
+                    @Html.TextBoxFor(m => m.Header, new { @class = "field required", @type = "text", @placeholder = "Título de la semana" })
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Apellidos:</label>
-                    @Html.TextBoxFor(m => m.Lastname, new { @class = "field required", @type = "text", @placeholder = "Apellidos" })
+                    <label style="margin-right: 23rem;">Contenido de la semana:</label>
+                    @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @rows = "4", @placeholder = "Contenido de la semana" })
                 </div>
 
-                <div class="form-group">
-                    <label style="margin-right: 53rem;">Email:</label>
-                    @Html.TextBoxFor(m => m.Email, new { @readonly = "@readonly", @class = "field required", @type = "email", @placeholder = "Email" })
-                </div>
-
-                <div class="form-group">
-                    <label style="margin-right: 53rem;">Número:</label>
-                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "field required", @type = "number", @placeholder = "Número" })
-                </div>
-                <div class="form-group">
-                    <label style="margin-right: 28rem;">Foto de perfil:</label>
-                    <input type="file" class="form-control" id="ProfileImg" name="ProfileImg">
-                </div>
-                <hr />
+                <input type="hidden" name="returnUrl" value="@Request.UrlReferrer?.ToString()" />
                 <div class="contacts_form-form_footer">
                     <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">ACTUALIZAR</button>
                 </div>
             }
         </div>
     </section>
+
 </main>
+
 
 
 <!-- Modal -->
@@ -75,9 +64,8 @@
                 <div style="display: inline-block;">
                     <img src="~/Images/checklist.png" style="width: 100px;" />
                 </div>
-
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">¿Está seguro desea actualizar este usuario?</h5>
                 <p id="userName" style="font-size: 24px; font-weight: bold;"></p>
+                <h5 class="modal-title mr-auto" id="confirmationModalLabel">¿Está seguro desea actualizar este usuario?</h5>
             </div>
             <div class="modal-footer d-flex justify-content-center" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
                 <!-- Añadido d-flex justify-content-center -->
@@ -102,3 +90,4 @@
         $('#registerForm').submit();
     }
 </script>
+

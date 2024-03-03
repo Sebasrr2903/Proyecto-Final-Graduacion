@@ -6,10 +6,11 @@ using System.Web;
 
 namespace SAEE_Web.Entities
 {
-    public class ViewModelCourse_Task : IEnumerable
+    public class ViewModelCourse_Task_Material : IEnumerable
     {
         public List<EnrolledCoursesEnt> EnrolledCourses { get; set; }
         public List<CourseAssignmentsEnt> CourseAssignments { get; set; }
+        public List<MaterialPerWeekEnt> WeekMaterial { get; set; }
 
         public IEnumerator GetEnumerator()
         {
@@ -19,6 +20,11 @@ namespace SAEE_Web.Entities
         public IEnumerator<CourseAssignmentsEnt> GetCourseAssignmentsEnumerator()
         {
             return CourseAssignments.GetEnumerator();
+        }
+        
+        public IEnumerator<MaterialPerWeekEnt> GetWeekMaterialEnumerator()
+        {
+            return WeekMaterial.GetEnumerator();
         }
     }
 }

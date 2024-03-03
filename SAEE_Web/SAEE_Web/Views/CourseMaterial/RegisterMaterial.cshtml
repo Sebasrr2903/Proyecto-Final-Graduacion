@@ -1,9 +1,10 @@
-﻿@model SAEE_Web.Entities.CourseAssignmentsEnt
+﻿@model SAEE_Web.Entities.MaterialPerWeekEnt
 
 @{
-    ViewBag.Title = "RegisterTasks";
+    ViewBag.Title = "RegisterMaterial";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 <main class="contacts">
     <section class="contacts_form">
@@ -26,30 +27,18 @@
                 </button>
             </div>
 
-            @using (Html.BeginForm("RegisterAssignment", "CourseAssignment", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
+            @using (Html.BeginForm("RegisterMaterial", "CourseMaterial", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm", @enctype = "multipart/form-data" }))
             {
                 <div class="form-group">
-                    <label style="margin-right: 25rem;">Nombre de la Tarea:</label>
-                    @Html.TextBoxFor(m => m.AssignmentName, new { @class = "field required", @type = "text", @placeholder = "Nombre de la Tarea" })
+                    <label style="margin-right: 20rem;">Nombre del Material Educativo:</label>
+                    @Html.TextBoxFor(m => m.MaterialName, new { @class = "field required", @type = "text", @placeholder = "Nombre del Material Educativo" })
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Indicaciones:</label>
-                    @Html.TextAreaFor(m => m.AssignmentDescription, new { @class = "form-control", @rows = "4", @placeholder = "Indicaciones" })
+                    <label style="margin-right: 53rem;">Archivo:</label>
+                    <input type="file" id="FileNew" name="FileNew" class="field requiered" placeholder="Archivo" />
                 </div>
 
-                <div class="form-group">
-                    <label style="margin-right: 28rem;">Fecha Límite:</label>
-                    @Html.TextBoxFor(m => m.AssignmentDeadline, "{0:yyyy-MM-ddTHH:mm}", new { @class = "field required", @type = "datetime-local", @placeholder = "Fecha Límite" })
-                </div>
-
-                <div class="form-group">
-                    <label style="margin-right: 24rem;">Estado del Entregable:</label>
-                    @Html.DropDownListFor(m => m.AssignmentActive, new SelectList(new[] {
-                        new { Value = true, Text = "Habilitar" },
-                        new { Value = false, Text = "Desabilitado" }
-                    }, "Value", "Text"), "Seleccione", new { @class = "form-control" })
-                </div>
                 <hr />
                 <div class="contacts_form-form_footer">
                     <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">REGISTRAR</button>
@@ -58,7 +47,6 @@
         </div>
     </section>
 </main>
-
 
 
 <!-- Modal -->

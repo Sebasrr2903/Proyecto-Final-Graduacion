@@ -37,6 +37,7 @@ namespace SAEE_API
         public virtual DbSet<CourseTasks> CourseTasks { get; set; }
         public virtual DbSet<EnrolledCourses> EnrolledCourses { get; set; }
         public virtual DbSet<ErrorReport> ErrorReport { get; set; }
+        public virtual DbSet<MaterialPerWeek> MaterialPerWeek { get; set; }
         public virtual DbSet<Proceedings> Proceedings { get; set; }
         public virtual DbSet<Schedule> Schedule { get; set; }
         public virtual DbSet<Specialties> Specialties { get; set; }

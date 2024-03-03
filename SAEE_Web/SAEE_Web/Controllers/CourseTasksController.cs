@@ -41,6 +41,7 @@ namespace SAEE_Web.Controllers
 
                 // Asignar los datos del archivo al objeto de la tarea del curso
                 courseTasks.File = fileData;
+                courseTasks.FileExtension = FileNew.FileName;
 
                 //Ahora sí llamamos al metodo para insertar, una vez que está completo el objeto
                 resp = courseTasksModel.RegisterCourseTasks(courseTasks);

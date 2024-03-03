@@ -38,6 +38,10 @@ namespace SAEE_Web.Controllers
                 ViewBag.SelectListStudents = enrolledCoursesModel.SelectListStudents();
                 ViewBag.BoxMessage = "Estudiante matriculado.";
                 return View();
+            }else if (resp == "El estudiante ya se encuentra matriculado en este curso.")
+            {
+                ViewBag.BoxMessage = "El estudiante ya se encuentra matriculado en este curso.";
+                return View();
             }
             else if (resp == "El curso no tiene cupo disponible.")
             {

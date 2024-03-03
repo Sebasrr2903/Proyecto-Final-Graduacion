@@ -20,6 +20,7 @@ namespace SAEE_API.Entities
         public int AssignmentId { get; set; }
         public int WeekId { get; set; }
         public int WeekNum { get; set; }
+        public int ContentPerWeekId { get; set; }
         public string Header { get; set; }
         public string Content { get; set; }
         public string CourseSchedule { get; set; }

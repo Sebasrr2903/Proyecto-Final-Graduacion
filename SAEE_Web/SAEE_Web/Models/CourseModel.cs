@@ -13,7 +13,6 @@ namespace SAEE_Web.Models
     {
         public string urlAPI = ConfigurationManager.AppSettings["urlAPI"];
 
-
         public List<CoursesEnt> CoursesList()
         {
             using (var client = new HttpClient())
@@ -24,7 +23,6 @@ namespace SAEE_Web.Models
             }
         }
 
-
         public CoursesEnt CourseData(long q)
         {
             using (var client = new HttpClient())
@@ -34,6 +32,7 @@ namespace SAEE_Web.Models
                 return resp.Content.ReadFromJsonAsync<CoursesEnt>().Result;
             }
         }
+
         public string UpdateCourse(CoursesEnt course)
         {
             using (var client = new HttpClient())
@@ -55,7 +54,6 @@ namespace SAEE_Web.Models
                 return resp.Content.ReadFromJsonAsync<string>().Result;
             }
         }
-
 
         public string RegisterCourse(CoursesEnt course)
         {

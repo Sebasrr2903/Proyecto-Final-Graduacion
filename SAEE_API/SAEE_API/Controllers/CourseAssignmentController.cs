@@ -10,12 +10,8 @@ namespace SAEE_API.Controllers
 {
     public class CourseAssignmentController : ApiController
     {
-
-
         //To insert into errors and actions table
         Reports reports = new Reports();
-
-
 
         [HttpPost]
         [Route("RegisterAssignment")]
@@ -23,18 +19,14 @@ namespace SAEE_API.Controllers
         {
             try
             {
-                
-
                 using (var context = new SAEEEntities())
                 {
-
                     var courses = new CourseAssignments();
                     courses.name = course.AssignmentName;
-                    courses.active = false;
+                    courses.active = course.AssignmentActive;
                     courses.deadline = course.AssignmentDeadline;
                     courses.indications = course.AssignmentDescription;
                     courses.weekId = course.AssignmentWeek;
-
 
                     context.CourseAssignments.Add(courses);
                     context.SaveChanges();

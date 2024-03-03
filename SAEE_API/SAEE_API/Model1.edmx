@@ -85,6 +85,7 @@
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="file" Type="varbinary(max)" Nullable="false" />
+          <Property Name="fileExtension" Type="varchar" MaxLength="200" />
           <Property Name="deliveredOn" Type="datetime" Nullable="false" />
           <Property Name="assignmentId" Type="int" Nullable="false" />
           <Property Name="studentId" Type="int" Nullable="false" />
@@ -106,6 +107,16 @@
           <Property Name="userId" Type="int" Nullable="false" />
           <Property Name="errorDescription" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="origin" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MaterialPerWeek">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="file" Type="varbinary(max)" Nullable="false" />
+          <Property Name="fileExtension" Type="varchar" MaxLength="200" />
+          <Property Name="weekId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Proceedings">
           <Key>
@@ -359,6 +370,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MaterialPerWeek_Weeks">
+          <End Role="Weeks" Type="Self.Weeks" Multiplicity="1" />
+          <End Role="MaterialPerWeek" Type="Self.MaterialPerWeek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MaterialPerWeek">
+              <PropertyRef Name="weekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Proceedings_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Proceedings" Type="Self.Proceedings" Multiplicity="*" />
@@ -476,6 +499,7 @@
           <EntitySet Name="CourseTasks" EntityType="Self.CourseTasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EnrolledCourses" EntityType="Self.EnrolledCourses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ErrorReport" EntityType="Self.ErrorReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialPerWeek" EntityType="Self.MaterialPerWeek" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proceedings" EntityType="Self.Proceedings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specialties" EntityType="Self.Specialties" Schema="dbo" store:Type="Tables" />
@@ -543,6 +567,10 @@
           <AssociationSet Name="FK_ErrorReport_Users" Association="Self.FK_ErrorReport_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="ErrorReport" EntitySet="ErrorReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialPerWeek_Weeks" Association="Self.FK_MaterialPerWeek_Weeks">
+            <End Role="Weeks" EntitySet="Weeks" />
+            <End Role="MaterialPerWeek" EntitySet="MaterialPerWeek" />
           </AssociationSet>
           <AssociationSet Name="FK_Proceedings_Users" Association="Self.FK_Proceedings_Users">
             <End Role="Users" EntitySet="Users" />
@@ -665,6 +693,7 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="file" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="fileExtension" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="deliveredOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="assignmentId" Type="Int32" Nullable="false" />
           <Property Name="studentId" Type="Int32" Nullable="false" />
@@ -692,6 +721,17 @@
           <Property Name="errorDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="origin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK_ErrorReport_Users" FromRole="ErrorReport" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="MaterialPerWeek">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="file" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="fileExtension" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="weekId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Weeks" Relationship="Self.FK_MaterialPerWeek_Weeks" FromRole="MaterialPerWeek" ToRole="Weeks" />
         </EntityType>
         <EntityType Name="Proceedings">
           <Key>
@@ -783,6 +823,7 @@
           <NavigationProperty Name="ContentPerWeek" Relationship="Self.FK_ContentPerWeek_Weeks" FromRole="Weeks" ToRole="ContentPerWeek" />
           <NavigationProperty Name="CourseAssignments" Relationship="Self.FK_CourseAssignments_Weeks" FromRole="Weeks" ToRole="CourseAssignments" />
           <NavigationProperty Name="CourseAvailable" Relationship="Self.FK_Weeks_CourseAvailable" FromRole="Weeks" ToRole="CourseAvailable" />
+          <NavigationProperty Name="MaterialPerWeek" Relationship="Self.FK_MaterialPerWeek_Weeks" FromRole="Weeks" ToRole="MaterialPerWeek" />
         </EntityType>
         <Association Name="FK_actionReport_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
@@ -976,6 +1017,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MaterialPerWeek_Weeks">
+          <End Role="Weeks" Type="Self.Weeks" Multiplicity="1" />
+          <End Role="MaterialPerWeek" Type="Self.MaterialPerWeek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MaterialPerWeek">
+              <PropertyRef Name="weekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Proceedings_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Proceedings" Type="Self.Proceedings" Multiplicity="*" />
@@ -1035,6 +1088,7 @@
           <EntitySet Name="CourseTasks" EntityType="Self.CourseTasks" />
           <EntitySet Name="EnrolledCourses" EntityType="Self.EnrolledCourses" />
           <EntitySet Name="ErrorReport" EntityType="Self.ErrorReport" />
+          <EntitySet Name="MaterialPerWeek" EntityType="Self.MaterialPerWeek" />
           <EntitySet Name="Proceedings" EntityType="Self.Proceedings" />
           <EntitySet Name="Schedule" EntityType="Self.Schedule" />
           <EntitySet Name="Specialties" EntityType="Self.Specialties" />
@@ -1106,6 +1160,10 @@
           <AssociationSet Name="FK_ErrorReport_Users" Association="Self.FK_ErrorReport_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="ErrorReport" EntitySet="ErrorReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialPerWeek_Weeks" Association="Self.FK_MaterialPerWeek_Weeks">
+            <End Role="Weeks" EntitySet="Weeks" />
+            <End Role="MaterialPerWeek" EntitySet="MaterialPerWeek" />
           </AssociationSet>
           <AssociationSet Name="FK_Proceedings_Users" Association="Self.FK_Proceedings_Users">
             <End Role="Users" EntitySet="Users" />
@@ -1283,6 +1341,7 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="file" ColumnName="file" />
+                <ScalarProperty Name="fileExtension" ColumnName="fileExtension" />
                 <ScalarProperty Name="deliveredOn" ColumnName="deliveredOn" />
                 <ScalarProperty Name="assignmentId" ColumnName="assignmentId" />
                 <ScalarProperty Name="studentId" ColumnName="studentId" />
@@ -1306,6 +1365,17 @@
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="errorDescription" ColumnName="errorDescription" />
                 <ScalarProperty Name="origin" ColumnName="origin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialPerWeek">
+            <EntityTypeMapping TypeName="SAEEModel.MaterialPerWeek">
+              <MappingFragment StoreEntitySet="MaterialPerWeek">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="file" ColumnName="file" />
+                <ScalarProperty Name="fileExtension" ColumnName="fileExtension" />
+                <ScalarProperty Name="weekId" ColumnName="weekId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

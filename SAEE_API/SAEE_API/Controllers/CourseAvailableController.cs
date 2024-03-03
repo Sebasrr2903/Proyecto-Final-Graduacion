@@ -136,6 +136,27 @@ namespace SAEE_API.Controllers
 
                         context.Weeks.Add(week);
                         context.SaveChanges();
+
+                        //Fill the weeks with generic content to be edited by the teacher later
+                        var content = new ContentPerWeek();
+                        if (week.weekNum == 0)
+                        {
+                            content.weekId = week.id;
+                            content.header = "Bienvenida";
+                            content.content = "Bienvenido/a al curso.";
+
+                            context.ContentPerWeek.Add(content);
+                            context.SaveChanges();
+                        }
+                        else
+                        {
+                            content.weekId = week.id;
+                            content.header = "Semana " + week.weekNum;
+                            content.content = "Contenido semanal";
+
+                            context.ContentPerWeek.Add(content);
+                            context.SaveChanges();
+                        }
                     }
 
                     return "OK";

@@ -10,22 +10,21 @@ namespace SAEE_Web.Controllers
 {
     public class CourseAssignmentController : Controller
     {
-
         CourseAssignmentModel courseAssignmentModel = new CourseAssignmentModel();
+        static string returnUrl; //For return
 
         [HttpGet]
         public ActionResult RegisterAssignment()
         {
+            returnUrl = Request.UrlReferrer?.ToString();//For return
 
             return View();
         }
-
 
         [HttpPost]
         public ActionResult RegisterAssignment(CourseAssignmentsEnt course)
         {
             course.activeUser = (int)Session["ActiveId"];//For action register
-
         
             course.AssignmentWeek = (int)Session["SelectedWeekId"];
 
@@ -33,16 +32,15 @@ namespace SAEE_Web.Controllers
 
             if (resp == "OK")
             {
-                ViewBag.BoxMessageDone = "Entregable se registrado correctamente.";
-                return View();
+                return Redirect(returnUrl); //For return
             }
             else
             {
                 ViewBag.BoxMessage = "No se ha registrado el entregable.";
-
                 return View();
             }
         }
+
 
     }
 }

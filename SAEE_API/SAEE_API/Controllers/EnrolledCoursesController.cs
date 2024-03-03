@@ -106,26 +106,38 @@ namespace SAEE_API.Controllers
 
                     if (availableQuota > 0)
                     {
-                        var enrolledCourses = new EnrolledCourses();
-                        enrolledCourses.courseId = enrolledCourse.CourseId;
-                        enrolledCourses.studentId = enrolledCourse.StudentId;
-
-
-                        context.EnrolledCourses.Add(enrolledCourses);
-                        context.SaveChanges();
-                        
-                        //Update EnrolledStudents in CourseAvailable
-                        var CourseAvailable = (from x in context.CourseAvailable
-                                           where x.id == enrolledCourse.CourseId
+                        var alreadyRegister = (from x in context.EnrolledCourses
+                                           where x.studentId == enrolledCourse.StudentId
+                                           && x.courseId == enrolledCourse.CourseId
                                            select x).FirstOrDefault();
 
-                        if (CourseAvailable != null)
+                        if (alreadyRegister == null)
                         {
-                            CourseAvailable.enrolledStudents = CourseAvailable.enrolledStudents + 1;
-                            context.SaveChanges();
-                        }
+                            var enrolledCourses = new EnrolledCourses();
+                            enrolledCourses.courseId = enrolledCourse.CourseId;
+                            enrolledCourses.studentId = enrolledCourse.StudentId;
 
-                        return "OK";
+
+                            context.EnrolledCourses.Add(enrolledCourses);
+                            context.SaveChanges();
+
+                            //Update EnrolledStudents in CourseAvailable
+                            var CourseAvailable = (from x in context.CourseAvailable
+                                                   where x.id == enrolledCourse.CourseId
+                                                   select x).FirstOrDefault();
+
+                            if (CourseAvailable != null)
+                            {
+                                CourseAvailable.enrolledStudents = CourseAvailable.enrolledStudents + 1;
+                                context.SaveChanges();
+                            }
+
+                            return "OK";
+                        }
+                        else
+                        {
+                            return "El estudiante ya se encuentra matriculado en este curso.";
+                        }
                     }
                     else
                     {
@@ -178,6 +190,40 @@ namespace SAEE_API.Controllers
         }
 
         [HttpGet]
+        [Route("EnrolledCoursesPerTeacher")]
+        public object EnrolledCoursesPerTeacher(int q)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+
+                    return (from courseAvailable in context.CourseAvailable
+                            join courses in context.Courses on courseAvailable.courseId equals courses.id
+                            join teacherData in context.Users on courseAvailable.teacherId equals teacherData.id
+                            join teacher in context.TeacherData on courseAvailable.teacherId equals teacher.teacherId
+                            where courseAvailable.teacherId == q
+                            select new
+                            {
+                                CourseId = courseAvailable.id, //Course Available
+                                CourseOriginId = courseAvailable.courseId, //Courses
+                                CourseName = courses.name,
+                                CourseDescription = courses.description,
+                                TechearName = teacherData.name + " " + teacherData.lastname
+                            }).ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 1, "EnrolledCoursesPerTeacher");
+
+                return new List<EnrolledCoursesEnt>();
+            }
+        }
+
+        [HttpGet]
         [Route("SpecificCourse")]
         public object SpecificCourse(int q)
         {
@@ -199,6 +245,7 @@ namespace SAEE_API.Controllers
                             select new
                             {
                                 WeekId = week.id,
+                                ContentPerWeekId = contentPerWeek.id,
                                 CourseName = courses.name,
                                 CourseDescription = courses.description,
                                 TechearName = teacher.name + " " + teacher.lastname,
@@ -219,6 +266,8 @@ namespace SAEE_API.Controllers
                 return new List<EnrolledCoursesEnt>();
             }
         }
+
+
 
     }
 }

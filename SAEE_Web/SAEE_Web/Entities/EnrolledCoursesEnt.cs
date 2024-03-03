@@ -19,6 +19,7 @@ namespace SAEE_Web.Entities
 
         public int WeekId { get; set; }
         public int WeekNum { get; set; }
+        public int ContentPerWeekId { get; set; }
         public string Header { get; set; }
         public string Content { get; set; }
         public string CourseSchedule { get; set; }
