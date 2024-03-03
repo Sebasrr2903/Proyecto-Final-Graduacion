@@ -13,8 +13,6 @@ namespace SAEE_Web.Models
     {
         public string urlAPI = ConfigurationManager.AppSettings["urlAPI"];
 
-
-
         public string RegisterAssignment(CourseAssignmentsEnt course)
         {
             using (var client = new HttpClient())
@@ -25,5 +23,20 @@ namespace SAEE_Web.Models
                 return resp.Content.ReadFromJsonAsync<string>().Result;
             }
         }
+
+        public CourseAssignmentsEnt GetAssignment(int q)
+        {
+            using (var client = new HttpClient())
+            {
+                var url = urlAPI + "GetAssignment?q=" + q;
+                var resp = client.GetAsync(url).Result;
+                return resp.Content.ReadFromJsonAsync<CourseAssignmentsEnt>().Result;
+
+            }
+        }
+
+
+
+
     }
 }

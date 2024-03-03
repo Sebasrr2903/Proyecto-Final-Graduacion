@@ -42,5 +42,41 @@ namespace SAEE_API.Controllers
                 return string.Empty;
             }
         }
+
+        [HttpGet]
+        [Route("GetAssignment")]
+        public object GetAssignment(int q)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    var datos = (from x in context.CourseAssignments
+                                 where x.id == q
+                                 select new
+                                 {
+                                     AssignmentId = x.id,
+                                     AssignmentName = x.name,
+                                     AssignmentDescription = x.indications,
+                                     AssignmentDeadline = x.deadline,
+                                     AssignmentActive = x.active,
+                                     AssignmentWeek = x.weekId
+                                 }).FirstOrDefault();
+                    return datos;
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 1, "GetContentPerWeek");
+
+                return null;
+            }
+        }
+
+
+
+        
     }
 }

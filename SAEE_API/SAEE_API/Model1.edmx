@@ -83,9 +83,9 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="description" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="250" />
           <Property Name="file" Type="varbinary(max)" Nullable="false" />
-          <Property Name="fileExtension" Type="varchar" MaxLength="200" />
+          <Property Name="fileExtension" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="deliveredOn" Type="datetime" Nullable="false" />
           <Property Name="assignmentId" Type="int" Nullable="false" />
           <Property Name="studentId" Type="int" Nullable="false" />
@@ -115,7 +115,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="file" Type="varbinary(max)" Nullable="false" />
-          <Property Name="fileExtension" Type="varchar" MaxLength="200" />
+          <Property Name="fileExtension" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="weekId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Proceedings">
@@ -691,9 +691,9 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="file" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="fileExtension" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="fileExtension" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="deliveredOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="assignmentId" Type="Int32" Nullable="false" />
           <Property Name="studentId" Type="Int32" Nullable="false" />
@@ -729,7 +729,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="file" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="fileExtension" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="fileExtension" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="weekId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Weeks" Relationship="Self.FK_MaterialPerWeek_Weeks" FromRole="MaterialPerWeek" ToRole="Weeks" />
         </EntityType>

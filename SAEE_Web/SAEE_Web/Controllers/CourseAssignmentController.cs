@@ -42,5 +42,14 @@ namespace SAEE_Web.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult ViewCourseAssignment()
+        {
+            int q = (int)Session["SelectedAssignmentId"];
+
+            var data = courseAssignmentModel.GetAssignment(q);
+            return View(data);
+
+        }
     }
 }

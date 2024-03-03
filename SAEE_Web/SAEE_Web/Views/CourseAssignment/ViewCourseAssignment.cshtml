@@ -1,0 +1,46 @@
+﻿@model SAEE_Web.Entities.CourseAssignmentsEnt
+
+@{
+    ViewBag.Title = "ViewCourseAssignment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div style="width: 50%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; ">
+    <div class="back-button-container" style="margin-top:5rem">
+        <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> Volver
+        </button>
+    </div>
+
+    <div class="list-group" style="margin-block:5rem">
+        <div class="list-group-item-light list-group-item-action active" style="height: 5rem; background-color: rgb(48, 120, 252); ">
+            <br />
+            <div class="d-flex flex-column align-items-center" style="margin-left: 20px;">
+                <h2 class="mb-1">@Model.AssignmentName</h2>
+            </div>
+        </div>
+
+        <div class="list-group-item list-group-item-action" style="text-align:center;">
+            <div class="d-flex w-100 justify-content-center">
+                <h4 class="" style="font-weight: bold;">Información de la tarea:</h4>
+            </div>
+            <div>
+                <p class="mb-1" style="font-weight:bold;">Fecha límite:</p>
+                <p class="mb-1">@Model.AssignmentDeadline</p>
+
+                <p class="mb-1" style="font-weight:bold;">Indicaciones:</p>
+                <p class="mb-1">@Model.AssignmentDescription</p>
+                <br />
+
+                @*Aqui validar si el estudiante ya ha subido una tarea(consulta a CourseTasks) y si sí, entonces mostrar la calificiacion (Select a AssignmentGrading)
+                    y mostrar botones para eliminar la entrega
+                    probablemente se deba hacer similar a specific course, consultando 3 entidades en un solo objeto*@
+                <a class="btn btn--rAdd" style="height:40px" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
+                    <span class="text">Subir Tarea</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>

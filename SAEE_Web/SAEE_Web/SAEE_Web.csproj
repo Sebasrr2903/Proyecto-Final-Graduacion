@@ -456,6 +456,7 @@
     <Content Include="Views\CourseAssignment\RegisterAssignment.cshtml" />
     <Content Include="Views\CourseMaterial\RegisterMaterial.cshtml" />
     <Content Include="Views\ContentPerWeek\UpdateContentPerWeek.cshtml" />
+    <Content Include="Views\CourseAssignment\ViewCourseAssignment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,10 +14,13 @@ namespace SAEE_Web.Controllers
     public class CourseTasksController : Controller
     {
         CourseTasksModel courseTasksModel = new CourseTasksModel();
-        
+        static string returnUrl; //For return
+
         [HttpGet]
         public ActionResult RegisterCourseTasks()
         {
+            returnUrl = Request.UrlReferrer?.ToString();//For return
+
             return View();
         }
 
@@ -54,8 +57,7 @@ namespace SAEE_Web.Controllers
 
             if (resp == "OK")
             {
-                ViewBag.BoxMessageDone = "Tarea enviada correctamente.";
-                return View();
+                return Redirect(returnUrl); //For return
             }
             else
             {
@@ -63,5 +65,9 @@ namespace SAEE_Web.Controllers
                 return View();
             }
         }
+
+
+
+        
     }
     }

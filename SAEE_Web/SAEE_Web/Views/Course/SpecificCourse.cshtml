@@ -174,12 +174,9 @@
                                             }
                                             else if ((int)Session["UserType"] == 3 && assignment.AssignmentActive == true)
                                             {
-                                                <p class="mb-1" style="font-weight:bold;">@assignment.AssignmentName</p>
-                                                <p class="mb-1">Indicaciones: @assignment.AssignmentDescription</p>
-
-                                                <div style="text-align:left; margin-bottom:15px;">
-                                                    <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
-                                                        <span class="text">Subir Tarea</span>
+                                                <div style="text-align:left; margin-top:5px">
+                                                    <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("ViewCourseAssignment","CourseAssignment")">
+                                                        <span class="text">Ver @assignment.AssignmentName</span>
                                                     </a>
                                                 </div>
                                             }
@@ -308,12 +305,9 @@
                                             }
                                             else if ((int)Session["UserType"] == 3 && assignment.AssignmentActive == true)
                                             {
-                                                <p class="mb-1" style="font-weight:bold;">@assignment.AssignmentName</p>
-                                                <p class="mb-1">Indicaciones: @assignment.AssignmentDescription</p>
-
-                                                <div style="text-align:left; margin-bottom:15px;">
-                                                    <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
-                                                        <span class="text">Subir Tarea</span>
+                                                <div style="text-align:left; margin-top:5px">
+                                                    <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("ViewCourseAssignment","CourseAssignment")">
+                                                        <span class="text">Ver @assignment.AssignmentName</span>
                                                     </a>
                                                 </div>
                                             }

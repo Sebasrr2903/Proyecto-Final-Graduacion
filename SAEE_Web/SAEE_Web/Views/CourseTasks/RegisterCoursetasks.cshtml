@@ -13,13 +13,7 @@
             </div>
             <hr />
 
-            @if (ViewBag.BoxMessageDone != null)
-            {
-                <div class="alert alert-info" role="alert" style="text-align:center">
-                    @ViewBag.BoxMessageDone
-                </div>
-            }
-            else if(ViewBag.BoxMessage != null)
+            @if(ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-danger" role="alert" style="text-align:center">
                     @ViewBag.BoxMessage
