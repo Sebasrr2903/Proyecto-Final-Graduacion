@@ -161,6 +161,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Entities\AssignmentGradingEnt.cs" />
     <Compile Include="Entities\ContentPerWeekEnt.cs" />
     <Compile Include="Entities\CourseAssignmentsEnt.cs" />
     <Compile Include="Entities\MaterialPerWeekEnt.cs" />
@@ -458,6 +459,7 @@
     <Content Include="Views\ContentPerWeek\UpdateContentPerWeek.cshtml" />
     <Content Include="Views\CourseAssignment\ViewCourseAssignment.cshtml" />
     <Content Include="Views\CourseTasks\DeliveredCoursetasks.cshtml" />
+    <Content Include="Views\CourseTasks\GradeAssignment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

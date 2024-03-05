@@ -20,5 +20,9 @@ namespace SAEE_Web.Entities
         public int WeekId { get; set; }
         public int StudentId { get; set; }
 
+
+        public string StudentFullName { get; set; }
+
+
     }
 }

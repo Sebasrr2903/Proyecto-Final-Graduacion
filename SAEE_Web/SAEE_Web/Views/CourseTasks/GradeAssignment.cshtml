@@ -1,7 +1,7 @@
-﻿@model SAEE_Web.Entities.CoursesTasksEnt
+﻿@model SAEE_Web.Entities.AssignmentGradingEnt
 
 @{
-    ViewBag.Title = "RegisterTasks";
+    ViewBag.Title = "GradeAssignment";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,43 +9,37 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Enviar tarea</h2>
+                <h2 class="contacts_form-header_title">Calificar Tarea</h2>
             </div>
             <hr />
-
-            @if(ViewBag.BoxMessage != null)
+            @if (ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-danger" role="alert" style="text-align:center">
-                    @ViewBag.BoxMessage
+                    @ViewBag.BoxMessage<br /> Llene todos los campos
                 </div>
-            }
 
+            }
             <div class="back-button-container">
                 <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Volver
                 </button>
             </div>
 
-            @using (Html.BeginForm("RegisterCourseTasks", "CourseTasks", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm", @enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("GradeAssignment", "CourseTasks", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
             {
                 <div class="form-group">
-                    <label style="margin-right: 25rem;">Nombre de la Tarea:</label>
-                    @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Nombre de la Tarea" })
+                    <label style="margin-right: 53rem;">Nota:</label>
+                    @Html.TextBoxFor(m => m.Score, new { @class = "field required", @type = "text", @placeholder = "Nota" })
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Archivo:</label>
-                    <input type="file" id="FileNew" name="FileNew" class="field requiered" placeholder="Archivo" />
-                </div>
-
-                <div class="form-group">
-                    <label style="margin-right: 53rem;">Descripción:</label>
-                    @Html.TextBoxFor(m => m.Description, new { @class = "field required", @type = "text", @placeholder = "Descripción" })
+                    <label style="margin-right: 22rem;">Comentarios de la entrega:</label>
+                    @Html.TextBoxFor(m => m.PerformanceDescription, new { @class = "field required", @type = "text", @placeholder = "Comentarios de la entrega" })
                 </div>
 
                 <hr />
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">ENTREGAR</button>
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">CALIFICAR</button>
                 </div>
             }
         </div>

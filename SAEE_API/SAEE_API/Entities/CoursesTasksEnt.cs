@@ -19,5 +19,11 @@ namespace SAEE_API.Entities
         public int AssignmentId { get; set; }
         public int WeekId { get; set; }
         public int StudentId { get; set; }
+
+
+        public string StudentFullName { get; set; }
+
+
+
     }
 }

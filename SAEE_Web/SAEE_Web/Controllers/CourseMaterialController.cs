@@ -82,13 +82,7 @@ namespace SAEE_Web.Controllers
             else
             {
                 return View();
-            }
-
-
-
-            
-
-            
+            }      
         }
     }
 }

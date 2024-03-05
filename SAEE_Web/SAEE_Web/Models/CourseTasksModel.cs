@@ -56,6 +56,29 @@ namespace SAEE_Web.Models
             }
         }
 
+        public CoursesTasksEnt GetTask(int q)
+        {
+            using (var client = new HttpClient())
+            {
+                var url = urlAPI + "GetTask?q=" + q;
+                var resp = client.GetAsync(url).Result;
+                return resp.Content.ReadFromJsonAsync<CoursesTasksEnt>().Result;
+
+            }
+        }
+
+        public string GradeAssignment(AssignmentGradingEnt grade)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = urlAPI + "GradeAssignment";
+                JsonContent content = JsonContent.Create(grade);
+                var resp = client.PostAsync(url, content).Result;
+                return resp.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
+        
 
     }
 }

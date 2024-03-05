@@ -1,28 +1,17 @@
-﻿@model List<SAEE_Web.Entities.UserEnt>
+﻿@model List<SAEE_Web.Entities.CoursesTasksEnt>
+
 @{
     ViewBag.Title = "UsersTable";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <main style="margin: 20px auto; max-width: 1000px; flex-grow: 1;">
     <div style="text-align: center;">
         <h2>Tareas entregadas</h2>
         <hr />
+        
         <br>
         <div style="display:flex;">
-            &nbsp;&nbsp;
-            <div style="text-align:left">
-                <a class="btn btn--rAdd" style="display:flex; height:40px" href="@Url.Action("RegisterUser","User")">
-                    <span class="text">Crear cuenta</span>
-                </a>
-            </div>
-            &nbsp;&nbsp;
-            <div style="text-align:left">
-                <a class="btn btn--rAvailable" style="display:flex; height:40px" href="@Url.Action("EnrolledStudent", "Enrolled")">
-                    <span class="text">Matricular Estudiante</span>
-                </a>
-            </div>
             &nbsp;&nbsp;
             <div style="text-align:left">
                 <a class="btn btn--rReport" id="" style="display:flex; height:40px" href="#">
@@ -43,15 +32,13 @@
             <table id="tableData" class="table" style="">
                 <thead class="thead-light" style="">
                     <tr>
-                        <th id="Bar" scope="col">Nombre</th>
-                        <th id="Bar" scope="col">Apellidos</th>
-                        <th id="Bar" scope="col">Fecha de nacimiento</th>
-                        <th id="Bar" scope="col">Correo</th>
-                        <th id="Bar" scope="col">Teléfono</th>
-                        <th id="Bar" scope="col">Rol</th>
-                        <th id="Bar" scope="col">Estado</th>
-                        <th id="Bar" scope="col">Cambiar Estado</th>
-                        <th id="Bar" scope="col">Actualizar</th>
+                        <th id="Bar" scope="col">Nombre de tarea</th>
+                        <th id="Bar" scope="col">Descripción</th>
+                        <th id="Bar" scope="col">Archivo</th>
+                        <th id="Bar" scope="col">Fecha de Entrega</th>
+                        <th id="Bar" scope="col">Estudiante</th>
+                        <th id="Bar" scope="col">Calificar</th>
+                        <th id="Bar" scope="col">Editar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,41 +46,26 @@
                     {
                         <tr>
                             <th>@item.Name</th>
-                            <td>@item.Lastname</td>
-                            <td>@item.Birthdate.ToString("dd/MM/yyyy")</td>
-                            <td>@item.Email</td>
-                            <td>@item.PhoneNumber</td>
+                            <td>@item.Description</td>
 
-                            @if (item.UserType == 1)
-                            {
-                                <td>Administrador</td>
-                            }
-                            else if (item.UserType == 2)
-                            {
-                                <td>Profesor</td>
-                            }
-                            else
-                            {
-                                <td>Estudiante</td>
-                            }
-
-                            @if (item.Active)
-                            {
-                                <td>Activo</td>
-                            }
-                            else
-                            {
-                                <td>Inactivo</td>
-                            }
-
-                            <td style="text-align:center">
-                                <a href="@Url.Action("ChangeStatusUser","User", new { q = item.Id })"><i class="fa-solid fa-rotate"></i></a>
+                            <td>
+                                <a href="@Url.Action("DownloadTask","CourseTasks", new { q = item.Id })">
+                                    <span class="text" style="color: Dodgerblue;"> @item.FileExtension</span>
+                                </a>
                             </td>
+
+                            <td>@item.DeliveredOn.ToString("dd/MM/yyyy")</td>
+                            <td>@item.StudentFullName</td>
+
                             <td style="text-align:center">
-                                <a href="@Url.Action("UpdateUser","User", new { q = item.Id })"><i class="fa-solid fa-edit"></i></a>
+                                <a href="@Url.Action("GradeAssignment","CourseTasks", new { q = item.Id })"><i class="fa-solid fa-edit"></i></a>
+                            </td>
+                            
+                            @*Realizar el editar entrega*@
+                            <td style="text-align:center">
+                                <a href="@Url.Action("UpdateGradeAssignment","CourseTasks", new { q = item.Id })"><i class="fa-solid fa-edit"></i></a>
                             </td>
                         </tr>
-
                     }
                 </tbody>
             </table>
@@ -101,7 +73,7 @@
         else
         {
             <div class="alert alert-info col-12" role="alert" style="text-align:center; margin-top:5%; font-size:18pt;">
-                No hay usuarios registrados en este momento.
+                No hay entregas en este momento.
             </div>
         }
     </div>

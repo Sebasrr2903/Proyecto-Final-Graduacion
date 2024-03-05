@@ -76,8 +76,59 @@ namespace SAEE_Web.Controllers
             return View(data);
         }
 
+        [HttpGet]
+        public ActionResult DownloadTask(int q)
+        {
+            CoursesTasksEnt task = courseTasksModel.GetTask(q);
+
+            if (task != null)
+            {
+                Response.Clear();
+                Response.Buffer = true;
+                Response.ContentType = "application/octet-stream";
+                Response.AddHeader("content-disposition", "attachment;filename=" + task.FileExtension);
+                Response.BinaryWrite(task.File);
+                Response.End();
+
+                return View();
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult GradeAssignment(int q)
+        {
+            Session["TempTaskId"] = q;
+            returnUrl = Request.UrlReferrer?.ToString();//For return
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GradeAssignment(AssignmentGradingEnt grade)
+        {
+            grade.activeUser = (int)Session["ActiveId"];//For action register
+
+            grade.TaskId = (int)Session["TempTaskId"];
+            var resp = courseTasksModel.GradeAssignment(grade);
+
+            //Mostrar mensaje si ya ha sido calificada
+            if (resp == "OK")
+            {
+                return Redirect(returnUrl); //For return
+            }
+            else
+            {
+                ViewBag.BoxMessage = "No se ha calificado la entrega.";
+                return View();
+            }
+        }
+
 
 
 
     }
-    }
+}

@@ -199,6 +199,7 @@
     <Compile Include="EnrolledCourses.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\AssignmentGradingEnt.cs" />
     <Compile Include="Entities\ContentPerWeekEnt.cs" />
     <Compile Include="Entities\CourseAssignmentsEnt.cs" />
     <Compile Include="Entities\CoursesTasksEnt.cs" />

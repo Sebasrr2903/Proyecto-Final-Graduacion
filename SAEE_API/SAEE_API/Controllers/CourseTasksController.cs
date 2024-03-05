@@ -107,7 +107,7 @@ namespace SAEE_API.Controllers
 
         [HttpGet]
         [Route("DeliveredCoursetasks")]
-        public List<CourseTasks> DeliveredCoursetasks(int q)
+        public object DeliveredCoursetasks(int q)
         {
             try
             {
@@ -115,8 +115,19 @@ namespace SAEE_API.Controllers
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var datos = (from x in context.CourseTasks
+                                 join studentData in context.Users on x.studentId equals studentData.id
                                  where x.assignmentId == q
-                                 select x).ToList();
+                                 select new
+                                 {
+                                     Id = x.id,
+                                     Name = x.name,
+                                     Description = x.description,
+                                     File = x.file,
+                                     FileExtension = x.fileExtension,
+                                     DeliveredOn = x.deliveredOn,
+                                     StudentId = x.studentId,
+                                     StudentFullName = studentData.name + " " + studentData.lastname
+                                 }).ToList();
 
                     return datos;
                 }
@@ -129,6 +140,71 @@ namespace SAEE_API.Controllers
                 return new List<CourseTasks>();
             }
         }
+
+        [HttpGet]
+        [Route("GetTask")]
+        public object GetTask(int q)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    var datos = (from x in context.CourseTasks
+                                 where x.id == q
+                                 where x.id == q
+                                 select x).FirstOrDefault();
+
+                    return datos;
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 1, "GetTask");
+
+                return null;
+            }
+        }
+
+
+        [HttpPost]
+        [Route("GradeAssignment")]
+        public string GradeAssignment(AssignmentGradingEnt grade)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    //Validar que solo se esté calificando una vez la entrega
+
+                    var grades = new AssignmentGrading();
+                    grades.taskId = grade.TaskId;
+                    grades.score = grade.Score;
+                    grades.performanceDescription = grade.PerformanceDescription;
+
+                    context.AssignmentGrading.Add(grades);
+                    context.SaveChanges();
+
+                    reports.ActionReport("GradeAssignmentDone", grade.activeUser, "GradeAssignment");
+
+                    return "OK";
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, grade.activeUser, "GradeAssignment");
+
+                return string.Empty;
+            }
+
+        }
+
+
+
+
+
 
 
     }
