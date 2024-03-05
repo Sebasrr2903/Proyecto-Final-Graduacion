@@ -46,7 +46,16 @@ namespace SAEE_Web.Models
             }
         }
 
-        
+        public List<CoursesTasksEnt> DeliveredCoursetasks(int q)
+        {
+            using (var client = new HttpClient())
+            {
+                var url = urlAPI + "DeliveredCoursetasks?q=" + q;
+                var res = client.GetAsync(url).Result;
+                return res.Content.ReadFromJsonAsync<List<CoursesTasksEnt>>().Result;
+            }
+        }
+
 
     }
 }

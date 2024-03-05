@@ -105,6 +105,31 @@ namespace SAEE_API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("DeliveredCoursetasks")]
+        public List<CourseTasks> DeliveredCoursetasks(int q)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    var datos = (from x in context.CourseTasks
+                                 where x.assignmentId == q
+                                 select x).ToList();
+
+                    return datos;
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, 1, "DeliveredCoursetasks");
+
+                return new List<CourseTasks>();
+            }
+        }
+
 
     }
 }

@@ -67,7 +67,17 @@ namespace SAEE_Web.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult DeliveredCoursetasks()
+        {
+            int assignmentId = (int)Session["SelectedAssignmentId"];
+            var data = courseTasksModel.DeliveredCoursetasks(assignmentId);
 
-        
+            return View(data);
+        }
+
+
+
+
     }
     }
