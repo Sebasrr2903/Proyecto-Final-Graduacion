@@ -55,7 +55,14 @@ namespace SAEE_Web.Models
             }
         }
 
-
+        public void DeleteMaterial(int q)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = urlAPI + "DeleteMaterial?q=" + q;
+                var resp = client.DeleteAsync(url).Result;
+            }
+        }
 
 
 

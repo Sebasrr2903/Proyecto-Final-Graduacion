@@ -84,5 +84,16 @@ namespace SAEE_Web.Controllers
                 return View();
             }      
         }
+
+        [HttpGet]
+        public ActionResult DeleteMaterial(int q)
+        {
+            returnUrl = Request.UrlReferrer?.ToString();
+
+            materialPerWeekModel.DeleteMaterial(q);
+            return Redirect(returnUrl); //For return
+        }
+
+        
     }
 }

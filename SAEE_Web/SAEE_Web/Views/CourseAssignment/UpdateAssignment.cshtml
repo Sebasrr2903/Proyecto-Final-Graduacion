@@ -1,0 +1,103 @@
+﻿@model SAEE_Web.Entities.CourseAssignmentsEnt
+
+@{
+    ViewBag.Title = "UpdateAssignment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="contacts">
+    <section class="contacts_form">
+        <div class="container">
+            <div class="contacts_form-header">
+                <h2 class="contacts_form-header_title">Enviar tarea</h2>
+            </div>
+            <hr />
+
+            @if (ViewBag.BoxMessage != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align:center">
+                    @ViewBag.BoxMessage
+                </div>
+            }
+
+            <div class="back-button-container">
+                <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </div>
+
+            @using (Html.BeginForm("UpdateAssignment", "CourseAssignment", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
+            {
+                @Html.HiddenFor(m => m.AssignmentId)
+
+                <div class="form-group">
+                    <label style="margin-right: 25rem;">Nombre de la Tarea:</label>
+                    @Html.TextBoxFor(m => m.AssignmentName, new { @class = "field required", @type = "text", @placeholder = "Nombre de la Tarea" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Indicaciones:</label>
+                    @Html.TextAreaFor(m => m.AssignmentDescription, new { @class = "form-control", @rows = "4", @placeholder = "Indicaciones" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 28rem;">Fecha Límite:</label>
+                    @Html.TextBoxFor(m => m.AssignmentDeadline, "{0:yyyy-MM-ddTHH:mm}", new { @class = "field required", @type = "datetime-local", @placeholder = "Fecha Límite" })
+                </div>
+
+                <hr />
+                <div class="contacts_form-form_footer">
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">ACTUALIZAR</button>
+                </div>
+            }
+        </div>
+    </section>
+</main>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center align-items-center" style="background: rgb(61, 89, 255); color:#fff; ">
+                <h5 class="modal-title mr-auto" id="confirmationModalLabel">Confirmación de Registro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center align-content-center">
+                <div style="display: inline-block;">
+                    <img src="~/Images/checklist.png" style="width: 100px;" />
+                </div>
+
+                <h5 class="modal-title mr-auto">¿Está seguro de agregar el curso?</h5>
+                <p id="courseName" style="font-size: 24px; font-weight: bold;"></p>
+            </div>
+            <div class="modal-footer d-flex justify-content-center" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
+                <!-- Añadido d-flex justify-content-center -->
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn--rAvailable" style="background-color: rgb(127, 167, 118); color: #ffff " onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function showConfirmation() {
+        var courseName = $('#Name').val();
+        $('#courseName').text('"' + courseName + '"');
+        $('#confirmationModal').modal('show');
+    }
+
+    function submitForm() {
+        $('#registerForm').submit();
+    }
+</script>
+
+
+
+
+
+

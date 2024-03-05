@@ -52,6 +52,62 @@ namespace SAEE_Web.Controllers
 
         }
 
-        //
+        [HttpGet]
+        public ActionResult ChangeStatusAssignment()
+        {
+            returnUrl = Request.UrlReferrer?.ToString();
+
+
+            int q = (int)Session["SelectedAssignmentId"];
+
+
+            var assignment = new CourseAssignmentsEnt();
+            assignment.AssignmentId = q;
+
+            assignment.activeUser = (int)Session["ActiveId"];//For action register
+
+            var resp = courseAssignmentModel.ChangeStatusAssignment(assignment);
+
+            if (resp == "OK")
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                ViewBag.BoxMessage = "No se pudo modificar el estado de la tarea.";
+                return Redirect(returnUrl);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult UpdateAssignment()
+        {
+            returnUrl = Request.UrlReferrer?.ToString();
+
+            int q = (int)Session["SelectedAssignmentId"];
+            var data = courseAssignmentModel.GetAssignment(q);
+            return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateAssignment(CourseAssignmentsEnt assignment)
+        {
+            assignment.activeUser = (int)Session["ActiveId"];//For action register
+
+            var resp = courseAssignmentModel.UpdateAssignment(assignment);
+
+            if (resp == "OK")
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                ViewBag.BoxMessage = "No se pudo actualizar la tarea.";
+                return View();
+            }
+        }
+
+        
+
     }
 }

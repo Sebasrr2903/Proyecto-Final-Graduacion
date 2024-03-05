@@ -69,14 +69,84 @@ namespace SAEE_API.Controllers
             catch (Exception e)
             {
                 string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 1, "GetContentPerWeek");
+                reports.ErrorReport(errorDescription, 1, "GetAssignment");
 
                 return null;
             }
         }
 
+        [HttpPut]
+        [Route("ChangeStatusAssignment")]
+        public string ChangeStatusAssignment(CourseAssignmentsEnt assignment)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    var data = (from x in context.CourseAssignments
+                                where x.id == assignment.AssignmentId
+                                select x).FirstOrDefault();
+
+                    if (data != null)
+                    {
+                        data.active = (data.active == true ? false : true);
+                        context.SaveChanges();
+                    }
+
+                    reports.ActionReport("ChangeStatusAssignmentDone", assignment.activeUser, "ChangeStatusAssignment");
+                    return "OK";
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, assignment.activeUser, "ChangeStatusAssignment");
+
+                return string.Empty;
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateAssignment")]
+        public string UpdateAssignment(CourseAssignmentsEnt assignment)
+        {
+            try
+            {
+                using (var context = new SAEEEntities())
+                {
+                    var data = (from x in context.CourseAssignments
+                                where x.id == assignment.AssignmentId
+                                select x).FirstOrDefault();
+
+                    if (data != null)
+                    {
+                        data.name = assignment.AssignmentName;
+                        data.indications = assignment.AssignmentDescription;
+                        data.deadline = assignment.AssignmentDeadline;
+
+                        context.SaveChanges();
+                    }
+
+                    reports.ActionReport("UpdateAssignmentDone", assignment.activeUser, "UpdateAssignment");
+                    return "OK";
+                }
+            }
+            catch (Exception e)
+            {
+                string errorDescription = e.Message.ToString();
+                reports.ErrorReport(errorDescription, assignment.activeUser, "UpdateAssignment");
+
+                return string.Empty;
+            }
+        }
+
+
 
 
         
+        
+
+
+
     }
 }

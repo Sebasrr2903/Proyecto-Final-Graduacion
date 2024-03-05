@@ -35,6 +35,29 @@ namespace SAEE_Web.Models
             }
         }
 
+        public string ChangeStatusAssignment(CourseAssignmentsEnt assignment)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = urlAPI + "ChangeStatusAssignment";
+                JsonContent content = JsonContent.Create(assignment);
+                var resp = client.PutAsync(url, content).Result;
+                return resp.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
+        public string UpdateAssignment(CourseAssignmentsEnt assignment)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = urlAPI + "UpdateAssignment";
+                JsonContent content = JsonContent.Create(assignment);
+                var resp = client.PutAsync(url, content).Result;
+                return resp.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
+
 
 
 

@@ -106,7 +106,20 @@ namespace SAEE_API.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("DeleteMaterial")]
+        public void DeleteMaterial(long q)
+        {
+            using (var context = new SAEEEntities())
+            {
+                var datos = (from x in context.MaterialPerWeek
+                             where x.id == q
+                             select x).FirstOrDefault();
 
+                context.MaterialPerWeek.Remove(datos);
+                context.SaveChanges();
+            }
+        }
         
 
     }
