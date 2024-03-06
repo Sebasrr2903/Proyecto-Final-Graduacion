@@ -1,6 +1,7 @@
 ﻿using SAEE_API.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -120,6 +121,25 @@ namespace SAEE_API.Controllers
 
                             context.EnrolledCourses.Add(enrolledCourses);
                             context.SaveChanges();
+
+
+                            //Send an email to the account created with the credentials
+                            var studentData = (from x in context.Users
+                                                   where x.id == enrolledCourse.StudentId
+                                                   select x).FirstOrDefault();
+
+                            var courseData = (from x in context.Courses
+                                               where x.id == enrolledCourse.CourseId
+                                               select x).FirstOrDefault();
+
+                            string urlHtml = AppDomain.CurrentDomain.BaseDirectory + "Templates\\EnrolledDone.html";
+                            string html = File.ReadAllText(urlHtml);
+                            html = html.Replace("@@Name", studentData.name + " " + studentData.lastname);
+                            html = html.Replace("@@Course", courseData.name); 
+                            html = html.Replace("@@Description", courseData.description);
+
+                            mailService.SendEmail(studentData.email, "Matrícula SAEE-ELEC", html);
+
 
                             //Update EnrolledStudents in CourseAvailable
                             var CourseAvailable = (from x in context.CourseAvailable

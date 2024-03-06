@@ -341,6 +341,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Templates\Images\ELEC.png" />
     <Content Include="Templates\RecoverPassword.html" />
+    <Content Include="Templates\EnrolledDone.html" />
     <Content Include="Templates\TemporaryCredentials.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
