@@ -42,7 +42,20 @@ div.dataTables_wrapper div.dataTables_filter input {
     line-height: 1;
 }
 /*css datable*/
-
+.btn--rUpdate {
+    border-color: #18a3c2;
+    height: 30px;
+    background: #18a3c2;
+    position: relative;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: .3s ease-in-out;
+    -o-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    -webkit-box-shadow: 0 2px 4px rgba(43,53,67,0);
+    box-shadow: 0 2px 4px rgba(43,53,67,0);
+}
 
 .btn--rAdd {
     border-color: rgb(156, 187, 152);

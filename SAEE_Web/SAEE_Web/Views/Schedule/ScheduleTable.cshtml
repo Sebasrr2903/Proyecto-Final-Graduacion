@@ -1,0 +1,82 @@
+﻿@model List<SAEE_Web.Entities.ScheduleEnt>
+
+@{
+    ViewBag.Title = "ScheduleTable";
+}
+
+<main style="margin: 20px auto; max-width: 1000px; flex-grow: 1;">
+    <div class="back-button-container" style="position: absolute; top: 20px; left: 20px;">
+        <!-- Añade estilo de posicionamiento y margen -->
+        <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> Volver
+        </button>
+    </div>
+    <div style="text-align: center; margin-top: 70px;">
+        <!-- Ajusta el margen superior para evitar solapamiento con el botón -->
+        <h2>Horarios</h2>
+        <hr />
+
+        <br />
+        @if (Model.Count() > 0)
+        {
+            if (ViewBag.BoxMessage != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align:center">
+                    @ViewBag.BoxMessage
+                </div>
+            }
+
+            <table id="tableData" class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th id="Bar" scope="col">Dia</th>
+                        <th id="Bar" scope="col">Hora de Inicio</th>
+                        <th id="Bar" scope="col">Hora Fin</th>
+                        <th id="Bar" scope="col">Actualizar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th>@item.Day</th>
+                            <td>@item.StartTime</td>
+                            <td>@item.EndTime</td>
+
+                            <td style="text-align:center">
+                                <a href="@Url.Action("UpdateCourse","Course", new { q = item.Id })"><i class="fa-solid fa-edit"></i></a>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info col-12" role="alert" style="text-align:center; margin-top:5%; font-size:18pt;">
+                No hay horarios registrados en este momento.
+            </div>
+        }
+    </div>
+    <hr />
+</main>
+
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#tableData').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            "paging": true // Habilita la paginación
+        });
+    });
+</script>
