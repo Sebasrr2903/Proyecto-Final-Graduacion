@@ -157,11 +157,13 @@
     <Compile Include="Controllers\CourseTasksController.cs" />
     <Compile Include="Controllers\CourseAvailableController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\SchedulesController.cs" />
     <Compile Include="Controllers\EnrolledController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Entities\AssignmentGradingEnt.cs" />
+    <Compile Include="Entities\SchedulesEnt.cs" />
     <Compile Include="Entities\ContentPerWeekEnt.cs" />
     <Compile Include="Entities\CourseAssignmentsEnt.cs" />
     <Compile Include="Entities\MaterialPerWeekEnt.cs" />
@@ -176,6 +178,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\SchedulesModel.cs" />
     <Compile Include="Models\ContentPerWeekModel.cs" />
     <Compile Include="Models\CourseAssignmentModel.cs" />
     <Compile Include="Models\CourseTasksModel.cs" />
@@ -461,6 +464,8 @@
     <Content Include="Views\CourseTasks\DeliveredCoursetasks.cshtml" />
     <Content Include="Views\CourseTasks\GradeAssignment.cshtml" />
     <Content Include="Views\CourseAssignment\UpdateAssignment.cshtml" />
+    <Content Include="Views\Schedules\RegisterSchedule.cshtml" />
+    <Content Include="Views\Schedules\ScheduleTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

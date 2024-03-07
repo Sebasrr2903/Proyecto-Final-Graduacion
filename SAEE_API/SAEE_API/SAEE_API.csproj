@@ -177,6 +177,7 @@
     <Compile Include="Controllers\CourseTasksController.cs" />
     <Compile Include="Controllers\CourseAvailableController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\EnrolledCoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaterialPerWeekController.cs" />
@@ -200,6 +201,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\AssignmentGradingEnt.cs" />
+    <Compile Include="Entities\ScheduleEnt.cs" />
     <Compile Include="Entities\ContentPerWeekEnt.cs" />
     <Compile Include="Entities\CourseAssignmentsEnt.cs" />
     <Compile Include="Entities\CoursesTasksEnt.cs" />

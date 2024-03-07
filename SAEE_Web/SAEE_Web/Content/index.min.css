@@ -2306,7 +2306,7 @@ main > .underlay {
 
 .banner {
     padding: 60px 0 0;
-    background: url(../img/placeholder.jpg) center right/cover no-repeat;
+    background: url(/Images/placeholder.jpg) center right/cover no-repeat;
     position: relative
 }
 

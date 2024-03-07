@@ -6,6 +6,7 @@
 }
 <style>
     .list-group {
+        height:100%;
         max-width: 100%; /* Asegura que el contenedor no se desborde */
         overflow: hidden; /* Oculta cualquier contenido que se desborde */
     }
@@ -54,6 +55,7 @@
             <div class="list-group">
                 <div class="banner">
                     <div class="underlay"></div>
+
                     <div class="container d-lg-flex align-items-center">
                         <div class="banner_content">
                             <h1 class="banner_content-title">
@@ -126,13 +128,13 @@
                                 {
                                     if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
                                     {
-                                        <div style="text-align: left; display: flex; flex-direction: row; margin-bottom: 10px;">
+                                        <div style=" text-align: left; display: flex; padding-left: 25%; flex-direction: row; margin-bottom: 20px;">
                                             <a href="@Url.Action("DownloadMaterial","CourseMaterial", new { q = material.MaterialId })">
                                                 <span class="text" style="color: rgb(72, 1, 219);"> <i class="fa-solid fa-file" style="font-size: 20px;"> </i> Descargar @material.MaterialName</span>
                                             </a>
 
                                             <a href="@Url.Action("DeleteMaterial","CourseMaterial", new { q = material.MaterialId })" style="color: red; margin-left: 10px; display: flex; align-items: center;">
-                                                <i class="fa-solid fa-trash" style="font-size: 20px;"></i>
+                                                <i class="fa-solid fa-trash" style="font-size: 20px; padding-left:17px"></i>
                                             </a>
                                         </div>
                                     }
