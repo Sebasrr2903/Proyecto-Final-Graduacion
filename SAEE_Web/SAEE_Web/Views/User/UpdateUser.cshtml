@@ -38,16 +38,16 @@
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Email:</label>
-                    @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "email", @placeholder = "Email" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "text", @placeholder = "Email", id = "emailInput" })
                 </div>
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Número:</label>
-                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "field required", @type = "", @placeholder = "Telefono" })
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "field required", @type = "number", @placeholder = "Telefono" })
                 </div>
 
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">ACTUALIZAR</button>
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">ACTUALIZAR</button>
                 </div>
             }
         </div>
@@ -85,8 +85,48 @@
 
 
 
+@{
+    string at = "@";
+}
 
 <script>
+    var at = "@Html.Raw(at)";
+
+    function validateForm() {
+        var formIsValid = true;
+        $(".field.required").each(function () {
+            if ($(this).val().trim() === "") {
+                formIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Este campo es obligatorio.</p>");
+                }
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+
+                //Si hay datos entonces se valida el correo manualmente
+                if ($(this).attr("id") === "emailInput") {
+                    var email = document.getElementById("emailInput").value;
+
+                    var hasAnAt = email.includes(at);
+                    if (hasAnAt) {
+                        var hasADot = email.split(at)[1].includes(".");
+                    }
+
+                    if (!hasAnAt || !hasADot) {
+                        $(this).after("<p class='error-message' style='color: red; text-align: left;'>El valor debe corresponder a un correo electrónico.</p>");
+                        formIsValid = false;
+                    }
+                }
+            }
+        });
+
+        if (formIsValid) {
+            showConfirmation();
+        }
+    }
+
     function showConfirmation() {
         var userName = $('#Name').val();
         $('#userName').text('Nombre del Usuario: ' + userName);
@@ -97,3 +137,4 @@
         $('#registerForm').submit();
     }
 </script>
+

@@ -27,7 +27,8 @@ namespace SAEE_API.Controllers
                     var data = (from x in context.Courses select x).ToList();
                     var list = new List<System.Web.Mvc.SelectListItem>();
 
-                    foreach (var x in data)
+					list.Add(new System.Web.Mvc.SelectListItem { Value = 0.ToString(), Text = "Seleccione" });
+					foreach (var x in data)
                     {
                         list.Add(new System.Web.Mvc.SelectListItem { Value = x.id.ToString(), Text = x.name });
                     }
@@ -62,7 +63,8 @@ namespace SAEE_API.Controllers
 
                     var list = new List<System.Web.Mvc.SelectListItem>();
 
-                    foreach (var x in data)
+					list.Add(new System.Web.Mvc.SelectListItem { Value = 0.ToString(), Text = "Seleccione" });
+					foreach (var x in data)
                     {
                         list.Add(new System.Web.Mvc.SelectListItem { Value = x.TeacherId.ToString(), Text = x.TeacherName});
                     }
@@ -89,7 +91,8 @@ namespace SAEE_API.Controllers
                     var data = (from x in context.Schedule select x).ToList();
                     var list = new List<System.Web.Mvc.SelectListItem>();
 
-                    foreach (var x in data)
+					list.Add(new System.Web.Mvc.SelectListItem { Value = 0.ToString(), Text = "Seleccione" });
+					foreach (var x in data)
                     {
                         list.Add(new System.Web.Mvc.SelectListItem { Value = x.id.ToString(), Text = x.day + " " + x.startTime + " " + x.endTime});
                     }

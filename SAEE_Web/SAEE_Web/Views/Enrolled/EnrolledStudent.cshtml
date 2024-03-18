@@ -33,22 +33,31 @@
                 </button>
             </div>
 
-            @using (Html.BeginForm("EnrolledStudent", "Enrolled", FormMethod.Post, new { @class = "contacts_form-form" , id ="registerForm"}))
+            @using (Html.BeginForm("EnrolledStudent", "Enrolled", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
             {
                 <h5>Seleccione el estudiante que desea matricular.</h5>
                 <br />
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Estudiante:</label>
-                    @Html.DropDownListFor(m => m.StudentId, ViewBag.SelectListStudents as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType" })
+                    @Html.DropDownListFor(m => m.StudentId, ViewBag.SelectListStudents as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Estudiante", id = "Student" })
                 </div>
 
+                //Lista seleccionable para condicionar
+                <label style="margin-right: 53rem;">Curso:</label>
+                <select name="Course" id="Course" class="form-control form-control-lg" onchange="filterCourses()">
+                    @foreach (var item in ViewBag.SelectListCourses as List<SelectListItem>)
+                    {
+                        <option value="@item.Text">@item.Text</option>
+                    }
+                </select>
+
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Curso:</label>
-                    @Html.DropDownListFor(m => m.CourseId, ViewBag.SelectListCoursesAvailable as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType" })
+                    <label style="margin-right: 53rem;">Horario:</label>
+                    @Html.DropDownListFor(m => m.CourseId, ViewBag.SelectListCoursesAvailable as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "CourseAvailable", id = "CourseAvailable" })
                 </div>
                 <hr />
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">MATRICULAR</button>
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">MATRICULAR</button>
                 </div>
             }
         </div>
@@ -83,8 +92,6 @@
 </div>
 
 
-
-
 <script>
     function showConfirmation() {
         var studentType = $('#UserType').val();
@@ -95,6 +102,46 @@
     function submitForm() {
         $('#registerForm').submit();
     }
+
+    function filterCourses() {
+        var selectedCourseName = document.getElementById("Course").value;
+        var courseDropdown = document.getElementById("CourseAvailable");
+        var availableCourses = @Html.Raw(Json.Encode(ViewBag.SelectListCoursesAvailable)); // Obtener la lista de cursos disponibles desde el ViewBag
+
+        // Limpiar las opciones existentes en el segundo dropdown
+        courseDropdown.innerHTML = "";
+
+        // Filtrar y agregar las opciones correspondientes al segundo dropdown
+        availableCourses.forEach(function(course) {
+            var courseName = course.Text.split("||")[0].trim(); // Obtener solo el nombre del curso
+
+            if (courseName === selectedCourseName) {
+                var option = document.createElement("option");
+                option.text = course.Text;
+                option.value = course.Value;
+                courseDropdown.add(option);
+            }
+        });
+    }
+
+    function validateForm() {
+        var selectIsValid = true;
+        $(".form-control").each(function () {
+            if ($(this).val().trim() == 0) {
+                selectIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Debe realizar una elección.</p>");
+                }
+
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+            }
+        });
+
+        if (selectIsValid) {
+            showConfirmation();
+        }
+    }
 </script>
-
-

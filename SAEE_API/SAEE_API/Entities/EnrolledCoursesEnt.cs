@@ -27,12 +27,12 @@ namespace SAEE_API.Entities
 
         public int TeacherExperience { get; set; }
         public string TeacherSpecialty { get; set; }
-
-        
-            
+		public byte[] TeacherPhoto { get; set; }
 
 
 
 
-    }
+
+
+	}
 }

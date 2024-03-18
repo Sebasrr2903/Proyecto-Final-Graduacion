@@ -18,31 +18,19 @@
                 </div>
             }
 
-            @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "contacts_form-form" }))
+            @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "contacts_form-form", id = "loginForm" }))
             {
                 <div class="form-group">
                     <label style="margin-right: 26rem;">Correo electronico:</label>
-                    @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "email", @placeholder = "Email" })
-
-                    @* ALERT *@
-                    @if (ViewBag.MessageMail != null)
-                    {
-                        <p style="color:red;margin-right:15rem;">@ViewBag.MessageMail</p>
-                    }
+                    @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "text", @placeholder = "Email", id = "emailInput" })
                 </div>
                 <div class="form-group">
                     <label style="margin-right: 52rem;">Contraseña:</label>
                     @Html.TextBoxFor(m => m.Password, new { @class = "field required", @type = "password", @placeholder = "Contraseña" })
-
-                    @* ALERT *@
-                    @if (ViewBag.MessagePass != null)
-                    {
-                        <p style="color: red;margin-right:15rem;">@ViewBag.MessagePass</p>
-                    }
                 </div>
 
                 <div class="contacts_form-form_footer">
-                    <input type="submit" class="btn btn--login" style="color:white;" value="INICIAR SESIÓN">
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">INICIAR SESIÓN</button>
                 </div>
 
                 <div class="text-center mt-4 font-weight-light">
@@ -52,3 +40,49 @@
         </div>
     </section>
 </main>
+
+
+
+@{
+    string at = "@";
+}
+
+<script>
+    var at = "@Html.Raw(at)";
+
+    function validateForm() {
+        var formIsValid = true;
+        $(".field.required").each(function () {
+            if ($(this).val().trim() === "") {
+                formIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Este campo es obligatorio.</p>");
+                }
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+
+                //Si hay datos entonces se valida el correo manualmente
+                if ($(this).attr("id") === "emailInput") {
+                    var email = document.getElementById("emailInput").value;
+
+                    var hasAnAt = email.includes(at);
+                    if (hasAnAt) {
+                        var hasADot = email.split(at)[1].includes(".");
+                    }
+
+                    if (!hasAnAt || !hasADot) {
+                        $(this).after("<p class='error-message' style='color: red; text-align: left;'>El valor debe corresponder a un correo electrónico.</p>");
+                        formIsValid = false;
+                    }
+                }
+            }
+        });
+
+        if (formIsValid) {
+            $('#loginForm').submit();
+        }
+    }
+
+</script>

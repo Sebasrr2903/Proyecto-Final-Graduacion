@@ -39,7 +39,8 @@ namespace SAEE_API.Controllers
 
                     var list = new List<System.Web.Mvc.SelectListItem>();
 
-                    foreach (var x in data)
+					list.Add(new System.Web.Mvc.SelectListItem { Value = 0.ToString(), Text = "Seleccione" });
+					foreach (var x in data)
                     {
                         list.Add(new System.Web.Mvc.SelectListItem { Value = x.CourseId.ToString(), Text = x.CourseName + " || " + x.CourseSchedule + " || " + x.TechearName + " || " + x.AvailableQuota });
                     }
@@ -70,7 +71,8 @@ namespace SAEE_API.Controllers
 
                     var list = new List<System.Web.Mvc.SelectListItem>();
 
-                    foreach (var x in data)
+					list.Add(new System.Web.Mvc.SelectListItem { Value = 0.ToString(), Text = "Seleccione" });
+					foreach (var x in data)
                     {
                         list.Add(new System.Web.Mvc.SelectListItem { Value = x.id.ToString(), Text = x.name + " " + x.lastname});
                     }
@@ -128,9 +130,14 @@ namespace SAEE_API.Controllers
                                                    where x.id == enrolledCourse.StudentId
                                                    select x).FirstOrDefault();
 
-                            var courseData = (from x in context.Courses
-                                               where x.id == enrolledCourse.CourseId
-                                               select x).FirstOrDefault();
+
+							var courseAvailableData = (from x in context.CourseAvailable
+											  where x.id == enrolledCourse.CourseId
+													   select x).FirstOrDefault();
+
+							var courseData = (from x in context.Courses
+                                               where x.id == courseAvailableData.courseId
+											  select x).FirstOrDefault();
 
                             string urlHtml = AppDomain.CurrentDomain.BaseDirectory + "Templates\\EnrolledDone.html";
                             string html = File.ReadAllText(urlHtml);
@@ -274,7 +281,8 @@ namespace SAEE_API.Controllers
                                 Content = contentPerWeek.content,
                                 CourseSchedule = schedule.day + " " + schedule.startTime + " " + schedule.endTime,
                                 TeacherExperience = teacherData.experienceYears,
-                                TeacherSpecialty = specialties.description
+                                TeacherSpecialty = specialties.description,
+                                TeacherPhoto = teacher.profilePicture
                             }).ToList();
                 }
             }

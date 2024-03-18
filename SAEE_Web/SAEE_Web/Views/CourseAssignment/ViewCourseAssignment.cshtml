@@ -5,42 +5,180 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .list-group {
+        height: 100%;
+        max-width: 100%; /* Asegura que el contenedor no se desborde */
+        overflow: hidden; /* Oculta cualquier contenido que se desborde */
+    }
+</style>
 
-<div style="width: 50%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; ">
-    <div class="back-button-container" style="margin-top:5rem">
-        <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
-            <i class="fas fa-arrow-left"></i> Volver
-        </button>
-    </div>
+<div style="width: 70%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; margin-block-end:8%;margin-top:2%;">
+    <div id="content-container">
+        <div class="list-group">
+            <div class="banner" style="height: 15rem; display: flex; align-items: center;">
+                <div class="underlay" style="height: 15rem;"></div>
 
-    <div class="list-group" style="margin-block:5rem">
-        <div class="list-group-item-light list-group-item-action active" style="height: 5rem; background-color: rgb(48, 120, 252); ">
-            <br />
-            <div class="d-flex flex-column align-items-center" style="margin-left: 20px;">
-                <h2 class="mb-1">@Model.AssignmentName</h2>
+                <div class="container d-lg-flex align-items-center align-content-center">
+                    <div class="banner_content" style="text-align: left;">
+                        <h1 class="banner_content-title">
+                            <i class="fa-solid fa-file-arrow-up"></i> @Model.AssignmentName
+                        </h1>
+                    </div>
+                </div>
             </div>
+
+            <div class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
+                    <h4 class="mb-1" style="color:rgb(48, 120, 252)">Descripción:</h4>
+                </div>
+                <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
+                    <p class="mb-1">Fecha límite: @Model.AssignmentDeadline</p>
+                </div>
+                <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
+                    <p class="mb-1">Indicaciones: @Model.AssignmentDescription</p>
+                </div>
+            </div>
+
+
+            @if (Model.TaskId != 0 & Model.GradingId != 0)  //Entregado y calificado
+            {
+                <div class="list-group-item list-group-item-action" style="background-color: #BEE3AF; ">
+                    <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
+                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Estado:</h4>
+                    </div>
+                    <div class="d-flex w-100">
+                        <p class="mb-1">Calificado</p>
+                    </div>
+                </div>
+
+                <div class="list-group-item list-group-item-action" style="background-color: #BEE3AF;">
+                    <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
+                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Tiempo restante:</h4>
+                    </div>
+                    <div class="d-flex w-100">
+                        <p class="mb-1">Entregado el: @Model.TaskDeliveredOn</p>
+                    </div>
+                </div>
+
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
+                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Archivos enviados:</h4>
+                    </div>
+                    <div class="d-flex w-100" style="margin-bottom:5px; margin-top:5px;">
+                        <a class="mb-1" href="@Url.Action("DownloadTask","CourseTasks", new { q = Model.TaskId })">
+                            <span class="text" style="color: Dodgerblue;"> <i class="fa-solid fa-file" style="font-size: 20px;"> </i> @Model.TaskFileExtension</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
+                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Calificación:</h4>
+                    </div>
+                    <div class="d-flex w-100">
+                        <p class="mb-1">Nota: @Model.GradingScore</p>
+                    </div>
+                    <div class="d-flex w-100">
+                        <p class="mb-1">Comentarios: @Model.GradingPerformanceDescription</p>
+                    </div>
+                </div>
+            }
+            else if (Model.TaskId != 0 & Model.GradingId == 0) //Entregado
+            {
+                <div class="list-group-item list-group-item-action" style="background-color: #F6F6F6; ">
+                    <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
+                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Estado:</h4>
+                    </div>
+                    <div class="d-flex w-100">
+                        <p class="mb-1">Sin calificar</p>
+                    </div>
+                </div>
+
+                <div class="list-group-item list-group-item-action" style="background-color: #BEE3AF;">
+                    <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
+                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Tiempo restante:</h4>
+                    </div>
+                    <div class="d-flex w-100">
+                        <p class="mb-1">Entregado el: @Model.TaskDeliveredOn</p> 
+                    </div>
+                </div>
+
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
+                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Archivos enviados:</h4>
+                    </div>
+                    <div class="d-flex w-100" style="margin-bottom:5px; margin-top:5px;">
+                        <a class="mb-1" href="@Url.Action("DownloadTask","CourseTasks", new { q = Model.TaskId })">
+                            <span class="text" style="color: Dodgerblue;"> <i class="fa-solid fa-file" style="font-size: 20px;"> </i> @Model.TaskFileExtension</span>
+                        </a>
+                    </div>
+                    <div style="display:flex;">
+                        @*Acá validar el tiempo restante tambien, si aun tiene tiempo entonces puede realizar cambios*@
+                        <a class="btn btn--rUpdate" style="margin-right: 10px; display: flex; height: 40px" href="#">
+                            <span class="text">Editar Entrega</span>
+                        </a>
+                        <a class="btn btn--rReport" style="margin-right: 10px; display: flex; height: 40px" href="#">
+                            <span class="text">Eliminar Entrega</span>
+                        </a>
+                    </div>
+                </div>
+            }
+            else //Sin entregar
+            {
+                <div class="list-group-item list-group-item-action" style="background-color: #F6F6F6; ">
+                    <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
+                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Estado:</h4>
+                    </div>
+                    <div class="d-flex w-100">
+                        <p class="mb-1">Sin calificar</p>
+                    </div>
+                </div>
+
+                <div class="list-group-item list-group-item-action" style="background-color: #F6F6F6;">
+                    <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
+                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Tiempo restante:</h4>
+                    </div>
+                    <div class="d-flex w-100">
+                        @{
+                            TimeSpan timeLeft = Model.AssignmentDeadline - DateTime.Now;
+
+                            string formattedTimeLeft = "";
+                            if (timeLeft.TotalMilliseconds > 0)
+                            {
+                                formattedTimeLeft = string.Format("{0} días, {1} horas, {2} minutos, {3} segundos",
+                                    timeLeft.Days, timeLeft.Hours, timeLeft.Minutes, timeLeft.Seconds);
+                            }
+                            else
+                            {
+                                formattedTimeLeft = "Ha caducado la fecha de entrega.";
+                            }
+                        }
+
+                        <p class="mb-1"> @formattedTimeLeft </p>
+                    </div>
+                </div><div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
+                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Archivos enviados:</h4>
+                    </div>
+                    <div style="display:flex;">
+                        @if (formattedTimeLeft == "Ha caducado la fecha de entrega.")
+                        {
+                            <div class="d-flex w-100">
+                                <p class="mb-1">Ya no puede enviar tareas, el tiempo ha caducado.</p>
+                            </div>
+                        }
+                        else {
+                            <a class="btn btn--rAdd" style="height:40px" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
+                                <span class="text">Subir Tarea</span>
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
         </div>
-
-        <div class="list-group-item list-group-item-action" style="text-align:center;">
-            <div class="d-flex w-100 justify-content-center">
-                <h4 class="" style="font-weight: bold;">Información de la tarea:</h4>
-            </div>
-            <div>
-                <p class="mb-1" style="font-weight:bold;">Fecha límite:</p>
-                <p class="mb-1">@Model.AssignmentDeadline</p>
-
-                <p class="mb-1" style="font-weight:bold;">Indicaciones:</p>
-                <p class="mb-1">@Model.AssignmentDescription</p>
-                <br />
-
-                @*Aqui validar si el estudiante ya ha subido una tarea(consulta a CourseTasks) y si sí, entonces mostrar la calificiacion (Select a AssignmentGrading)
-                    y mostrar botones para eliminar la entrega
-                    probablemente se deba hacer similar a specific course, consultando 3 entidades en un solo objeto*@
-                <a class="btn btn--rAdd" style="height:40px" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
-                    <span class="text">Subir Tarea</span>
-                </a>
-            </div>
-        </div>
-
     </div>
 </div>
+
+
+

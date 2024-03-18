@@ -26,6 +26,7 @@ namespace SAEE_Web.Entities
 
         public int TeacherExperience { get; set; }
         public string TeacherSpecialty { get; set; }
+        public byte[] TeacherPhoto { get; set; }
 
     }
 }

@@ -59,8 +59,8 @@ namespace SAEE_API.Controllers
 
                         mailService.SendEmail(user.Email, "Credenciales SAEE-ELEC", html);
 
-                        return resp;
-                    }
+						return resp;
+					}
                     else
                     {
                         //Only the response from the database is returned to show the error to the client
@@ -313,7 +313,8 @@ namespace SAEE_API.Controllers
                     var data = (from x in context.UsersTypes select x).ToList();
                     var list = new List<System.Web.Mvc.SelectListItem>();
 
-                    foreach (var x in data)
+					list.Add(new System.Web.Mvc.SelectListItem { Value = 0.ToString(), Text = "Seleccione" });
+					foreach (var x in data)
                     {
                         list.Add(new System.Web.Mvc.SelectListItem { Value = x.id.ToString(), Text = x.description });
                     }
@@ -340,7 +341,8 @@ namespace SAEE_API.Controllers
                     var data = (from x in context.Specialties select x).ToList();
                     var list = new List<System.Web.Mvc.SelectListItem>();
 
-                    foreach (var x in data)
+					list.Add(new System.Web.Mvc.SelectListItem { Value = 0.ToString(), Text = "Seleccione" });
+					foreach (var x in data)
                     {
                         list.Add(new System.Web.Mvc.SelectListItem { Value = x.id.ToString(), Text = x.description });
                     }

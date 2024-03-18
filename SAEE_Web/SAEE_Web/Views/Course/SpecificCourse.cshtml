@@ -31,7 +31,7 @@
 <div style="width: 70%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; margin-block-end:8%;">
     <br />
     @* SECONDARY NAV *@
-    <nav class="navbar navbar-expand-lg navbar-light" style="display:flex; justify-content:flex-start; background-color:#ffffff">
+    <nav class="navbar navbar-expand-lg navbar-light" style="display: flex; justify-content: flex-start; background-color: #F4F4F5; flex-wrap: wrap; ">
         @foreach (var item in Model.EnrolledCourses)
         {
             if (item.WeekNum == 0)
@@ -70,19 +70,21 @@
                         </div>
                     </div>
                 </div>
-        
-
-
-
-
             @if (item.WeekNum == 0)
             {
                 Session["SelectedWeekId"] = item.WeekId;
 
                 <div class="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
                     <div class="d-flex align-items-center">
-                        <img class="img-xs rounded-circle mr-3" src="https://cdn-icons-png.flaticon.com/512/2550/2550383.png" style="max-width: 7rem;" alt="profilePicture">
-                        <h4 class="mb-0" style="color:rgb(72, 1, 219)">@item.TechearName</h4>
+                        @if (Session["TeacherProfileImageB64"] == null)
+                        {
+                            <img class="img-xs rounded-circle mr-3" src="https://cdn-icons-png.flaticon.com/512/2550/2550383.png" style="max-width: 7rem;" alt="Foto de Perfil Default">
+                        }
+                        else
+                        {
+                            <img class="img-xs rounded-circle" src="data:image/jpeg;base64,@Session["TeacherProfileImageB64"]" style="max-width:7rem;" alt="Foto de Perfil Profesor">
+                        }
+                        <h4 class="mb-0" style="color:rgb(72, 1, 219); margin-left:7px;">@item.TechearName</h4>
                     </div>
 
                     <div class="d-flex flex-column align-items-start ml-3">
@@ -91,7 +93,6 @@
                         <p class="mb-1">@item.TeacherExperience años de experiencia</p>
                     </div>
                 </div>
-
 
                 <div class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
@@ -128,7 +129,7 @@
                                 {
                                     if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
                                     {
-                                        <div style=" text-align: left; display: flex; padding-left: 25%; flex-direction: row; margin-bottom: 20px;">
+                                        <div style=" display: flex; text-align: left; flex-direction: row; margin-bottom: 20px;">
                                             <a href="@Url.Action("DownloadMaterial","CourseMaterial", new { q = material.MaterialId })">
                                                 <span class="text" style="color: rgb(72, 1, 219);"> <i class="fa-solid fa-file" style="font-size: 20px;"> </i> Descargar @material.MaterialName</span>
                                             </a>
@@ -207,7 +208,7 @@
                                     {
                                         <div style="text-align:left; margin-top:5px">
                                             <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("ViewCourseAssignment","CourseAssignment")">
-                                                <span class="text">Ver @assignment.AssignmentName</span>
+                                                <span class="text">@assignment.AssignmentName</span>
                                             </a>
                                         </div>
                                     }
@@ -338,7 +339,7 @@
                                     {
                                         <div style="text-align:left; margin-top:5px">
                                             <a class="btn btn--rAdd" style="display:flex; height:40px" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("ViewCourseAssignment","CourseAssignment")">
-                                                <span class="text">Ver @assignment.AssignmentName</span>
+                                                <span class="text">@assignment.AssignmentName</span>
                                             </a>
                                         </div>
                                     }

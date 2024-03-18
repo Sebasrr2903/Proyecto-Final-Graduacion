@@ -24,11 +24,11 @@ namespace SAEE_Web.Models
             }
         }
 
-        public CourseAssignmentsEnt GetAssignment(int q)
+        public CourseAssignmentsEnt GetAssignment(int q, int a)
         {
             using (var client = new HttpClient())
             {
-                var url = urlAPI + "GetAssignment?q=" + q;
+                var url = urlAPI + "GetAssignment?q=" + q + "&a=" + a;
                 var resp = client.GetAsync(url).Result;
                 return resp.Content.ReadFromJsonAsync<CourseAssignmentsEnt>().Result;
 

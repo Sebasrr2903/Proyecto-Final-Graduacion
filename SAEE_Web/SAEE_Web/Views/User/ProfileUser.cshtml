@@ -40,7 +40,8 @@
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Email:</label>
-                    @Html.TextBoxFor(m => m.Email, new { @readonly = "@readonly", @class = "field required", @type = "email", @placeholder = "Email" })
+                    @Html.TextBoxFor(m => m.Email, new { @readonly = "@readonly", @class = "field required", @type = "text", @placeholder = "Email", style = "color: #B4B2B2;" })
+                    <p style="color: #1C8ADA; text-align: left;">Para editar el correo comuníquese con soporte.</p>
                 </div>
 
                 <div class="form-group">
@@ -53,7 +54,7 @@
                 </div>
                 <hr />
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">ACTUALIZAR</button>
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">ACTUALIZAR</button>
                 </div>
             }
         </div>
@@ -89,9 +90,27 @@
 </div>
 
 
-
-
 <script>
+    function validateForm() {
+        var formIsValid = true;
+        $(".field.required").each(function () {
+            if ($(this).val().trim() === "") {
+                formIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Este campo es obligatorio.</p>");
+                }
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+            }
+        });
+
+        if (formIsValid) {
+            showConfirmation();
+        }
+    }
+
     function showConfirmation() {
         var userName = $('#Name').val();
         $('#userName').text('Nombre del Usuario: ' + userName);
@@ -102,3 +121,4 @@
         $('#registerForm').submit();
     }
 </script>
+

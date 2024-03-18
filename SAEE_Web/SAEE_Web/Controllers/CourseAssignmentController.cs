@@ -46,8 +46,11 @@ namespace SAEE_Web.Controllers
         public ActionResult ViewCourseAssignment()
         {
             int q = (int)Session["SelectedAssignmentId"];
+            int a = (int)Session["ActiveId"];
 
-            var data = courseAssignmentModel.GetAssignment(q);
+            var data = courseAssignmentModel.GetAssignment(q, a);
+            //Traer en esta consulta la calificación
+            //Luego de que se procesa se puede validar el contenido y mostrar botones para borrar o editar la entrega en la vista
             return View(data);
 
         }
@@ -85,7 +88,8 @@ namespace SAEE_Web.Controllers
             returnUrl = Request.UrlReferrer?.ToString();
 
             int q = (int)Session["SelectedAssignmentId"];
-            var data = courseAssignmentModel.GetAssignment(q);
+			int a = (int)Session["ActiveId"];
+			var data = courseAssignmentModel.GetAssignment(q, a);
             return View(data);
         }
 

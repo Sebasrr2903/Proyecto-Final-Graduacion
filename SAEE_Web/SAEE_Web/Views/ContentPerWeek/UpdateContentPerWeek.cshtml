@@ -40,7 +40,7 @@
 
                 <input type="hidden" name="returnUrl" value="@Request.UrlReferrer?.ToString()" />
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">ACTUALIZAR</button>
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">ACTUALIZAR</button>
                 </div>
             }
         </div>
@@ -77,9 +77,27 @@
 </div>
 
 
-
-
 <script>
+    function validateForm() {
+        var formIsValid = true;
+        $(".field.required").each(function () {
+            if ($(this).val().trim() === "") {
+                formIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Este campo es obligatorio.</p>");
+                }
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+            }
+        });
+
+        if (formIsValid) {
+            showConfirmation();
+        }
+    }
+
     function showConfirmation() {
         var userName = $('#Name').val();
         $('#userName').text('Nombre del Usuario: ' + userName);
@@ -90,4 +108,5 @@
         $('#registerForm').submit();
     }
 </script>
+
 

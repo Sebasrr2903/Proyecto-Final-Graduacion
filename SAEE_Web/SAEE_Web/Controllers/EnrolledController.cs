@@ -11,12 +11,15 @@ namespace SAEE_Web.Controllers
     public class EnrolledController : Controller
     {
         EnrolledCoursesModel enrolledCoursesModel = new EnrolledCoursesModel();
+		CourseAvailableModel courseAvailableModel = new CourseAvailableModel();
 
 
-        [HttpGet]
+		[HttpGet]
         public ActionResult EnrolledStudent()
         {
-            ViewBag.SelectListCoursesAvailable = enrolledCoursesModel.SelectListCoursesAvailable();
+			ViewBag.SelectListCourses = courseAvailableModel.SelectListCourses(); //Lista solo para condicionar la el selected real
+
+			ViewBag.SelectListCoursesAvailable = enrolledCoursesModel.SelectListCoursesAvailable();
             ViewBag.SelectListStudents = enrolledCoursesModel.SelectListStudents();
             return View();
         }
@@ -25,16 +28,20 @@ namespace SAEE_Web.Controllers
         [HttpPost]
         public ActionResult EnrolledStudent(EnrolledCoursesEnt enrolledCourses)
         {
-            //user.activeUser = (int)Session["ActiveId"];//For action register
+			//user.activeUser = (int)Session["ActiveId"];//For action register
+			ViewBag.SelectListCourses = courseAvailableModel.SelectListCourses(); //Lista solo para condicionar la el selected real
 
-            ViewBag.SelectListCoursesAvailable = enrolledCoursesModel.SelectListCoursesAvailable();
+			ViewBag.SelectListCoursesAvailable = enrolledCoursesModel.SelectListCoursesAvailable();
             ViewBag.SelectListStudents = enrolledCoursesModel.SelectListStudents();
+
 
             var resp = enrolledCoursesModel.EnrolledStudent(enrolledCourses);
 
             if (resp == "OK")
             {
-                ViewBag.SelectListCoursesAvailable = enrolledCoursesModel.SelectListCoursesAvailable();
+				ViewBag.SelectListCourses = courseAvailableModel.SelectListCourses(); //Lista solo para condicionar la el selected real
+
+				ViewBag.SelectListCoursesAvailable = enrolledCoursesModel.SelectListCoursesAvailable();
                 ViewBag.SelectListStudents = enrolledCoursesModel.SelectListStudents();
                 ViewBag.BoxMessage = "Estudiante matriculado.";
                 return View();
@@ -45,14 +52,18 @@ namespace SAEE_Web.Controllers
             }
             else if (resp == "El curso no tiene cupo disponible.")
             {
-                ViewBag.SelectListCoursesAvailable = enrolledCoursesModel.SelectListCoursesAvailable();
+				ViewBag.SelectListCourses = courseAvailableModel.SelectListCourses(); //Lista solo para condicionar la el selected real
+
+				ViewBag.SelectListCoursesAvailable = enrolledCoursesModel.SelectListCoursesAvailable();
                 ViewBag.SelectListStudents = enrolledCoursesModel.SelectListStudents();
                 ViewBag.BoxMessage = "El curso no tiene cupo disponible.";
                 return View();
             }
             else
             {
-                ViewBag.BoxMessage = "No se ha matriculado al estudiante.";
+				ViewBag.SelectListCourses = courseAvailableModel.SelectListCourses(); //Lista solo para condicionar la el selected real
+
+				ViewBag.BoxMessage = "No se ha matriculado al estudiante.";
                 ViewBag.SelectListCoursesAvailable = enrolledCoursesModel.SelectListCoursesAvailable();
                 ViewBag.SelectListStudents = enrolledCoursesModel.SelectListStudents();
                 return View();

@@ -37,7 +37,7 @@
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Indicaciones:</label>
-                    @Html.TextAreaFor(m => m.AssignmentDescription, new { @class = "form-control", @rows = "4", @placeholder = "Indicaciones" })
+                    @Html.TextAreaFor(m => m.AssignmentDescription, new { @class = "field required", @rows = "6", @placeholder = "Indicaciones", style = "height:15%;" })
                 </div>
 
                 <div class="form-group">
@@ -47,7 +47,7 @@
 
                 <hr />
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">ACTUALIZAR</button>
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">ACTUALIZAR</button>
                 </div>
             }
         </div>
@@ -85,9 +85,29 @@
 
 
 <script>
+    function validateForm() {
+        var formIsValid = true;
+        $(".field.required").each(function () {
+            if ($(this).val().trim() === "") {
+                formIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Este campo es obligatorio.</p>");
+                }
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+            }
+        });
+
+        if (formIsValid) {
+            showConfirmation();
+        }
+    }
+
     function showConfirmation() {
-        var courseName = $('#Name').val();
-        $('#courseName').text('"' + courseName + '"');
+        var userName = $('#Name').val();
+        $('#userName').text('Nombre del Usuario: ' + userName);
         $('#confirmationModal').modal('show');
     }
 

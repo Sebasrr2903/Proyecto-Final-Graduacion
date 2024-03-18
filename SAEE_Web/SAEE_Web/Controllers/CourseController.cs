@@ -137,7 +137,20 @@ namespace SAEE_Web.Controllers
             var courseAssignmentsList = courseTasksModel.SpecificAssignment(weekId);
             var materialPerWeekList = materialPerWeekModel.SpecificMaterial(weekId);
 
-            var viewModel = new ViewModelCourse_Task_Material
+            //Procesar foto del profesor
+            if (enrolledCoursesList[0].TeacherPhoto != null)
+            {
+				byte[] bytes = enrolledCoursesList[0].TeacherPhoto;
+				string base64String = Convert.ToBase64String(bytes);
+				Session["TeacherProfileImageB64"] = base64String;
+            }
+            else
+            {
+                Session["TeacherProfileImageB64"] = null;
+
+			}
+
+			var viewModel = new ViewModelCourse_Task_Material
             {
                 EnrolledCourses = enrolledCoursesList,
                 CourseAssignments = courseAssignmentsList,

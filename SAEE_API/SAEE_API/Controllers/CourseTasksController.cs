@@ -47,20 +47,19 @@ namespace SAEE_API.Controllers
             {
                 using (var context = new SAEEEntities())
                 {
-                    //Agregar validacioines para que no se pueda subir 2 veces la tarea sino más bien se edite o elimine
-                    var tasks = new CourseTasks();
-                    tasks.name = courseTasks.Name;
-                    tasks.description = courseTasks.Description;
-                    tasks.file = courseTasks.File;
-                    tasks.fileExtension = courseTasks.FileExtension;
-                    tasks.deliveredOn = DateTime.Now;
-                    tasks.assignmentId = courseTasks.AssignmentId;
-                    tasks.studentId = courseTasks.activeUser; 
+					var tasks = new CourseTasks();
+					tasks.name = courseTasks.Name;
+					tasks.description = courseTasks.Description;
+					tasks.file = courseTasks.File;
+					tasks.fileExtension = courseTasks.FileExtension;
+					tasks.deliveredOn = DateTime.Now;
+					tasks.assignmentId = courseTasks.AssignmentId;
+					tasks.studentId = courseTasks.StudentId;
 
-                    context.CourseTasks.Add(tasks);
-                    context.SaveChanges();
+					context.CourseTasks.Add(tasks);
+					context.SaveChanges();
 
-                    return "OK";
+					return "OK";
                 }
             }
             catch (Exception e)

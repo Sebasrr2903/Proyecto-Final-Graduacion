@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace SAEE_API.Controllers
@@ -45,25 +46,95 @@ namespace SAEE_API.Controllers
 
         [HttpGet]
         [Route("GetAssignment")]
-        public object GetAssignment(int q)
+        public object GetAssignment(int q, int a)
         {
             try
             {
                 using (var context = new SAEEEntities())
                 {
-                    context.Configuration.LazyLoadingEnabled = false;
-                    var datos = (from x in context.CourseAssignments
-                                 where x.id == q
-                                 select new
-                                 {
-                                     AssignmentId = x.id,
-                                     AssignmentName = x.name,
-                                     AssignmentDescription = x.indications,
-                                     AssignmentDeadline = x.deadline,
-                                     AssignmentActive = x.active,
-                                     AssignmentWeek = x.weekId
-                                 }).FirstOrDefault();
-                    return datos;
+					var alreadySubmitted = (from x in context.CourseTasks
+										   where x.studentId == a
+                                           && x.assignmentId == q
+										   select x).FirstOrDefault();
+
+
+                    AssignmentGrading alreadyQualified = null;
+
+					if (alreadySubmitted != null)
+                    {
+						alreadyQualified = (from x in context.AssignmentGrading
+												where x.taskId == alreadySubmitted.id
+												select x).FirstOrDefault();
+					}
+
+
+                    //Procesamiento
+                    if (alreadySubmitted != null & alreadyQualified != null)
+                    {
+						context.Configuration.LazyLoadingEnabled = false;
+						var datos = (from assignment in context.CourseAssignments
+									 join courseTask in context.CourseTasks on assignment.id equals courseTask.assignmentId
+									 join assignmentGrading in context.AssignmentGrading on courseTask.id equals assignmentGrading.taskId
+									 where courseTask.studentId == a
+									 select new
+									 {
+										 AssignmentId = assignment.id,
+										 AssignmentName = assignment.name,
+										 AssignmentDescription = assignment.indications,
+										 AssignmentDeadline = assignment.deadline,
+										 AssignmentActive = assignment.active,
+										 AssignmentWeek = assignment.weekId,
+										 TaskId = courseTask.id,
+										 TaskName = courseTask.name,
+										 TaskDescription = courseTask.description,
+										 TaskFile = courseTask.file,
+										 TaskFileExtension = courseTask.fileExtension,
+										 TaskDeliveredOn = courseTask.deliveredOn,
+										 GradingId = assignmentGrading.id,
+										 GradingScore = assignmentGrading.score,
+										 GradingPerformanceDescription = assignmentGrading.performanceDescription
+									 }).FirstOrDefault();
+						return datos;
+                    }
+                    else if(alreadySubmitted != null & alreadyQualified == null)
+                    {
+						context.Configuration.LazyLoadingEnabled = false;
+						var datos = (from assignment in context.CourseAssignments
+									 join courseTask in context.CourseTasks on assignment.id equals courseTask.assignmentId
+									 where courseTask.studentId == a
+									 select new
+									 {
+										 AssignmentId = assignment.id,
+										 AssignmentName = assignment.name,
+										 AssignmentDescription = assignment.indications,
+										 AssignmentDeadline = assignment.deadline,
+										 AssignmentActive = assignment.active,
+										 AssignmentWeek = assignment.weekId,
+										 TaskId = courseTask.id,
+										 TaskName = courseTask.name,
+										 TaskDescription = courseTask.description,
+										 TaskFile = courseTask.file,
+										 TaskFileExtension = courseTask.fileExtension,
+										 TaskDeliveredOn = courseTask.deliveredOn
+									 }).FirstOrDefault();
+						return datos;
+                    }
+                    else
+                    {
+						context.Configuration.LazyLoadingEnabled = false;
+						var datos = (from assignment in context.CourseAssignments
+									 where assignment.id == q
+									 select new
+									 {
+										 AssignmentId = assignment.id,
+										 AssignmentName = assignment.name,
+										 AssignmentDescription = assignment.indications,
+										 AssignmentDeadline = assignment.deadline,
+										 AssignmentActive = assignment.active,
+										 AssignmentWeek = assignment.weekId
+									 }).FirstOrDefault();
+						return datos;
+					}
                 }
             }
             catch (Exception e)

@@ -7,7 +7,7 @@
 <style>
     .form-group {
         margin-right: 20px;
-        margin-bottom: 20px; /* Ajusta el margen inferior según tus necesidades */
+        margin-bottom: 20px;
     }
 </style>
 <main class="contacts">
@@ -51,10 +51,10 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Email:</label>
-                            @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "email", @placeholder = "Email" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "text", @placeholder = "Email", id = "emailInput" })
                             @if (ViewBag.MessageMail != null)
                             {
-                                <p style="color: red;">@ViewBag.MessageMail</p>
+                                <p class='error-message' style='color: red; text-align: left;'>@ViewBag.MessageMail</p>
                             }
                         </div>
 
@@ -70,18 +70,18 @@
 
                         <div class="form-group" id="divSpecialty" style="display: none;">
                             <label>Especialidad:</label>
-                            @Html.DropDownListFor(m => m.Specialty, ViewBag.ListSpecialties as List<SelectListItem>, new { @class = "field form-control form-control-lg", @type = "text", @placeholder = "Especialidad" })
+                            @Html.DropDownListFor(m => m.Specialty, ViewBag.ListSpecialties as List<SelectListItem>, new { @class = "field form-control-lg", @type = "text", @placeholder = "Especialidad", id = "Specialty" })
                         </div>
 
                         <div class="form-group" id="divExperienceYears" style="display: none;">
                             <label>Años de experiencia:</label>
-                            @Html.TextBoxFor(m => m.ExperienceYears, new { @class = "field required", @type = "number", @placeholder = "Años de experiencia" })
+                            @Html.TextBoxFor(m => m.ExperienceYears, new { @type = "number", @placeholder = "Años de experiencia", id = "ExperienceYears" })
                         </div>
                     </div>
                 </div>
                 <hr />
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">REGISTRAR</button>
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">REGISTRAR</button>
                 </div>
             }
         </div>
@@ -104,9 +104,9 @@
                     <img src="~/Images/checklist.png" style="width: 100px;" />
                 </div>
                 <p id="userName" style="font-size: 24px; font-weight: bold;"></p>
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">¿Está seguro de agregar el curso?</h5>
+                <h5 class="modal-title mr-auto" id="confirmationModalLabel">¿Está seguro de agregar el usuario?</h5>
             </div>
-            <div class="modal-footer d-flex justify-content-center"  style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
+            <div class="modal-footer d-flex justify-content-center" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
                 <!-- Añadido d-flex justify-content-center -->
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn " style="background-color: rgb(127, 167, 118); color:#ffff;" onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
@@ -117,8 +117,80 @@
 
 
 
+@{
+    string at = "@";
+}
 
 <script>
+    var at = "@Html.Raw(at)";
+
+    $(document).ready(function () {
+        $("#UserType").change(function () {
+            if ($(this).val() == 2) {
+                $("#divSpecialty").show();
+                $("#divExperienceYears").show();
+                $("#ExperienceYears").addClass("field required");
+                $("#Specialty").addClass("form-control");
+            } else {
+                $("#divSpecialty").hide();
+                $("#divExperienceYears").hide();
+                $("#ExperienceYears").removeClass("field required");
+                $("#Specialty").removeClass("form-control");
+            }
+        });
+    });
+
+    function validateForm() {
+        var formIsValid = true;
+        $(".field.required").each(function () {
+            if ($(this).val().trim() === "") {
+                formIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Este campo es obligatorio.</p>");
+                }
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+
+                //Si hay datos entonces se valida el correo manualmente
+                if ($(this).attr("id") === "emailInput") {
+                    var email = document.getElementById("emailInput").value;
+
+                    var hasAnAt = email.includes(at);
+                    if (hasAnAt) {
+                        var hasADot = email.split(at)[1].includes(".");
+                    }
+
+                    if (!hasAnAt || !hasADot) {
+                        $(this).after("<p class='error-message' style='color: red; text-align: left;'>El valor debe corresponder a un correo electrónico.</p>");
+                        formIsValid = false;
+                    }
+                }
+            }
+        });
+
+        //Validacion para espacios seleccionables
+        var selectIsValid = true;
+        $(".form-control").each(function () {
+            if ($(this).val().trim() == 0) {
+                selectIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Debe realizar una elección.</p>");
+                }
+
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+            }
+        });
+
+        if (formIsValid && selectIsValid) {
+            showConfirmation();
+        }
+    }
+
     function showConfirmation() {
         var userName = $('#Name').val();
         $('#userName').text('Nombre del Usuario: ' + userName);
@@ -129,18 +201,3 @@
         $('#registerForm').submit();
     }
 </script>
-
-<script>
-    $(document).ready(function () {
-        $("#UserType").change(function () {
-            if ($(this).val() == 2) {
-                $("#divSpecialty").show();
-                $("#divExperienceYears").show();
-            } else {
-                $("#divSpecialty").hide();
-                $("#divExperienceYears").hide();
-            }
-        });
-    });
-</script>
-

@@ -9,7 +9,7 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Actualizar Usuario</h2>
+                <h2 class="contacts_form-header_title">Actualizar Curso</h2>
             </div>
             @if (ViewBag.BoxMessage != null)
             {
@@ -28,25 +28,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Apellidos:</label>
-                    @Html.TextBoxFor(m => m.Description, new { @class = "field required", @type = "text", @placeholder = "Apellidos" })
+                    <label style="margin-right: 53rem;">Descripción:</label>
+                    @Html.TextAreaFor(m => m.Description, new { @class = "field required", @rows = "6", @placeholder = "Descripción", style = "height:15%;" })
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Email:</label>
-                    @Html.TextBoxFor(m => m.AvailableQuota, new { @class = "field required", @type = "number", @placeholder = "Email" })
-                </div>
-
-                <div class="form-group">
-                    <label style="margin-right: 53rem;">Estado:</label>
-                    @Html.DropDownListFor(m => m.Active, new SelectList(new[] {
-                        new { Value = true, Text = "Activo" },
-                        new { Value = false, Text = "Inactivo" }
-                    }, "Value", "Text"), "Seleccione", new { @class = "form-control" })
+                    <label style="margin-right: 53rem;">Cupo:</label>
+                    @Html.TextBoxFor(m => m.AvailableQuota, new { @class = "field required", @type = "number", @placeholder = "Cupo" })
                 </div>
 
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">Actualizar</button>
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">Actualizar</button>
                 </div>
             }
         </div>
@@ -57,7 +49,7 @@
 <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header"  style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); color:#fff;">
+            <div class="modal-header" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); color:#fff;">
                 <h5 class="modal-title" id="confirmationModalLabel">Confirmación de Actualización</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -66,15 +58,36 @@
             <div class="modal-body">
                 <p>¿Está seguro de actualizar el usuario?</p>
             </div>
-            <div class="modal-footer"  style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
+            <div class="modal-footer" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary" style="background-color: rgb(127, 167, 118); color: #ffff; "  onclick="submitForm()">Aceptar</button>
+                <button type="submit" class="btn btn-primary" style="background-color: rgb(127, 167, 118); color: #ffff; " onclick="submitForm()">Aceptar</button>
             </div>
         </div>
     </div>
 </div>
 
+
 <script>
+    function validateForm() {
+        var formIsValid = true;
+        $(".field.required").each(function () {
+            if ($(this).val().trim() === "") {
+                formIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Este campo es obligatorio.</p>");
+                }
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+            }
+        });
+
+        if (formIsValid) {
+            showConfirmation();
+        }
+    }
+
     function showConfirmation() {
         $('#confirmationModal').modal('show');
     }
@@ -83,4 +96,6 @@
         $('#updateForm').submit();
     }
 </script>
+
+
 

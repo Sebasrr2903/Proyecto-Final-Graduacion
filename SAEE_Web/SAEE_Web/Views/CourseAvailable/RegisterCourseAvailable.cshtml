@@ -50,7 +50,7 @@
 
                 <hr />
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">REGISTRAR</button>
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">REGISTRAR</button>
                 </div>
             }
         </div>
@@ -84,16 +84,54 @@
 </div>
 
 
-
-
 <script>
+    function validateForm() {
+        var formIsValid = true;
+        $(".field.required").each(function () {
+            if ($(this).val().trim() === "") {
+                formIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Este campo es obligatorio.</p>");
+                }
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+            }
+        });
+
+        //Validacion para espacios seleccionables
+        var selectIsValid = true;
+        $(".form-control").each(function () {
+            if ($(this).val().trim() == 0) {
+                selectIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Debe realizar una elección.</p>");
+                }
+
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+            }
+        });
+
+        if (formIsValid && selectIsValid) {
+            showConfirmation();
+        }
+    }
+
     function showConfirmation() {
         var Enrolled = $('#TeacherId').val();
-        $('#Enrolled').text('"'+Enrolled+'"');
+        $('#Enrolled').text('"' + Enrolled + '"');
         $('#confirmationModal').modal('show');
     }
 
     function submitForm() {
         $('#registerForm').submit();
     }
+
 </script>
+
+
+

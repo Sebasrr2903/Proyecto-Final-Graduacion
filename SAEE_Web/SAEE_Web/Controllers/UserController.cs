@@ -29,48 +29,34 @@ namespace SAEE_Web.Controllers
         [HttpPost]
         public ActionResult Login(UserEnt user)
         {
-            //Space validations
-            if (user.Email == null)
-            {
-                ViewBag.MessageMail = "Ingrese el correo electrónico.";
-                return View();
-            }
-            else if (user.Password == null)
-            {
-                ViewBag.MessagePass = "Ingrese la contraseña.";
-                return View();
-            }
-            else
-            {
-                var resp = userModel.Login(user);
-                if (resp != null)
-                {
-                    Session["ActiveId"] = resp.Id;
-                    Session["Name"] = resp.Name;
-                    Session["Lastname"] = resp.Lastname;
-                    Session["Email"] = resp.Email;
-                    Session["PhoneNumber"] = resp.PhoneNumber;
-                    Session["UserType"] = resp.UserType;
+			var resp = userModel.Login(user);
+			if (resp != null)
+			{
+				Session["ActiveId"] = resp.Id;
+				Session["Name"] = resp.Name;
+				Session["Lastname"] = resp.Lastname;
+				Session["Email"] = resp.Email;
+				Session["PhoneNumber"] = resp.PhoneNumber;
+				Session["UserType"] = resp.UserType;
 
-                    Session["SelectedWeekNum"] = 0;
+				Session["SelectedWeekNum"] = 0;
 
-                    if (resp.ProfilePicture != null)
-                    {
-                        byte[] bytes = resp.ProfilePicture;
+				if (resp.ProfilePicture != null)
+				{
+					byte[] bytes = resp.ProfilePicture;
 
-                        string base64String = Convert.ToBase64String(bytes);
+					string base64String = Convert.ToBase64String(bytes);
 
-                        Session["ProfileImageB64"] = base64String;
-                    }
+					Session["ProfileImageB64"] = base64String;
+				}
 
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ViewBag.BoxMessage = "Compruebe la información de sus credenciales.";
-                    return View();
-                }
-            }
+				return RedirectToAction("Index", "Home");
+			}
+			else
+			{
+				ViewBag.BoxMessage = "Compruebe la información de sus credenciales.";
+				return View();
+			}
         }
 
         [HttpGet]

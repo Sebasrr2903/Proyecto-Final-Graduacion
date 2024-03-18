@@ -10,7 +10,7 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Enviar tarea</h2>
+                <h2 class="contacts_form-header_title">Subir Material Educativo</h2>
             </div>
             <hr />
 
@@ -36,12 +36,12 @@
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Archivo:</label>
-                    <input type="file" id="FileNew" name="FileNew" class="field requiered" placeholder="Archivo" />
+                    <input type="file" id="FileNew" name="FileNew" class="field required" placeholder="Archivo" />
                 </div>
 
                 <hr />
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">REGISTRAR</button>
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">REGISTRAR</button>
                 </div>
             }
         </div>
@@ -78,9 +78,29 @@
 
 
 <script>
+    function validateForm() {
+        var formIsValid = true;
+        $(".field.required").each(function () {
+            if ($(this).val().trim() === "") {
+                formIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Este campo es obligatorio.</p>");
+                }
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+            }
+        });
+
+        if (formIsValid) {
+            showConfirmation();
+        }
+    }
+
     function showConfirmation() {
-        var courseName = $('#Name').val();
-        $('#courseName').text('"' + courseName + '"');
+        var userName = $('#Name').val();
+        $('#userName').text('Nombre del Usuario: ' + userName);
         $('#confirmationModal').modal('show');
     }
 

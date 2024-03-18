@@ -33,18 +33,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Descripcion:</label>
-                    @Html.TextBoxFor(m => m.Description, new { @class = "field required", @type = "text", @placeholder = "Descripcion" })
+                    <label style="margin-right: 53rem;">Descripción:</label>
+                    @Html.TextAreaFor(m => m.Description, new { @class = "field required", @rows = "6", @placeholder = "Descripción del curso", style = "height:15%;" })
                 </div>
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Cupos:</label>
                     @Html.TextBoxFor(m => m.AvailableQuota, new { @class = "field required", @type = "number", @placeholder = "Cupos" })
                 </div>
 
-            
+
                 <hr />
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">REGISTRAR</button>
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">REGISTRAR</button>
                 </div>
             }
         </div>
@@ -66,24 +66,45 @@
                 <div style="display: inline-block;">
                     <img src="~/Images/checklist.png" style="width: 100px;" />
                 </div>
-              
+
                 <h5 class="modal-title mr-auto">¿Está seguro de agregar el curso?</h5>
                 <p id="courseName" style="font-size: 24px; font-weight: bold;"></p>
             </div>
             <div class="modal-footer d-flex justify-content-center" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
                 <!-- Añadido d-flex justify-content-center -->
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn--rAvailable" style="background-color: rgb(127, 167, 118); color: #ffff "  onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
+                <button type="submit" class="btn btn--rAvailable" style="background-color: rgb(127, 167, 118); color: #ffff " onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
             </div>
         </div>
     </div>
 </div>
 
 
+
 <script>
+    function validateForm() {
+        var formIsValid = true;
+        $(".field.required").each(function () {
+            if ($(this).val().trim() === "") {
+                formIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Este campo es obligatorio.</p>");
+                }
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+            }
+        });
+
+        if (formIsValid) {
+            showConfirmation();
+        }
+    }
+
     function showConfirmation() {
-        var courseName = $('#Name').val();
-        $('#courseName').text('"' + courseName + '"');
+        var userName = $('#Name').val();
+        $('#userName').text('Nombre del Usuario: ' + userName);
         $('#confirmationModal').modal('show');
     }
 
@@ -91,4 +112,22 @@
         $('#registerForm').submit();
     }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
