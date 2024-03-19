@@ -9,21 +9,28 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Calificar Tarea</h2>
-            </div>
+                <div class="position-relative" style="position: relative;">
+                    <div class="back-button-container" style="position: absolute; top: 5%; left: 0.5%;">
+                        <!-- Añade estilo de posicionamiento y margen -->
+                        <button type="button" class="btn btn--return" style="color:white; font-size: 1em; padding: 0.5em 1em;" onclick="history.back()">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </button>
+                    </div>
+
+                    <h2 class="contacts_form-header_title" style="font-size: 2.5em;">Agregar la Calificacion </h2>
+                </div>
+            </div> 
+            <h5>Añade la calificacion de la tarea del estudiante</h5>
+    
             <hr />
             @if (ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-danger" role="alert" style="text-align:center">
-                    @ViewBag.BoxMessage<br /> Llene todos los campos
+                    @ViewBag.BoxMessage<br /> 
                 </div>
 
             }
-            <div class="back-button-container">
-                <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
-                    <i class="fas fa-arrow-left"></i> Volver
-                </button>
-            </div>
+          
 
             @using (Html.BeginForm("GradeAssignment", "CourseTasks", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
             {
@@ -34,7 +41,8 @@
 
                 <div class="form-group">
                     <label style="margin-right: 30rem;">Comentarios:</label>
-                    @Html.TextAreaFor(m => m.PerformanceDescription, new { @class = "field required", @rows = "6", @placeholder = "Comentarios de la entrega", style = "height:15%;" })
+                    @Html.TextAreaFor(m => m.PerformanceDescription, new { @class = "field required", @rows = "6", @placeholder = "Comentarios de la entrega", style = "height:15%;",MaxLength="250", id="contador" })
+                <div style="font-size: 12px; margin-left: 27rem;"> <span id="nameCharacterCount">0</span>/250 caracteres</div>
                 </div>
 
                 <hr />
@@ -53,6 +61,22 @@
 
 
 <script>
+
+    // Obtener el elemento del input y el contador
+    var nameInput = document.getElementById('contador');
+    var nameCounter = document.getElementById('nameCharacterCount');
+
+    // Función para actualizar el contador
+    function updateNameCounter() {
+        nameCounter.textContent = nameInput.value.length;
+    }
+
+    // Agregar un event listener para el evento input
+    nameInput.addEventListener('input', updateNameCounter);
+
+    // Llamar a updateNameCounter inicialmente para mostrar el valor inicial
+    updateNameCounter();
+
     function validateForm() {
         var formIsValid = true;
         $(".field.required").each(function () {
