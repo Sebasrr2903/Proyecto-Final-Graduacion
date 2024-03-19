@@ -9,31 +9,38 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Actualizar Usuario</h2>
+                <div class="position-relative" style="position: relative;">
+                    <div class="back-button-container" style="position: absolute; top: 5%; left: 0.3%;">
+                        <!-- Añade estilo de posicionamiento y margen -->
+                        <button type="button" class="btn btn--return" style="color:white; font-size: 1em; padding: 0.5em 1em;" onclick="history.back()">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </button>
+                    </div>
+
+                    <h2 class="contacts_form-header_title" style="font-size: 2em;">Actualizar Usuario</h2>
+                </div>
             </div>
+            <hr />
             @if (ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-danger" role="alert" style="text-align:center">
                     @ViewBag.BoxMessage
                 </div>
             }
-            <div class="back-button-container">
-                <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
-                    <i class="fas fa-arrow-left"></i> Volver
-                </button>
-            </div>
+          
             @using (Html.BeginForm("UpdateUser", "User", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
             {
+                <h5>Actualize la informacion del Usuario.</h5>
                 @Html.HiddenFor(m => m.Id)
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Nombre:</label>
-                    @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Nombre" })
+                    @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Nombre", maxlength = "30" })
                 </div>
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Apellidos:</label>
-                    @Html.TextBoxFor(m => m.Lastname, new { @class = "field required", @type = "text", @placeholder = "Apellidos" })
+                    @Html.TextBoxFor(m => m.Lastname, new { @class = "field required", @type = "text", @placeholder = "Apellidos", maxlength = "30" })
                 </div>
 
                 <div class="form-group">
@@ -43,7 +50,7 @@
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Número:</label>
-                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "field required", @type = "number", @placeholder = "Telefono" })
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "field required", @type = "number", @placeholder = "Telefono", maxlength = "20" })
                 </div>
 
                 <div class="contacts_form-form_footer">
@@ -58,30 +65,8 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-flex justify-content-center align-items-center" style="background: rgb(61, 89, 255); color: aliceblue; border-block-color: rgb(61, 89, 255);">
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">Confirmación de Registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" style="color:#ffffff">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center align-content-center">
-                <div style="display: inline-block;">
-                    <img src="~/Images/checklist.png" style="width: 100px;" />
-                </div>
-                <p id="userName" style="font-size: 24px; font-weight: bold;"></p>
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">¿Está seguro desea actualizar este usuario?</h5>
-            </div>
-            <div class="modal-footer d-flex justify-content-center" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
-                <!-- Añadido d-flex justify-content-center -->
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn " style="background-color: rgb(127, 167, 118); color:#ffff;" onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
-            </div>
-        </div>
-    </div>
-</div>
+@Html.Partial("_Alerts")
+<!-- Modal -->
 
 
 

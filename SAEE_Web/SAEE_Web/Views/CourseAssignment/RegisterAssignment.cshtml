@@ -9,10 +9,20 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Enviar tarea</h2>
-            </div>
-            <hr />
+                <div class="position-relative" style="position: relative;">
+                    <div class="back-button-container" style="position: absolute; top: 5%; left: 0.5%;">
+                        <!-- Añade estilo de posicionamiento y margen -->
+                        <button type="button" class="btn btn--return" style="color:white; font-size: 1em; padding: 0.5em 1em;" onclick="history.back()">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </button>
+                    </div>
 
+                    <h2 class="contacts_form-header_title" style="font-size: 2.5em;">Registrar Entregable</h2>
+                </div>
+            </div>            
+  
+            <hr />
+            <h5>Agregue el entregable de la semana.</h5>
             @if (ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-danger" role="alert" style="text-align:center">
@@ -20,22 +30,19 @@
                 </div>
             }
 
-            <div class="back-button-container">
-                <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
-                    <i class="fas fa-arrow-left"></i> Volver
-                </button>
-            </div>
+         
 
             @using (Html.BeginForm("RegisterAssignment", "CourseAssignment", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
             {
                 <div class="form-group">
                     <label style="margin-right: 25rem;">Nombre de la Tarea:</label>
-                    @Html.TextBoxFor(m => m.AssignmentName, new { @class = "field required", @type = "text", @placeholder = "Nombre de la Tarea" })
+                    @Html.TextBoxFor(m => m.AssignmentName, new { @class = "field required", @type = "text", @placeholder = "Nombre de la Tarea" , MaxLength = "30" })
                 </div>
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Indicaciones:</label>
-                    @Html.TextAreaFor(m => m.AssignmentDescription, new { @class = "field required", @rows = "6", @placeholder = "Indicaciones", style = "height:15%;" })
+                    @Html.TextAreaFor(m => m.AssignmentDescription, new { @class = "field required", @rows = "6", @placeholder = "Indicaciones", style = "height:15%;" , MaxLength="250", id="contador" })
+                    <div style="font-size: 12px; margin-left: 27rem;"> <span id="nameCharacterCount">0</span>/250 caracteres</div>
                 </div>
 
                 <div class="form-group">
@@ -60,33 +67,10 @@
 </main>
 
 
-
 <!-- Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-flex justify-content-center align-items-center" style="background: rgb(61, 89, 255); color:#fff; ">
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">Confirmación de Registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center align-content-center">
-                <div style="display: inline-block;">
-                    <img src="~/Images/checklist.png" style="width: 100px;" />
-                </div>
+@Html.Partial("_Alerts")
+<!-- Modal -->
 
-                <h5 class="modal-title mr-auto">¿Está seguro de agregar el curso?</h5>
-                <p id="courseName" style="font-size: 24px; font-weight: bold;"></p>
-            </div>
-            <div class="modal-footer d-flex justify-content-center" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
-                <!-- Añadido d-flex justify-content-center -->
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn--rAvailable" style="background-color: rgb(127, 167, 118); color: #ffff " onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <script>
@@ -119,6 +103,23 @@
     function submitForm() {
         $('#registerForm').submit();
     }
+
+
+
+    // Obtener el elemento del input y el contador
+    var nameInput = document.getElementById('contador');
+    var nameCounter = document.getElementById('nameCharacterCount');
+
+    // Función para actualizar el contador
+    function updateNameCounter() {
+        nameCounter.textContent = nameInput.value.length;
+    }
+
+    // Agregar un event listener para el evento input
+    nameInput.addEventListener('input', updateNameCounter);
+
+    // Llamar a updateNameCounter inicialmente para mostrar el valor inicial
+    updateNameCounter();
 </script>
 
 

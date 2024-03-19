@@ -9,8 +9,14 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Actualizar Usuario</h2>
+                <h2 class="contacts_form-header_title">Actualizar el Contenido</h2>
             </div>
+            <hr />
+            <h5>
+                Actualice el contenido de la semana.
+            </h5>
+            <br />
+
             @if (ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-danger" role="alert" style="text-align:center">
@@ -22,7 +28,7 @@
                     <i class="fas fa-arrow-left"></i> Volver
                 </button>
             </div>
-            @using (Html.BeginForm("UpdateContentPerWeek", "ContentPerWeek", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
+            @using (Html.BeginForm("UpdateContentPerWeek", "ContentPerWeek", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm"  }))
             {
                 @Html.HiddenFor(m => m.Id)
 
@@ -30,12 +36,13 @@
 
                 <div class="form-group">
                     <label style="margin-right: 25rem;">Título de la semana:</label>
-                    @Html.TextBoxFor(m => m.Header, new { @class = "field required", @type = "text", @placeholder = "Título de la semana" })
+                    @Html.TextBoxFor(m => m.Header, new { @class = "field required", @type = "text", @placeholder = "Título de la semana" ,MaxLength = "50" })
                 </div>
 
                 <div class="form-group">
                     <label style="margin-right: 23rem;">Contenido de la semana:</label>
-                    @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @rows = "4", @placeholder = "Contenido de la semana" })
+                    @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @rows = "4", @placeholder = "Contenido de la semana", MaxLength = "250",id="contador" })
+                    <div style="font-size: 12px; margin-left: 27rem;"> <span id="nameCharacterCount">0</span>/250 caracteres</div>
                 </div>
 
                 <input type="hidden" name="returnUrl" value="@Request.UrlReferrer?.ToString()" />
@@ -51,30 +58,9 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-flex justify-content-center align-items-center" style="background: rgb(61, 89, 255); color: aliceblue; border-block-color: rgb(61, 89, 255);">
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">Confirmación de Registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" style="color:#ffffff">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center align-content-center">
-                <div style="display: inline-block;">
-                    <img src="~/Images/checklist.png" style="width: 100px;" />
-                </div>
-                <p id="userName" style="font-size: 24px; font-weight: bold;"></p>
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">¿Está seguro desea actualizar este usuario?</h5>
-            </div>
-            <div class="modal-footer d-flex justify-content-center" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
-                <!-- Añadido d-flex justify-content-center -->
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn " style="background-color: rgb(127, 167, 118); color:#ffff;" onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
-            </div>
-        </div>
-    </div>
-</div>
+@Html.Partial("_Alerts")
+<!-- Modal -->
+
 
 
 <script>
@@ -99,14 +85,29 @@
     }
 
     function showConfirmation() {
-        var userName = $('#Name').val();
-        $('#userName').text('Nombre del Usuario: ' + userName);
+       
         $('#confirmationModal').modal('show');
     }
 
     function submitForm() {
         $('#registerForm').submit();
     }
+
+
+
+    var nameInput = document.getElementById('contador');
+    var nameCounter = document.getElementById('nameCharacterCount');
+
+    function updateNameCounter() {
+        nameCounter.textContent = nameInput.value.length;
+    }
+
+    nameInput.addEventListener('input', updateNameCounter);
+
+   
+    updateNameCounter()
+
+
 </script>
 
 

@@ -8,8 +8,15 @@
 <main class="contacts">
     <section class="contacts_form">
         <div class="container">
-            <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Editar Perfil</h2>
+            <div class="position-relative" style="position: relative;">
+                <div class="back-button-container" style="position: absolute; top: 5%; left: 0.5%;">
+                    <!-- Añade estilo de posicionamiento y margen -->
+                    <button type="button" class="btn btn--return" style="color:white; font-size: 1em; padding: 0.5em 1em;" onclick="history.back()">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>
+                </div>
+
+                <h2 class="contacts_form-header_title" style="font-size: 2.5em;">Editar perfil</h2>
             </div>
             <hr />
             @if (ViewBag.BoxMessage != null)
@@ -19,39 +26,39 @@
                 </div>
             }
 
-            <div class="back-button-container">
-                <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
-                    <i class="fas fa-arrow-left"></i> Volver
-                </button>
-            </div>
+
             @using (Html.BeginForm("ProfileUser", "User", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm", @enctype = "multipart/form-data" }))
             {
+                <h5>Edite tu informacion a tu gusto.</h5>
                 @Html.HiddenFor(m => m.Id)
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Nombre:</label>
+                    <label style="margin-right: 29rem;">Nombre:</label>
                     @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Nombre" })
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Apellidos:</label>
+                    <label style=" margin-right: 29rem;">Apellidos:</label>
                     @Html.TextBoxFor(m => m.Lastname, new { @class = "field required", @type = "text", @placeholder = "Apellidos" })
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Email:</label>
+                    <label style=" margin-right: 30rem;">Email:</label>
                     @Html.TextBoxFor(m => m.Email, new { @readonly = "@readonly", @class = "field required", @type = "text", @placeholder = "Email", style = "color: #B4B2B2;" })
                     <p style="color: #1C8ADA; text-align: left;">Para editar el correo comuníquese con soporte.</p>
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Número:</label>
+                    <label style=" margin-right: 29rem;">Número:</label>
                     @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "field required", @type = "number", @placeholder = "Número" })
                 </div>
                 <div class="form-group">
-                    <label style="margin-right: 28rem;">Foto de perfil:</label>
-                    <input type="file" class="form-control" id="ProfileImg" name="ProfileImg">
+                    <label style=" margin-right: 28rem;">Foto de perfil:</label>
+                    <input type="file" class="field required" id="ProfileImg" name="ProfileImg" accept="image/jpeg, image/png, image/gif" onchange="validateFileType(this)">
+                    <p style="color: #1C8ADA; text-align: left;">Solo puede subir jpeg, png, gif.</p>
                 </div>
+                <div id="fileTypeError" style="display:none; text-align:start; color:red; margin-top: 5px;">Por favor, seleccione un archivo JPEG, PNG o GIF.</div>
+
                 <hr />
                 <div class="contacts_form-form_footer">
                     <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">ACTUALIZAR</button>
@@ -63,34 +70,24 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-flex justify-content-center align-items-center" style="background: rgb(61, 89, 255); color: aliceblue; border-block-color: rgb(61, 89, 255);">
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">Confirmación de Registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" style="color:#ffffff">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center align-content-center">
-                <div style="display: inline-block;">
-                    <img src="~/Images/checklist.png" style="width: 100px;" />
-                </div>
+@Html.Partial("_Alerts")
+<!-- Modal -->
 
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">¿Está seguro desea actualizar este usuario?</h5>
-                <p id="userName" style="font-size: 24px; font-weight: bold;"></p>
-            </div>
-            <div class="modal-footer d-flex justify-content-center" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
-                <!-- Añadido d-flex justify-content-center -->
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn " style="background-color: rgb(127, 167, 118); color:#ffff;" onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <script>
+    function validateFileType(input) {
+        var validExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        var fileName = input.value.toLowerCase();
+        var fileExtension = fileName.split('.').pop();
+
+        if (validExtensions.indexOf(fileExtension) == -1) {
+            document.getElementById('fileTypeError').style.display = 'block';
+            input.value = ''; // Clear the file input
+        } else {
+            document.getElementById('fileTypeError').style.display = 'none';
+        }
+    }
     function validateForm() {
         var formIsValid = true;
         $(".field.required").each(function () {
@@ -112,8 +109,6 @@
     }
 
     function showConfirmation() {
-        var userName = $('#Name').val();
-        $('#userName').text('Nombre del Usuario: ' + userName);
         $('#confirmationModal').modal('show');
     }
 

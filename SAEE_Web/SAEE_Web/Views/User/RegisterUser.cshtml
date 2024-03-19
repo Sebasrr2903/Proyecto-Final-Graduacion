@@ -5,6 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
+    label {
+        display: inline-block;
+        width: 200px;
+        text-align: left;
+    }
+
     .form-group {
         margin-right: 20px;
         margin-bottom: 20px;
@@ -14,106 +20,95 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Registro de Usuarios</h2>
-            </div>
-            <hr />
-            @if (ViewBag.BoxMessage != null)
-            {
-                <div class="alert alert-danger" role="alert" style="text-align:center">
-                    @ViewBag.BoxMessage
+
+                <div class="position-relative" style="position: relative;">
+                    <div class="back-button-container" style="position: absolute; top: 5%; left: 0.5%;">
+                        <!-- Añade estilo de posicionamiento y margen -->
+                        <button type="button" class="btn btn--return" style="color:white; font-size: 1em; padding: 0.5em 1em;" onclick="history.back()">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </button>
+                    </div>
+
+                    <h2 class="contacts_form-header_title" style="font-size: 2em;">Registro de Usuarios</h2>
                 </div>
-            }
-            <div class="back-button-container">
-                <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
-                    <i class="fas fa-arrow-left"></i> Volver
-                </button>
-            </div>
-
-            @using (Html.BeginForm("RegisterUser", "User", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
-            {
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Nombre:</label>
-                            @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Nombre" })
-                        </div>
-
-                        <div class="form-group">
-                            <label>Apellidos:</label>
-                            @Html.TextBoxFor(m => m.Lastname, new { @class = "field required", @type = "text", @placeholder = "Apellidos" })
-                        </div>
-
-                        <div class="form-group">
-                            <label>Fecha de nacimiento:</label>
-                            @Html.TextBoxFor(m => m.Birthdate, new { @class = "field required", @type = "date", @placeholder = "Fecha de nacimiento" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Email:</label>
-                            @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "text", @placeholder = "Email", id = "emailInput" })
-                            @if (ViewBag.MessageMail != null)
-                            {
-                                <p class='error-message' style='color: red; text-align: left;'>@ViewBag.MessageMail</p>
-                            }
-                        </div>
-
-                        <div class="form-group">
-                            <label>Número de teléfono:</label>
-                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "field required", @type = "number", @placeholder = "Número" })
-                        </div>
-
-                        <div class="form-group">
-                            <label>Tipo de usuario:</label>
-                            @Html.DropDownListFor(m => m.UserType, ViewBag.ListUsersTypes as List<SelectListItem>, new { @class = "field form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType", @style = "border-radius:12px; height: 54px;" })
-                        </div>
-
-                        <div class="form-group" id="divSpecialty" style="display: none;">
-                            <label>Especialidad:</label>
-                            @Html.DropDownListFor(m => m.Specialty, ViewBag.ListSpecialties as List<SelectListItem>, new { @class = "field form-control-lg", @type = "text", @placeholder = "Especialidad", id = "Specialty" })
-                        </div>
-
-                        <div class="form-group" id="divExperienceYears" style="display: none;">
-                            <label>Años de experiencia:</label>
-                            @Html.TextBoxFor(m => m.ExperienceYears, new { @type = "number", @placeholder = "Años de experiencia", id = "ExperienceYears" })
-                        </div>
-                    </div>
+             
                 </div>
                 <hr />
-                <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">REGISTRAR</button>
-                </div>
-            }
-        </div>
+                @if (ViewBag.BoxMessage != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center">
+                        @ViewBag.BoxMessage
+                    </div>
+                }
+                
+
+                @using (Html.BeginForm("RegisterUser", "User", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
+                {
+                    <h5>Agregue la informacion del usuario.</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label style=" display: inline-block; width: 200px; /* Ajusta el ancho según tus necesidades */ text-align: left;">Nombre:</label>
+                                @Html.TextBoxFor(m => m.Name, new { @class = "field required", @type = "text", @placeholder = "Nombre", maxlength = "30" })
+
+                            </div>
+
+                            <div class="form-group">
+                                <label>Apellidos:</label>
+                                @Html.TextBoxFor(m => m.Lastname, new { @class = "field required", @type = "text", @placeholder = "Apellidos", maxlength = "30" })
+                            </div>
+
+                            <div class="form-group">
+                                <label>Fecha de nacimiento:</label>
+                                @Html.TextBoxFor(m => m.Birthdate, new { @class = "field required", @type = "date", @placeholder = "Fecha de nacimiento" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email:</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "text", @placeholder = "Email", id = "emailInput" })
+                                @if (ViewBag.MessageMail != null)
+                                {
+                                    <p class='error-message' style='color: red; text-align: left;'>@ViewBag.MessageMail</p>
+                                }
+                            </div>
+
+                            <div class="form-group">
+                                <label>Número de teléfono:</label>
+                                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "field required", @type = "number", @placeholder = "Número", maxlength = "20" })
+                            </div>
+
+                            <div class="form-group">
+                                <label>Tipo de usuario:</label>
+                                @Html.DropDownListFor(m => m.UserType, ViewBag.ListUsersTypes as List<SelectListItem>, new { @class = "field form-control form-control-lg", @type = "text", @placeholder = "Tipo de usuario", id = "UserType", @style = "border-radius:12px; height: 54px;" })
+                            </div>
+
+                            <div class="form-group" id="divSpecialty" style="display: none;">
+                                <label>Especialidad:</label>
+                                @Html.DropDownListFor(m => m.Specialty, ViewBag.ListSpecialties as List<SelectListItem>, new { @class = "field form-control-lg", @type = "text", @placeholder = "Especialidad", id = "Specialty", @style = "border-radius:12px; height: 54px; width:200%;" })
+                            </div>
+
+                            <div class="form-group" id="divExperienceYears" style="display: none;">
+                                <label>Años de experiencia:</label>
+                                @Html.TextBoxFor(m => m.ExperienceYears, new { @type = "number", @placeholder = "Años de experiencia", id = "ExperienceYears" })
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="contacts_form-form_footer">
+
+                        <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">REGISTRAR</button>
+                    </div>
+                }
+            </div>
     </section>
 
 </main>
 
+
 <!-- Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-flex justify-content-center align-items-center" style="background: rgb(61, 89, 255); color: aliceblue; border-block-color: rgb(61, 89, 255);">
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">Confirmación de Registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" style="color:#ffffff">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center align-content-center">
-                <div style="display: inline-block;">
-                    <img src="~/Images/checklist.png" style="width: 100px;" />
-                </div>
-                <p id="userName" style="font-size: 24px; font-weight: bold;"></p>
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">¿Está seguro de agregar el usuario?</h5>
-            </div>
-            <div class="modal-footer d-flex justify-content-center" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
-                <!-- Añadido d-flex justify-content-center -->
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn " style="background-color: rgb(127, 167, 118); color:#ffff;" onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
-            </div>
-        </div>
-    </div>
-</div>
+@Html.Partial("_Alerts")
+<!-- Modal -->
 
 
 
@@ -192,12 +187,30 @@
     }
 
     function showConfirmation() {
-        var userName = $('#Name').val();
-        $('#userName').text('Nombre del Usuario: ' + userName);
         $('#confirmationModal').modal('show');
     }
 
     function submitForm() {
         $('#registerForm').submit();
     }
+
+
+
+
+
+    // Obtener el elemento del input y el contador
+    var nameInput = document.getElementById('Name');
+    var nameCounter = document.getElementById('nameCharacterCount');
+
+    // Función para actualizar el contador
+    function updateNameCounter() {
+        nameCounter.textContent = nameInput.value.length;
+    }
+
+    // Agregar un event listener para el evento input
+    nameInput.addEventListener('input', updateNameCounter);
+
+    // Llamar a updateNameCounter inicialmente para mostrar el valor inicial
+    updateNameCounter();
+
 </script>

@@ -13,6 +13,7 @@
                 <h2 class="contacts_form-header_title">Horarios</h2>
             </div>
             <hr />
+            <h5> Agregue un nuevo horario.</h5>
 
             @if (!string.IsNullOrEmpty(ViewBag.BoxMessage))
             {
@@ -58,11 +59,13 @@
                 <div class="form-group">
                     <label style="margin-right: 27rem;">Hora de Inicio:</label>
                     @Html.TextBoxFor(m => m.StartTime, new { @class = "field required", @type = "text", @placeholder = "HH:MM a.m.o p.m.", @id = "startTimeInput" })
+                    <p class="text-danger">@Html.ValidationMessageFor(m => m.StartTime)</p> <!-- Mensaje de error -->
                 </div>
 
                 <div class="form-group">
                     <label style="margin-right: 27rem;">Hora de Fin:</label>
                     @Html.TextBoxFor(m => m.EndTime, new { @class = "field required", @type = "text", @placeholder = "HH:MM a.m.o p.m.", @id = "endTimeInput" })
+                    <p class="text-danger">@Html.ValidationMessageFor(m => m.EndTime)</p> <!-- Mensaje de error -->
                 </div>
 
 
@@ -70,7 +73,7 @@
                 <hr />
                 <div class="contacts_form-form_footer">
                     <div style="display: flex; justify-content: space-between;">
-                        <a class="btn btn--rReport" style="color: white; display: flex" href="@Url.Action("ScheduleTable","Schedule")">Ver Horarios</a>
+                        <a class="btn btn--rReport" style="color: white; display: flex" href="@Url.Action("ScheduleTable","Schedules")">Ver Horarios</a>
                         <button type="button" class="btn btn--login" style="color:white;" onclick="showConfirmation()">REGISTRAR</button>
 
 
@@ -84,66 +87,18 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-flex justify-content-center align-items-center" style="background: rgb(61, 89, 255); color:#fff; ">
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">Confirmación de Registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center align-content-center">
-                <div style="display: inline-block;">
-                    <img src="~/Images/checklist.png" style="width: 100px;" />
-                </div>
-
-                <h5 class="modal-title mr-auto">¿Está seguro desea agregar?</h5>
-                <p id="courseName" style="font-size: 24px; font-weight: bold;"></p>
-            </div>
-            <div class="modal-footer d-flex justify-content-center" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
-                <!-- Añadido d-flex justify-content-center -->
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn--rAvailable" style="background-color: rgb(127, 167, 118); color: #ffff " onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
-            </div>
-        </div>
-    </div>
-</div>
-
+@Html.Partial("_Alerts")
+<!-- Modal -->
 
 <script>
     function showConfirmation() {
-        var courseName = $('#Day').val();
-        $('#courseName').text('"' + courseName + '"');
+
         $('#confirmationModal').modal('show');
     }
 
     function submitForm() {
         $('#registerForm').submit();
-
     }
-
-
-
-        $(document).ready(function () {
-            // Función para validar el formato de hora
-            function validateTimeFormat(inputField) {
-                var value = inputField.val().trim();
-                var pattern = /^(0?[1-9]|1[0-2]):[0-5][0-9] (am|pm)$/i;
-                return pattern.test(value);
-            }
-
-        // Evento blur para validar el formato de hora al salir del campo
-        $('.time-input').on('blur', function () {
-            var inputField = $(this);
-        if (!validateTimeFormat(inputField)) {
-            alert('Formato de hora incorrecto. El formato válido es HH:MM a.m. o p.m.');
-        inputField.val(''); // Limpiar el campo si el formato es incorrecto
-            }
-        });
-    });
-
-
 </script>
 
 

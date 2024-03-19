@@ -3,11 +3,37 @@
     ViewBag.Title = "ProfileData";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .title-container {
+        background-color: #2575fc;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        width: 40%;
+    }
+
+    .title-little {
+        background-color: #401ade;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        width: 28%;
+    }
+
+    .title-text {
+        color: #ffffff;
+        font-weight: bold;
+        margin: 0;
+    }
+</style>
+
 
 <div style="width: 50%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; ">
 
     <div class="list-group" style="margin-block:5rem">
-        <div class="list-group-item-light list-group-item-action active" style="height: 13%; background-color: rgb(48, 120, 252);">
+        <div class="list-group-item-light list-group-item-action active" style="height: 13%; background: linear-gradient(151.89deg,rgba(106,17,203,.83) 6.97%,rgba(37,117,252,.83) 84.71%); border-radius:10px">
             <br />
 
             <div class="d-flex flex-column align-items-center" style="margin-left: 20px;">
@@ -27,34 +53,60 @@
 
         </div>
 
-        <div class="list-group-item list-group-item-action" style="text-align:center;">
+        <div class="list-group-item list-group-item-action" style="border-color:transparent">
             <div class="d-flex w-100 justify-content-center">
-                <h4 class="" style="font-weight: bold;">Mis Datos:</h4>
+                <div class="title-container">
+                    <h4 class="title-text"><i class="fas fa-user icon" style="margin-right:10px;"></i>Mis Datos:</h4>
+                </div>
             </div>
-            <div>
-                @if ((int)Session["UserType"] == 1)
-                {
-                    <p class="mb-1" style="font-weight:bold;">Tipo de cuenta:</p>
-                    <p class="mb-1">Administrador</p>
-                }
-                else if ((int)Session["UserType"] == 2)
-                {
-                    <p class="mb-1" style="font-weight:bold;">Tipo de cuenta:</p>
-                    <p class="mb-1">Profesor</p>
-                }
-                else
-                {
-                    <p class="mb-1" style="font-weight:bold;">Tipo de cuenta:</p>
-                    <p class="mb-1">Estudiante</p>
-                }
-                <p class="mb-1" style="font-weight:bold;">Email:</p>
-                <p class="mb-1">@Session["Email"]</p>
-                <p class="mb-1" style="font-weight:bold;">Número de teléfono:</p>
-                <p class="mb-1">@Session["PhoneNumber"]</p>
-                <br />
-                <a class="btn btn--rlogin" style=" width:20%; height:40px" href="@Url.Action("ProfileUser", "User", new { q = @Session["ActiveId"] })">
-                    <span class="text">Editar Perfil</span>
-                </a>
+            <div class="title-container  w-100 justify-content-center" style="text-align:center; padding:80px; background:linear-gradient(0deg,rgba(255,255,255,.9),rgba(255,255,255,.9)),linear-gradient(127.36deg,#6a11cb 31.85%,#2575fc 108.53%);">
+
+                <div>
+                    <div class="Boxlittle">
+                        <div class="title-little">
+                            <p class="title-text " style="font-weight:bold;"><i class="fas fa-user icon" style="margin-right:10px;"></i>Tipo de cuenta:</p>
+                        </div>
+                    </div>
+                    @if ((int)Session["UserType"] == 1)
+                    {
+
+
+                        <h5 class="">Administrador</h5>
+                    }
+                    else if ((int)Session["UserType"] == 2)
+                    {
+
+                        <h5 class="mb-1">Profesor</h5>
+                    }
+                    else
+                    {
+
+                        <h5 class="mb-1">Estudiante</h5>
+                    }
+                    <br />
+                    <div class="" style=" margin-right:100px">
+                        <div class="title-little">
+                            <p class="title-text" style="font-weight:bold;"><i class="fas fa-envelope" style="margin-right:10px;"></i>Email:</p>
+                        </div>
+                    </div>
+                    <h5 class="mb-1">@Session["Email"]</h5>
+                    <br />
+                    <div class="justify-content-center">
+                        <div class="title-little" style="width:30%">
+                            <p class="title-text" style="font-weight:bold;"><i class="fas fa-phone-alt" style="margin-right:10px;"></i>Número de Teléfono:</p>
+                        </div>
+                    </div>
+
+                    <h5 class="mb-1">@Session["PhoneNumber"]</h5>
+                    <br />
+                    <button type="button" class="btn btn--return" style="color: white; width: 25%; height: 40px; " onclick="history.back()">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>  
+
+                    <a class="btn btn--rUpdate" style=" width:25%; height:40px" href="@Url.Action("ProfileUser", "User", new { q = @Session["ActiveId"] })">
+                        <span class="text">Editar Perfil</span>
+                    </a>
+                </div>
             </div>
         </div>
 

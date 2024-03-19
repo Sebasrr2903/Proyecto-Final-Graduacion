@@ -6,13 +6,39 @@
 }
 
 <style>
+    .title-little {
+        background-color: rgb(48, 120, 252);
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        width: 25%;
+    }
+
+    .list-group-item {
+        padding: 3%;
+        background-color: #ecedfd;
+        border-color: transparent;
+    }
+
     .list-group {
+        border-color: transparent;
         height: 100%;
         max-width: 100%; /* Asegura que el contenedor no se desborde */
         overflow: hidden; /* Oculta cualquier contenido que se desborde */
     }
-</style>
 
+    .title-text {
+        color: #ffffff;
+        font-weight: bold;
+        margin: 0;
+    }
+</style>
+<div class="back-button-container">
+    <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
+        <i class="fas fa-arrow-left"></i> Volver
+    </button>
+</div>
 <div style="width: 70%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; margin-block-end:8%;margin-top:2%;">
     <div id="content-container">
         <div class="list-group">
@@ -30,13 +56,15 @@
 
             <div class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
-                    <h4 class="mb-1" style="color:rgb(48, 120, 252)">Descripción:</h4>
+                    <div class="title-little">
+                        <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-circle-info icon" style="margin-right:10px;"></i>Descripcion:</h4>
+                    </div>
                 </div>
-                <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
-                    <p class="mb-1">Fecha límite: @Model.AssignmentDeadline</p>
+                <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start; padding-left:5%;">
+                    <h5 class="mb-1">Fecha límite: @Model.AssignmentDeadline</h5>
                 </div>
-                <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start;">
-                    <p class="mb-1">Indicaciones: @Model.AssignmentDescription</p>
+                <div class="d-flex w-100 justify-content-end" style="flex-direction:column;align-items:flex-start; padding-left:5%;">
+                    <h5 class="mb-1">Indicaciones: @Model.AssignmentDescription</h5>
                 </div>
             </div>
 
@@ -45,27 +73,33 @@
             {
                 <div class="list-group-item list-group-item-action" style="background-color: #BEE3AF; ">
                     <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
-                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Estado:</h4>
+                        <div class="title-little">
+                            <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-arrow-right-arrow-left icon" style="margin-right:10px;"></i>Estado:</h4>
+                        </div>
                     </div>
-                    <div class="d-flex w-100">
-                        <p class="mb-1">Calificado</p>
+                    <div class="d-flex w-100" style="padding-left:5%;">
+                        <h5 class="mb-1">Calificado</h5>
                     </div>
                 </div>
 
                 <div class="list-group-item list-group-item-action" style="background-color: #BEE3AF;">
                     <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
-                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Tiempo restante:</h4>
+                        <div class="title-little">
+                            <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-clock icon" style="margin-right:10px;"></i>Tiempo entregado:</h4>
+                        </div>
                     </div>
-                    <div class="d-flex w-100">
-                        <p class="mb-1">Entregado el: @Model.TaskDeliveredOn</p>
+                    <div class="d-flex w-100" style="padding-left:5%;">
+                        <h5 class="mb-1">Entregado el: @Model.TaskDeliveredOn</h5>
                     </div>
                 </div>
 
                 <div class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
-                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Archivos enviados:</h4>
+                        <div class="title-little">
+                            <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-file icon" style="margin-right:10px;"></i>Archvos enviados:</h4>
+                        </div>
                     </div>
-                    <div class="d-flex w-100" style="margin-bottom:5px; margin-top:5px;">
+                    <div class="d-flex w-100" style="margin-bottom:5px; margin-top:5px; padding-left:5%;">
                         <a class="mb-1" href="@Url.Action("DownloadTask","CourseTasks", new { q = Model.TaskId })">
                             <span class="text" style="color: Dodgerblue;"> <i class="fa-solid fa-file" style="font-size: 20px;"> </i> @Model.TaskFileExtension</span>
                         </a>
@@ -73,47 +107,53 @@
                 </div>
 
                 <div class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
-                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Calificación:</h4>
+                    <div class="title-little">
+                        <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-percent icon" style="margin-right:10px;"></i>Calificacion:</h4>
                     </div>
-                    <div class="d-flex w-100">
-                        <p class="mb-1">Nota: @Model.GradingScore</p>
+                    <div class="d-flex w-100" style="padding-left:5%">
+                        <h5 class="mb-1">Nota: @Model.GradingScore</h5>
                     </div>
-                    <div class="d-flex w-100">
-                        <p class="mb-1">Comentarios: @Model.GradingPerformanceDescription</p>
+                    <div class="d-flex w-100" style="padding-left:5%">
+                        <h5 class="mb-1">Comentarios: @Model.GradingPerformanceDescription</h5>
                     </div>
                 </div>
             }
             else if (Model.TaskId != 0 & Model.GradingId == 0) //Entregado
             {
-                <div class="list-group-item list-group-item-action" style="background-color: #F6F6F6; ">
+                <div class="list-group-item list-group-item-action" style="background-color: #ecedfd; ">
                     <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
-                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Estado:</h4>
+                        <div class="title-little">
+                            <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-arrow-right-arrow-left icon" style="margin-right:10px;"></i>Estado:</h4>
+                        </div>
                     </div>
-                    <div class="d-flex w-100">
-                        <p class="mb-1">Sin calificar</p>
+                    <div class="d-flex w-100" style="padding-left:5%">
+                        <h5 class="mb-1">Sin calificar</h5>
                     </div>
                 </div>
 
                 <div class="list-group-item list-group-item-action" style="background-color: #BEE3AF;">
                     <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
-                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Tiempo restante:</h4>
+                        <div class="title-little">
+                            <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-clock icon" style="margin-right:10px;"></i>Tiempo restante:</h4>
+                        </div>
                     </div>
-                    <div class="d-flex w-100">
-                        <p class="mb-1">Entregado el: @Model.TaskDeliveredOn</p> 
+                    <div class="d-flex w-100" style="padding-left:5%">
+                        <h5 class="mb-1">Entregado el: @Model.TaskDeliveredOn</h5>
                     </div>
                 </div>
 
                 <div class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
-                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Archivos enviados:</h4>
+                        <div class="title-little">
+                            <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-file icon" style="margin-right:10px;"></i>Archivos enviados:</h4>
+                        </div>
                     </div>
-                    <div class="d-flex w-100" style="margin-bottom:5px; margin-top:5px;">
+                    <div class="d-flex w-100" style="margin-bottom:5px; margin-top:5px; padding-left:5%">
                         <a class="mb-1" href="@Url.Action("DownloadTask","CourseTasks", new { q = Model.TaskId })">
                             <span class="text" style="color: Dodgerblue;"> <i class="fa-solid fa-file" style="font-size: 20px;"> </i> @Model.TaskFileExtension</span>
                         </a>
                     </div>
-                    <div style="display:flex;">
+                    <div style="display:flex; padding-left:3%">
                         @*Acá validar el tiempo restante tambien, si aun tiene tiempo entonces puede realizar cambios*@
                         <a class="btn btn--rUpdate" style="margin-right: 10px; display: flex; height: 40px" href="#">
                             <span class="text">Editar Entrega</span>
@@ -126,20 +166,24 @@
             }
             else //Sin entregar
             {
-                <div class="list-group-item list-group-item-action" style="background-color: #F6F6F6; ">
+                <div class="list-group-item list-group-item-action" style="background-color: #ecedfd; ">
                     <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
-                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Estado:</h4>
+                        <div class="title-little">
+                            <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-arrow-right-arrow-left icon" style="margin-right:10px;"></i>Estado:</h4>
+                        </div>
                     </div>
-                    <div class="d-flex w-100">
-                        <p class="mb-1">Sin calificar</p>
+                    <div class="d-flex w-100" style="padding-left:5%">
+                        <h5 class="mb-1">Sin calificar</h5>
                     </div>
                 </div>
 
-                <div class="list-group-item list-group-item-action" style="background-color: #F6F6F6;">
+                <div class="list-group-item list-group-item-action" style="background-color: #ecedfd;">
                     <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
-                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Tiempo restante:</h4>
+                        <div class="title-little">
+                            <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-clock icon" style="margin-right:10px;"></i>Tiempo restante:</h4>
+                        </div>
                     </div>
-                    <div class="d-flex w-100">
+                    <div class="d-flex w-100" style="padding-left: 5%; font-size: larger; font-family: inherit; font-weight: 500; line-height: 1.2; color: inherit;">
                         @{
                             TimeSpan timeLeft = Model.AssignmentDeadline - DateTime.Now;
 
@@ -159,16 +203,19 @@
                     </div>
                 </div><div class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
-                        <h4 class="mb-1" style="color:rgb(48, 120, 252)">Archivos enviados:</h4>
+                        <div class="title-little">
+                            <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-file icon" style="margin-right:10px;"></i>Archivos enviados:</h4>
+                        </div>
                     </div>
-                    <div style="display:flex;">
+                    <div style="display:flex; padding-left:5%">
                         @if (formattedTimeLeft == "Ha caducado la fecha de entrega.")
                         {
                             <div class="d-flex w-100">
-                                <p class="mb-1">Ya no puede enviar tareas, el tiempo ha caducado.</p>
+                                <h5 class="mb-1">Ya no puede enviar tareas, el tiempo ha caducado.</h5>
                             </div>
                         }
-                        else {
+                        else
+                        {
                             <a class="btn btn--rAdd" style="height:40px" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
                                 <span class="text">Subir Tarea</span>
                             </a>
@@ -178,6 +225,11 @@
             }
         </div>
     </div>
+    <br />
+    <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
+        <i class="fas fa-arrow-left"></i> Volver
+    </button>
+
 </div>
 
 

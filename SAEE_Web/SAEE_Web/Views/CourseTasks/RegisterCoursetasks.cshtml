@@ -9,11 +9,20 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Enviar tarea</h2>
+                <div class="position-relative" style="position: relative;">
+                    <div class="back-button-container" style="position: absolute; top: 5%; left: 0.5%;">
+                        <!-- Añade estilo de posicionamiento y margen -->
+                        <button type="button" class="btn btn--return" style="color:white; font-size: 1em; padding: 0.5em 1em;" onclick="history.back()">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </button>
+                    </div>
+
+                    <h2 class="contacts_form-header_title" style="font-size: 2.5em;">Enviar Tarea</h2>
+                </div>
             </div>
             <hr />
 
-            @if(ViewBag.BoxMessage != null)
+            @if (ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-danger" role="alert" style="text-align:center">
                     @ViewBag.BoxMessage
@@ -35,8 +44,11 @@
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Archivo:</label>
-                    <input type="file" id="FileNew" name="FileNew" class="field required" placeholder="Archivo" />
+                    <input type="file" id="FileNew" name="FileNew" class="field required" placeholder="Archivo" onchange="validateFile(this)" accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, image/*" />
+                    <p style="color: #1C8ADA; text-align: left;">Solo puede subir jpeg, png, gif, pdf, doc, docx, xls, ppt</p>
                 </div>
+                <div id="fileTypeError" style="display:none; color:red; margin-top: 5px;">Por favor, seleccione un archivo de imagen, PDF, Word, Excel o PowerPoint.</div>
+
 
                 <div class="form-group">
                     <label style="margin-right: 53rem;">Comentarios:</label>
@@ -53,35 +65,31 @@
 </main>
 
 
-<!-- Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-flex justify-content-center align-items-center" style="background: rgb(61, 89, 255); color:#fff; ">
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">Confirmación de Registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center align-content-center">
-                <div style="display: inline-block;">
-                    <img src="~/Images/checklist.png" style="width: 100px;" />
-                </div>
 
-                <h5 class="modal-title mr-auto">¿Está seguro de agregar el curso?</h5>
-                <p id="courseName" style="font-size: 24px; font-weight: bold;"></p>
-            </div>
-            <div class="modal-footer d-flex justify-content-center" style="background: rgb(61, 89, 255); border-color: rgb(61, 89, 255); ">
-                <!-- Añadido d-flex justify-content-center -->
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn--rAvailable" style="background-color: rgb(127, 167, 118); color: #ffff " onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Modal -->
+@Html.Partial("_Alerts")
+<!-- Modal -->
 
 
 <script>
+
+    function validateFile(input) {
+        if (input.files.length > 0) {
+            var file = input.files[0];
+            var fileName = file.name.toLowerCase();
+            var fileExtension = fileName.split('.').pop();
+
+            if (!['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+                document.getElementById('fileTypeError').style.display = 'block';
+                input.value = ''; 
+            } else {
+                document.getElementById('fileTypeError').style.display = 'none';
+            }
+        }
+    }
+
+
+
     function validateForm() {
         var formIsValid = true;
         $(".field.required").each(function () {

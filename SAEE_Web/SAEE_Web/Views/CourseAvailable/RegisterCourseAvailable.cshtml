@@ -10,7 +10,16 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Habilitar Cursos</h2>
+                <div class="position-relative" style="position: relative;">
+                    <div class="back-button-container" style="position: absolute; top: 5%; left: 0.5%;">
+                        <!-- Añade estilo de posicionamiento y margen -->
+                        <button type="button" class="btn btn--return" style="color:white; font-size: 1em; padding: 0.5em 1em;" onclick="history.back()">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </button>
+                    </div>
+
+                    <h2 class="contacts_form-header_title" style="font-size: 2.5em;">Habilitar Curso</h2>
+                </div>
             </div>
             <hr />
             @if (ViewBag.BoxMessage != null)
@@ -19,12 +28,7 @@
                     @ViewBag.BoxMessage
                 </div>
             }
-            <div class="back-button-container">
-                <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
-                    <i class="fas fa-arrow-left"></i> Volver
-                </button>
-            </div>
-
+           
 
 
             @using (Html.BeginForm("RegisterCourseAvailable", "CourseAvailable", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
@@ -57,31 +61,9 @@
     </section>
 </main>
 
-
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-flex justify-content-center align-items-center" style="background: rgba(37,117,252,.83); color:aliceblue">
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">Confirmación de Registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center align-content-center">
-                <div style="display: inline-block;">
-                    <img src="~/Images/checklist.png" style="width: 100px;" />
-                </div>
-                <p id="Enrolled" style="font-size: 24px; font-weight: bold;"></p>
-                <h5 class="modal-title mr-auto" id="confirmationModalLabel">¿Está seguro desea habilitar el curso?</h5>
-            </div>
-            <div class="modal-footer d-flex justify-content-center" style="background:rgba(37,117,252,.83) ; color:aliceblue">
-                <!-- Añadido d-flex justify-content-center -->
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success" onclick="submitForm()">Aceptar</button> <!-- Corregido el estilo -->
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Modal -->
+@Html.Partial("_Alerts")
+<!-- Modal -->
 
 
 <script>
@@ -122,8 +104,7 @@
     }
 
     function showConfirmation() {
-        var Enrolled = $('#TeacherId').val();
-        $('#Enrolled').text('"' + Enrolled + '"');
+       
         $('#confirmationModal').modal('show');
     }
 
