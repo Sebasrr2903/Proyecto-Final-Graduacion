@@ -37,7 +37,7 @@
                         <th id="Bar" scope="col">Archivo</th>
                         <th id="Bar" scope="col">Fecha de Entrega</th>
                         <th id="Bar" scope="col">Estudiante</th>
-                        <th id="Bar" scope="col">Calificar</th>
+                        <th id="Bar" scope="col">Calificación</th>
                         <th id="Bar" scope="col">Editar</th>
                     </tr>
                 </thead>
@@ -57,14 +57,29 @@
                             <td>@item.DeliveredOn.ToString("dd/MM/yyyy")</td>
                             <td>@item.StudentFullName</td>
 
-                            <td style="text-align:center">
-                                <a href="@Url.Action("GradeAssignment","CourseTasks", new { q = item.Id })"><i class="fa-solid fa-edit"></i></a>
-                            </td>
-                            
-                            @*Realizar el editar entrega*@
-                            <td style="text-align:center">
-                                <a href="@Url.Action("UpdateGradeAssignment","CourseTasks", new { q = item.Id })"><i class="fa-solid fa-edit"></i></a>
-                            </td>
+
+                            @if (item.GradingScore == 0) //No calificado
+                            {
+                                <td style="text-align:center">
+                                    <a href="@Url.Action("GradeAssignment","CourseTasks", new { q = item.Id })"><i class="fa-solid fa-upload"></i></a>
+                                </td>
+
+                                <td><i class="fa-solid fa-xmark"></i></td>
+                            }
+                            else
+                            {
+                                <td>@item.GradingScore</td>
+
+                                @*Realizar el editar entrega*@
+                                <td style="text-align:center">
+                                    <a href="@Url.Action("UpdateGradeAssignment","CourseTasks", new { q = item.GradingId })"><i class="fa-solid fa-edit"></i></a>
+                                </td>
+                            }
+
+
+
+
+
                         </tr>
                     }
                 </tbody>

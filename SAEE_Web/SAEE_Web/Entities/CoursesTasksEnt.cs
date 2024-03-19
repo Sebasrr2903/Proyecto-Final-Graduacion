@@ -24,5 +24,9 @@ namespace SAEE_Web.Entities
         public string StudentFullName { get; set; }
 
 
+        public int GradingId { get; set; }
+        public float GradingScore { get; set; }
+
+
     }
 }

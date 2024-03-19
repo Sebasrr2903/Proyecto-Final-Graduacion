@@ -466,6 +466,7 @@
     <Content Include="Views\CourseAssignment\UpdateAssignment.cshtml" />
     <Content Include="Views\Schedules\RegisterSchedule.cshtml" />
     <Content Include="Views\Schedules\ScheduleTable.cshtml" />
+    <Content Include="Views\CourseTasks\UpdateGradeAssignment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

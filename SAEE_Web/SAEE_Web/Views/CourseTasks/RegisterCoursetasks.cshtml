@@ -29,11 +29,7 @@
                 </div>
             }
 
-            <div class="back-button-container">
-                <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
-                    <i class="fas fa-arrow-left"></i> Volver
-                </button>
-            </div>
+            
 
             @using (Html.BeginForm("RegisterCourseTasks", "CourseTasks", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm", @enctype = "multipart/form-data" }))
             {

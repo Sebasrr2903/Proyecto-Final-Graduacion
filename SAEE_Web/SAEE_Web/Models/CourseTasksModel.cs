@@ -78,7 +78,32 @@ namespace SAEE_Web.Models
             }
         }
 
-        
 
-    }
+		public AssignmentGradingEnt GradingData(int q)
+		{
+			using (var client = new HttpClient())
+			{
+				var url = urlAPI + "GradingData?q=" + q;
+				var resp = client.GetAsync(url).Result;
+				return resp.Content.ReadFromJsonAsync<AssignmentGradingEnt>().Result;
+			}
+		}
+
+		public string UpdateGradeAssignment(AssignmentGradingEnt grading)
+		{
+			using (var client = new HttpClient())
+			{
+				string url = urlAPI + "UpdateGradeAssignment";
+				JsonContent content = JsonContent.Create(grading);
+				var resp = client.PutAsync(url, content).Result;
+				return resp.Content.ReadFromJsonAsync<string>().Result;
+			}
+		}
+
+
+
+
+
+
+	}
 }

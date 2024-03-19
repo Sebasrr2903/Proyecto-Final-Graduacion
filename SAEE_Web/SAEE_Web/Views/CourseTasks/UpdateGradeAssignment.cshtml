@@ -1,0 +1,94 @@
+﻿@model SAEE_Web.Entities.AssignmentGradingEnt
+
+@{
+    ViewBag.Title = "UpdateGradeAssignment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="contacts">
+    <section class="contacts_form">
+        <div class="container">
+            <div class="contacts_form-header">
+                <h2 class="contacts_form-header_title">Actualizar Calificación</h2>
+            </div>
+            <hr />
+            @if (ViewBag.BoxMessage != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align:center">
+                    @ViewBag.BoxMessage<br />
+                </div>
+
+            }
+            <div class="back-button-container">
+                <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </div>
+
+            @using (Html.BeginForm("UpdateGradeAssignment", "CourseTasks", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
+            {
+
+                @Html.HiddenFor(m => m.Id)
+
+                @Html.HiddenFor(m => m.TaskId)
+
+                <div class="form-group">
+                    <label style="margin-right: 53rem;">Nota:</label>
+                    @Html.TextBoxFor(m => m.Score, new { @class = "field required", @type = "number", @placeholder = "Nota" })
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-right: 30rem;">Comentarios:</label>
+                    @Html.TextAreaFor(m => m.PerformanceDescription, new { @class = "field required", @rows = "6", @placeholder = "Comentarios de la entrega", style = "height:15%;" })
+                </div>
+
+                <hr />
+                <div class="contacts_form-form_footer">
+                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">CALIFICAR</button>
+                </div>
+            }
+        </div>
+    </section>
+</main>
+
+
+<!-- Modal -->
+@Html.Partial("_Alerts")
+<!-- Modal -->
+
+
+<script>
+    function validateForm() {
+        var formIsValid = true;
+        $(".field.required").each(function () {
+            if ($(this).val().trim() === "") {
+                formIsValid = false;
+                $(this).css("border-color", "red");
+                if (!$(this).next().hasClass("error-message")) {
+                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Este campo es obligatorio.</p>");
+                }
+            } else {
+                $(this).css("border-color", "");
+                $(this).next(".error-message").remove();
+            }
+        });
+
+        if (formIsValid) {
+            showConfirmation();
+        }
+    }
+
+    function showConfirmation() {
+
+        $('#confirmationModal').modal('show');
+    }
+
+    function submitForm() {
+        $('#registerForm').submit();
+    }
+</script>
+
+
+
+
+

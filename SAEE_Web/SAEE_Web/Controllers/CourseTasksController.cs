@@ -3,6 +3,7 @@ using SAEE_Web.Entities;
 using SAEE_Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -128,7 +129,35 @@ namespace SAEE_Web.Controllers
         }
 
 
+		[HttpGet]
+		public ActionResult UpdateGradeAssignment(int q)
+		{
+			returnUrl = Request.UrlReferrer?.ToString();//For return
+			var data = courseTasksModel.GradingData(q);
 
 
-    }
+			return View(data);
+		}
+
+		[HttpPost]
+		public ActionResult UpdateGradeAssignment(AssignmentGradingEnt grading)
+		{
+			grading.activeUser = (int)Session["ActiveId"];//For action register
+
+			var resp = courseTasksModel.UpdateGradeAssignment(grading);
+
+			if (resp == "OK")
+			{
+				return RedirectToAction("DeliveredCoursetasks", "CourseTasks");
+			}
+			else
+			{
+				ViewBag.BoxMessage = "No se pudo actualizar la calificación.";
+				return View();
+			}
+		}
+
+
+
+	}
 }

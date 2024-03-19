@@ -154,13 +154,38 @@
                         </a>
                     </div>
                     <div style="display:flex; padding-left:3%">
-                        @*Acá validar el tiempo restante tambien, si aun tiene tiempo entonces puede realizar cambios*@
-                        <a class="btn btn--rUpdate" style="margin-right: 10px; display: flex; height: 40px" href="#">
-                            <span class="text">Editar Entrega</span>
-                        </a>
-                        <a class="btn btn--rReport" style="margin-right: 10px; display: flex; height: 40px" href="#">
-                            <span class="text">Eliminar Entrega</span>
-                        </a>
+                        @{
+                            TimeSpan timeLeft = Model.AssignmentDeadline - DateTime.Now;
+
+                            string formattedTimeLeft = "";
+                            if (timeLeft.TotalMilliseconds > 0)
+                            {
+                                formattedTimeLeft = string.Format("{0} días, {1} horas, {2} minutos, {3} segundos",
+                                    timeLeft.Days, timeLeft.Hours, timeLeft.Minutes, timeLeft.Seconds);
+                            }
+                            else
+                            {
+                                formattedTimeLeft = "Sin tiempo";
+                            }
+                        }
+
+                        @if (formattedTimeLeft == "Sin tiempo")
+                        {
+                            <div class="d-flex w-100">
+                                <h5 class="mb-1">Ya no puede editar su entrega, el tiempo ha caducado.</h5>
+                            </div>
+                        }
+                        else
+                        {
+                            //Añadir funcionamiento de los siguientes botones, no estaba pensado pero son importantes
+
+                            @*<a class="btn btn--rUpdate" style="margin-right: 10px; display: flex; height: 40px" href="#">
+                                <span class="text">Editar Entrega</span>
+                            </a>
+                            <a class="btn btn--rReport" style="margin-right: 10px; display: flex; height: 40px" href="#">
+                                <span class="text">Eliminar Entrega</span>
+                            </a>*@
+                        }
                     </div>
                 </div>
             }

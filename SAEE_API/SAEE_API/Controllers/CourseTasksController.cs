@@ -112,10 +112,13 @@ namespace SAEE_API.Controllers
             {
                 using (var context = new SAEEEntities())
                 {
-                    context.Configuration.LazyLoadingEnabled = false;
+
+					context.Configuration.LazyLoadingEnabled = false;
                     var datos = (from x in context.CourseTasks
                                  join studentData in context.Users on x.studentId equals studentData.id
-                                 where x.assignmentId == q
+                                 join grading in context.AssignmentGrading on x.id equals grading.taskId into gj
+								 from grading in gj.DefaultIfEmpty()
+								 where x.assignmentId == q 
                                  select new
                                  {
                                      Id = x.id,
@@ -125,8 +128,10 @@ namespace SAEE_API.Controllers
                                      FileExtension = x.fileExtension,
                                      DeliveredOn = x.deliveredOn,
                                      StudentId = x.studentId,
-                                     StudentFullName = studentData.name + " " + studentData.lastname
-                                 }).ToList();
+                                     StudentFullName = studentData.name + " " + studentData.lastname,
+									 GradingId = grading != null ? grading.id : (int?)0,
+									 GradingScore = grading != null ? grading.score : (double?)0
+								 }).ToList();
 
                     return datos;
                 }
@@ -201,10 +206,73 @@ namespace SAEE_API.Controllers
         }
 
 
+		[HttpGet]
+		[Route("GradingData")]
+		public AssignmentGrading GradingData(int q)
+		{
+			try
+			{
+				using (var context = new SAEEEntities())
+				{
+					context.Configuration.LazyLoadingEnabled = false;
+					var datos = (from x in context.AssignmentGrading
+								 where x.id == q
+								 select x).FirstOrDefault();
+
+					return datos;
+				}
+			}
+			catch (Exception e)
+			{
+				string errorDescription = e.Message.ToString();
+				reports.ErrorReport(errorDescription, 1, "GradingData");
+
+				return null;
+			}
+		}
+
+
+		[HttpPut]
+		[Route("UpdateGradeAssignment")]
+		public string UpdateGradeAssignment(AssignmentGradingEnt grading)
+		{
+			try
+			{
+				using (var context = new SAEEEntities())
+				{
+					var data = (from x in context.AssignmentGrading
+								where x.id == grading.Id
+								select x).FirstOrDefault();
+
+					if (data != null)
+					{
+						//De momento se hace por Linq, es mejor hacer un SP y así poder actualizar el tipo de usuario tambien
+						data.score = grading.Score;
+						data.performanceDescription = grading.PerformanceDescription;
+
+						context.SaveChanges();
+					}
+
+					reports.ActionReport("UpdateGradeAssignmentDone", grading.activeUser, "UpdateGradeAssignment");
+					return "OK";
+				}
+			}
+			catch (Exception e)
+			{
+				string errorDescription = e.Message.ToString();
+				reports.ErrorReport(errorDescription, 1, "UpdateGradeAssignment");
+
+				return string.Empty;
+			}
+		}
 
 
 
 
 
-    }
+
+
+
+
+	}
 }

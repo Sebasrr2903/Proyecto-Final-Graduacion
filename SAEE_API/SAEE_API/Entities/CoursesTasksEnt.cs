@@ -23,7 +23,8 @@ namespace SAEE_API.Entities
 
         public string StudentFullName { get; set; }
 
+		public int GradingId { get; set; }
+		public float GradingScore { get; set; }
 
-
-    }
+	}
 }
