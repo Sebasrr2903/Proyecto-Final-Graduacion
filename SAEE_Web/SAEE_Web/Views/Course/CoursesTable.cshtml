@@ -4,98 +4,90 @@
     ViewBag.Title = "CoursesTable";
 }
 
-<main style="margin: 20px auto; max-width: 1000px; flex-grow: 1;">
-    <div style="text-align: center;">
-        <h2>Cursos</h2>
-        <hr />
-        <br>
-        <div style="display:flex;">
-            &nbsp;&nbsp;
-            <div style="text-align:left">
-                <a class="btn btn--rAdd" style="display:flex; height:40px" href="@Url.Action("RegisterCourse","Course")">
-                    <span class="text">Agregar Curso</span>
-                </a>
+<main class="contacts">
+    <section class="contacts_form">
+        <div class="container">
+            <div class="contacts_form-header">
+                <h4 class="contacts_form-header_title">Cursos</h4>
             </div>
-            &nbsp;&nbsp;
-            <div style="text-align:left">
-                <a class="btn btn--rAvailable" style="display:flex; height:40px" href="@Url.Action("RegisterCourseAvailable", "CourseAvailable")">
-                    <span class="text">Habilitar Curso</span>
-                </a>
+            <hr />
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 mb-2">
+                        <a class="btn btn--rAdd d-flex align-items-center justify-content-center" href="@Url.Action("RegisterCourse","Course")">
+                            <span class="text">Agregar Curso</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 mb-2">
+                        <a class="btn btn--rAvailable d-flex align-items-center justify-content-center"  href="@Url.Action("RegisterCourseAvailable", "CourseAvailable") ">
+                            <span class="text">Habilitar Curso</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 mb-2">
+                        <a class="btn btn--rReport d-flex align-items-center justify-content-center" href="#">
+                            <span class="text">Descargar reporte</span>
+                        </a>
+                    </div>
+                </div>
             </div>
-            @*&nbsp;&nbsp;
-            <div style="text-align:left">
-                <a class="btn btn--rUpdate" id="" style="display:flex; height:40px" href="@Url.Action("RegisterSchedule", "Schedules")">
-                    <span class="text">Agregar Horarios</span>
-                </a>
-            </div>*@
-            &nbsp;&nbsp;
-            <div style="text-align:left">
-                <a class="btn btn--rReport" id="" style="display:flex; height:40px" href="#">
-                    <span class="text">Descargar reporte</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        @if (Model.Count() > 0)
-        {
-            if (ViewBag.BoxMessage != null)
+
+
+
+
+
+            <br />
+            @if (Model.Count() > 0)
             {
-                <div class="alert alert-danger" role="alert" style="text-align:center">
-                    @ViewBag.BoxMessage
+                if (ViewBag.BoxMessage != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center">
+                        @ViewBag.BoxMessage
+                    </div>
+                }
+
+                <div class="table-responsive">
+                    <table id="tableData" class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th id="Bar" scope="col">Nombre</th>
+                                <th id="Bar" scope="col">Descripción</th>
+                                <th id="Bar" scope="col">Cupos</th>
+                                <th id="Bar" scope="col">Estado</th>
+                                <th id="Bar" scope="col">Cambiar Estado</th>
+                                <th id="Bar" scope="col">Actualizar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.AvailableQuota</td>
+                                    <td>@(item.Active ? "Activo" : "Inactivo")</td>
+                                    <td style="text-align:center">
+                                        <a href="@Url.Action("ChangeStatusCourse","Course", new { q = item.Id })"><i class="fa-solid fa-rotate"></i></a>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <a href="@Url.Action("UpdateCourse","Course", new { q = item.Id })"><i class="fa-solid fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             }
-
-            <table id="tableData" class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th id="Bar" scope="col">Nombre</th>
-                        <th id="Bar" scope="col">Descripcion</th>
-                        <th id="Bar" scope="col">Cupos</th>
-                        <th id="Bar" scope="col">Estado</th>
-                        <th id="Bar" scope="col">Cambiar Estado</th>
-                        <th id="Bar" scope="col">Actualizar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <th>@item.Name</th>
-                            <td>@item.Description</td>
-                            <td>@item.AvailableQuota</td>
-
-
-                            @if (item.Active)
-                            {
-                                <td>Activo</td>
-                            }
-                            else
-                            {
-                                <td>Inactivo</td>
-                            }
-
-                            <td style="text-align:center">
-                                <a href="@Url.Action("ChangeStatusCourse","Course", new { q = item.Id })"><i class="fa-solid fa-rotate"></i></a>
-                            </td>
-                            <td style="text-align:center">
-                                <a href="@Url.Action("UpdateCourse","Course", new { q = item.Id })"><i class="fa-solid fa-edit"></i></a>
-                            </td>
-                        </tr>
-
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <div class="alert alert-info col-12" role="alert" style="text-align:center; margin-top:5%; font-size:18pt;">
-                No hay cursos registrados en este momento.
-            </div>
-        }
-    </div>
-    <hr />
+            else
+            {
+                <div class="alert alert-info" role="alert" style="text-align:center;">
+                    No hay cursos registrados en este momento.
+                </div>
+            }
+            <hr />
+        </div>
+     </section>
+ 
 </main>
-
 
 <script>
     $(document).ready(function () {

@@ -9,7 +9,8 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <h2 class="contacts_form-header_title">Inicio de Sesión</h2>
+                <h4 class="contacts_form-header_title">Inicio de Sesión</h4>
+
             </div>
             @if (ViewBag.BoxMessage != null)
             {
@@ -17,27 +18,31 @@
                     @ViewBag.BoxMessage
                 </div>
             }
+          
 
             @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "contacts_form-form", id = "loginForm" }))
             {
                 <div class="form-group">
-                    <label style="margin-right: 26rem;">Correo electronico:</label>
-                    @Html.TextBoxFor(m => m.Email, new { @class = "field required", @type = "text", @placeholder = "Email", id = "emailInput" })
+                    <hr />
+                    <label style="margin-right: 20rem;">Correo electronico:</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "field required", @style = "", @type = "text", @placeholder = "Email", id = "emailInput" })
                 </div>
                 <div class="form-group">
-                    <label style="margin-right: 52rem;">Contraseña:</label>
-                    @Html.TextBoxFor(m => m.Password, new { @class = "field required", @type = "password", @placeholder = "Contraseña" })
+                    <label style="margin-right: 22rem;">Contraseña:</label>
+                    @Html.TextBoxFor(m => m.Password, new { @class = "field required", @style = "", @type = "password", @placeholder = "Contraseña" })
                 </div>
-
+             
                 <div class="contacts_form-form_footer">
                     <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">INICIAR SESIÓN</button>
                 </div>
-
+                    <hr />
                 <div class="text-center mt-4 font-weight-light">
                     ¿Olvidaste tu contraseña? <a href="@Url.Action("RecoverPassword","User")" class="text-primary">Recuperar</a>
                 </div>
+
             }
         </div>
+   
     </section>
 </main>
 <br/>
@@ -52,6 +57,10 @@
 }
 
 <script>
+    function limpiarCampos() {
+        // Aquí puedes agregar el código para limpiar los campos del formulario
+        document.getElementById("loginForm").reset();
+    } 
     var at = "@Html.Raw(at)";
 
     function validateForm() {
@@ -61,7 +70,7 @@
                 formIsValid = false;
                 $(this).css("border-color", "red");
                 if (!$(this).next().hasClass("error-message")) {
-                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Este campo es obligatorio.</p>");
+                    $(this).after("<p class='error-message' style='color: red; text-align: left; margin-left: 5rem;'>Este campo es obligatorio.</p>");
                 }
             } else {
                 $(this).css("border-color", "");
@@ -77,7 +86,7 @@
                     }
 
                     if (!hasAnAt || !hasADot) {
-                        $(this).after("<p class='error-message' style='color: red; text-align: left;'>El valor debe corresponder a un correo electrónico.</p>");
+                        $(this).after("<p class='error-message' style='color: red; text-align: left; margin-left: 5rem;'>El valor debe corresponder a un correo electrónico.</p>");
                         formIsValid = false;
                     }
                 }

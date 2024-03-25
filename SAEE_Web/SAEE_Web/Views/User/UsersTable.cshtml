@@ -3,119 +3,122 @@
     ViewBag.Title = "UsersTable";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
- 
-  
-<main style="margin: 20px auto; max-width: 1000px; flex-grow: 1;">
-    <div style="text-align: center;">
-        <h2>Usuarios</h2>
-        <hr />
-        <br>
-        <div style="display:flex;">
-            &nbsp;&nbsp;
-            <div style="text-align:left">
-                <a class="btn btn--rAdd" style="display:flex; height:40px" href="@Url.Action("RegisterUser","User")">
-                    <span class="text">Crear cuenta</span>
-                </a>
+<main class="contacts">
+    <section class="contacts_form">
+        <div class="container">
+            <div class="contacts_form-header">
+                <h4 class="contacts_form-header_title">Cursos</h4>
             </div>
-            &nbsp;&nbsp;
-            <div style="text-align:left">
-                <a class="btn btn--rAvailable" style="display:flex; height:40px" href="@Url.Action("EnrolledStudent", "Enrolled")">
-                    <span class="text">Matricular Estudiante</span>
-                </a>
-            </div>
-            &nbsp;&nbsp;
-            <div style="text-align:left">
-                <a class="btn btn--rReport" id="" style="display:flex; height:40px" href="#">
-                    <span class="text">Descargar reporte</span>
-                </a>
-            </div>
-        </div>
-        <br />
-        @if (Model.Count() > 0)
-        {
-            if (ViewBag.BoxMessage != null)
-            {
-                <div class="alert alert-danger" role="alert" style="text-align:center">
-                    @ViewBag.BoxMessage
+            <hr />
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 mb-2">
+                        <a class="btn btn--rAdd d-flex align-items-center justify-content-center" href="@Url.Action("RegisterUser","User")">
+                            <span class="text">Crear Usuario</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 mb-2">
+                        <a class="btn btn--rAvailable d-flex align-items-center justify-content-center" href="@Url.Action("EnrolledStudent", "Enrolled")">
+                            <span class="text">Matricular Estudiante</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 mb-2">
+                        <a class="btn btn--rReport d-flex align-items-center justify-content-center" href="#">
+                            <span class="text">Descargar reporte</span>
+                        </a>
+                    </div>
                 </div>
-            }
-
-            <table id="tableData" class="table" style="">
-                <thead class="thead-light" style="">
-                    <tr>
-                        <th id="Bar" scope="col">Nombre</th>
-                        <th id="Bar" scope="col">Apellidos</th>
-                        <th id="Bar" scope="col">Fecha de nacimiento</th>
-                        <th id="Bar" scope="col">Correo</th>
-                        <th id="Bar" scope="col">Teléfono</th>
-                        <th id="Bar" scope="col">Rol</th>
-                        <th id="Bar" scope="col">Estado</th>
-                        <th id="Bar" scope="col">Cambiar Estado</th>
-                        <th id="Bar" scope="col">Actualizar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <th>@item.Name</th>
-                            <td>@item.Lastname</td>
-                            <td>@item.Birthdate.ToString("dd/MM/yyyy")</td>
-                            <td>@item.Email</td>
-                            <td>@item.PhoneNumber</td>
-
-                            @if (item.UserType == 1)
-                            {
-                                <td>Administrador</td>
-                            }
-                            else if (item.UserType == 2)
-                            {
-                                <td>Profesor</td>
-                            }
-                            else
-                            {
-                                <td>Estudiante</td>
-                            }
-
-                            @if (item.Active)
-                            {
-                                <td>Activo</td>
-                            }
-                            else
-                            {
-                                <td>Inactivo</td>
-                            }
-
-                            <td style="text-align:center">
-                                <a href="@Url.Action("ChangeStatusUser","User", new { q = item.Id })"><i class="fa-solid fa-rotate"></i></a>
-                            </td>
-                            <td style="text-align:center">
-                                <a href="@Url.Action("UpdateUser","User", new { q = item.Id })"><i class="fa-solid fa-edit"></i></a>
-                            </td>
-                        </tr>
-
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <div class="alert alert-info col-12" role="alert" style="text-align:center; margin-top:5%; font-size:18pt;">
-                No hay usuarios registrados en este momento.
             </div>
-        }
-    </div>
-    <hr />
+            <br />
+            @if (Model.Count() > 0)
+            {
+                if (ViewBag.BoxMessage != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center">
+                        @ViewBag.BoxMessage
+                    </div>
+                }
+                <div class="table-responsive">
+                    <table id="tableData" class="table">
+                        <thead class="thead-light">
+                                    <tr>
+                                        <th id="Bar" scope="col">Nombre</th>
+                                        <th id="Bar" scope="col">Apellidos</th>
+                                        <th id="Bar" scope="col">Fecha de nacimiento</th>
+                                        <th id="Bar" scope="col">Correo</th>
+                                        <th id="Bar" scope="col">Teléfono</th>
+                                        <th id="Bar" scope="col">Rol</th>
+                                        <th id="Bar" scope="col">Estado</th>
+                                        <th id="Bar" scope="col">Cambiar Estado</th>
+                                        <th id="Bar" scope="col">Actualizar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <th>@item.Name</th>
+                                            <td>@item.Lastname</td>
+                                            <td>@item.Birthdate.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.PhoneNumber</td>
+
+                                            @if (item.UserType == 1)
+                                            {
+                                                <td>Administrador</td>
+                                            }
+                                            else if (item.UserType == 2)
+                                            {
+                                                <td>Profesor</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Estudiante</td>
+                                            }
+
+                                            @if (item.Active)
+                                            {
+                                                <td>Activo</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Inactivo</td>
+                                            }
+
+                                            <td style="text-align:center">
+                                                <a href="@Url.Action("ChangeStatusUser","User", new { q = item.Id })"><i class="fa-solid fa-rotate"></i></a>
+                                            </td>
+                                            <td style="text-align:center">
+                                                <a href="@Url.Action("UpdateUser","User", new { q = item.Id })"><i class="fa-solid fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                    </div>
+                            }
+                            else
+                            {
+                            <div class="alert alert-info col-12" role="alert" style="text-align:center; margin-top:5%; font-size:18pt;">
+                                No hay usuarios registrados en este momento.
+                            </div>
+                            }
+                </div>
+
+                <hr />
+</section>
 </main>
 
 @* DATATABLES *@
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
 <script>
     $(document).ready(function () {
         $('#tableData').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-            }
+            },
+            "paging": true // Habilita la paginación
         });
     });
 </script>

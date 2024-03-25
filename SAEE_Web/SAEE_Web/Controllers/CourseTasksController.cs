@@ -29,7 +29,6 @@ namespace SAEE_Web.Controllers
         public ActionResult RegisterCourseTasks(HttpPostedFileBase FileNew, CoursesTasksEnt courseTasks)
         {
             courseTasks.activeUser = (int)Session["ActiveId"]; // Para la acción de registro
-
             courseTasks.AssignmentId = (int)Session["SelectedAssignmentId"];
             courseTasks.StudentId = (int)Session["ActiveId"];
 
@@ -68,7 +67,58 @@ namespace SAEE_Web.Controllers
         }
 
 
-        [HttpGet]
+
+		[HttpGet]
+		public ActionResult UpdateCoursesTasks()
+		{
+			returnUrl = Request.UrlReferrer?.ToString();//For return
+
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult UpdateCoursesTasks(HttpPostedFileBase FileNew, CoursesTasksEnt courseTasks)
+		{
+			
+				courseTasks.activeUser = (int)Session["ActiveId"];
+			    courseTasks.AssignmentId = (int)Session["SelectedAssignmentId"];
+			    courseTasks.StudentId = (int)Session["ActiveId"];
+
+			     var resp = "";
+
+				if (FileNew != null && FileNew.ContentLength > 0)
+				{
+					byte[] fileData;
+					using (BinaryReader reader = new BinaryReader(FileNew.InputStream))
+					{
+						fileData = reader.ReadBytes(FileNew.ContentLength);
+					}
+
+				
+					courseTasks.File = fileData;
+					courseTasks.FileExtension = Path.GetExtension(FileNew.FileName);
+				}
+
+				
+				resp = courseTasksModel.UpdateCoursesTasks(courseTasks);
+
+				if (resp == "OK")
+				{
+					
+					return Redirect(returnUrl);
+				}
+				else
+				{
+					ViewBag.BoxMessage = "No se ha actualizado la tarea correctamente.";
+					return View();
+				}
+		
+		}
+
+
+
+
+		[HttpGet]
         public ActionResult DeliveredCoursetasks()
         {
             int assignmentId = (int)Session["SelectedAssignmentId"];

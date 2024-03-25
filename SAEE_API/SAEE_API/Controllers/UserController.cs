@@ -227,58 +227,63 @@ namespace SAEE_API.Controllers
                 return string.Empty;
             }
         }
+		[HttpPost]
+		[Route("RecoverPassword")]
+		public string RecoverPassword(UserEnt user)
+		{
+			try
+			{
+			
+				if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.PhoneNumber) || user.Birthdate == null)
+				{
+					return "Datos de entrada no válidos";
+				}
 
-        [HttpPost]
-        [Route("RecoverPassword")]
-        public string RecoverPassword(UserEnt user)
-        {
-            try
-            {
-                using (var context = new SAEEEntities())
-                {
-                    var data = (from x in context.Users
-                                 where x.email == user.Email
-                                 && x.phoneNumber == user.PhoneNumber
-                                 && x.birthdate == user.Birthdate
-                                 select x).FirstOrDefault();
+				using (var context = new SAEEEntities())
+				{
+					var data = context.Users.FirstOrDefault(x =>
+						x.email == user.Email &&
+						x.phoneNumber == user.PhoneNumber &&
+						x.birthdate == user.Birthdate);
+
+					if (data != null)
+					{
+						
+						string newPassword = GeneratePassword();
+						string encryptedPassword = EncryptPassword(newPassword);
+
+						data.password = encryptedPassword;
+						context.SaveChanges();
+
+			
+						string urlHtml = AppDomain.CurrentDomain.BaseDirectory + "Templates\\RecoverPassword.html";
+						string html = File.ReadAllText(urlHtml);
+						html = html.Replace("@@Name", data.name + " " + data.lastname);
+						html = html.Replace("@@Password", newPassword);
+
+						mailService.SendEmail(user.Email, "Recuperación de contraseña SAEE-ELEC", html);
+
+						return "OK";
+					}
+					else
+					{
+						return "No se encontró ningún usuario con los datos proporcionados";
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				// Manejar excepciones
+				string errorDescription = $"Error al recuperar la contraseña: {e.Message}";
+				reports.ErrorReport(errorDescription, 1, "RecoverPassword");
+				return "Error en el servidor";
+			}
+		}
 
 
-                    //Generate password
-                    string pass = GeneratePassword();
-                    //Encrypt password
-                    string encryptPass = EncryptPassword(pass);
 
-                    data.password = encryptPass;
-                    context.SaveChanges();
-
-                    if (data != null)
-                    {
-                        //Send an email to recover the password
-                        string urlHtml = AppDomain.CurrentDomain.BaseDirectory + "Templates\\RecoverPassword.html";
-                        string html = File.ReadAllText(urlHtml);
-                        html = html.Replace("@@Name", data.name + " " + data.lastname);
-                        html = html.Replace("@@Password", pass);
-
-                        mailService.SendEmail(user.Email, "Recuperación de contraseña SAEE-ELEC", html);
-
-                        return "OK";
-                    }
-
-                    return string.Empty;
-                }
-            }
-            catch (Exception e)
-            {
-                string errorDescription = e.Message.ToString();
-                reports.ErrorReport(errorDescription, 1, "RecoverPassword");
-
-                return string.Empty;
-            }
-        }
-
-
-        /***********************Users List***********************/
-        [HttpGet]
+		/***********************Users List***********************/
+		[HttpGet]
         [Route("UsersList")]
         public List<Users> UsersList()
         {

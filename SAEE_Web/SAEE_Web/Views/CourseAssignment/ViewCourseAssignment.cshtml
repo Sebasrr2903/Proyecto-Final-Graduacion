@@ -7,12 +7,9 @@
 
 <style>
     .title-little {
-        background-color: rgb(48, 120, 252);
-        border-radius: 10px;
+  
         padding: 10px;
-        margin-bottom: 20px;
-        text-align: center;
-        width: 25%;
+      
     }
 
     .list-group-item {
@@ -29,16 +26,12 @@
     }
 
     .title-text {
-        color: #ffffff;
+        color: rgb(48, 120, 252);
         font-weight: bold;
         margin: 0;
     }
 </style>
-<div class="back-button-container">
-    <button type="button" class="btn btn--return" style="color:white;" onclick="history.back()">
-        <i class="fas fa-arrow-left"></i> Volver
-    </button>
-</div>
+
 <div style="width: 70%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; margin-block-end:8%;margin-top:2%;">
     <div id="content-container">
         <div class="list-group">
@@ -81,7 +74,19 @@
                         <h5 class="mb-1">Calificado</h5>
                     </div>
                 </div>
-
+                <div class="list-group-item list-group-item-action"  style="background-color: #BEE3AF; ">
+                    <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
+                        <div class="title-little">
+                            <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-percent icon" style="margin-right:10px;"></i>Calificacion:</h4>
+                        </div>
+                    </div>
+                    <div class="d-flex w-100" style="padding-left:5%">
+                        <h5 class="mb-1">Nota: @Model.GradingScore</h5>
+                    </div>
+                    <div class="d-flex w-100" style="padding-left:5%">
+                        <h5 class="mb-1">Comentarios: @Model.GradingPerformanceDescription</h5>
+                    </div>
+                </div>
                 <div class="list-group-item list-group-item-action" style="background-color: #BEE3AF;">
                     <div class="d-flex w-100 justify-content-between" style="display: flex; flex-direction: row;">
                         <div class="title-little">
@@ -106,17 +111,7 @@
                     </div>
                 </div>
 
-                <div class="list-group-item list-group-item-action">
-                    <div class="title-little">
-                        <h4 class="title-text" style="font-weight:bold;"><i class="fas fa-percent icon" style="margin-right:10px;"></i>Calificacion:</h4>
-                    </div>
-                    <div class="d-flex w-100" style="padding-left:5%">
-                        <h5 class="mb-1">Nota: @Model.GradingScore</h5>
-                    </div>
-                    <div class="d-flex w-100" style="padding-left:5%">
-                        <h5 class="mb-1">Comentarios: @Model.GradingPerformanceDescription</h5>
-                    </div>
-                </div>
+               
             }
             else if (Model.TaskId != 0 & Model.GradingId == 0) //Entregado
             {
@@ -171,6 +166,7 @@
 
                         @if (formattedTimeLeft == "Sin tiempo")
                         {
+                            
                             <div class="d-flex w-100">
                                 <h5 class="mb-1">Ya no puede editar su entrega, el tiempo ha caducado.</h5>
                             </div>
@@ -178,13 +174,16 @@
                         else
                         {
                             //Añadir funcionamiento de los siguientes botones, no estaba pensado pero son importantes
+                          
+                            //SEBAS:ALGO ME HACE FALTA PARA QUE SE VEA LA INFORMACION Y NO ENSENA LOS BOTONES POR LO DEL TIEMPO
 
-                            @*<a class="btn btn--rUpdate" style="margin-right: 10px; display: flex; height: 40px" href="#">
+                            <a class="btn btn--rUpdate" style="margin-right: 10px; display: flex; height: 40px" href="@Url.Action("UpdateCoursesTasks","CourseTasks", new { id = Model.TaskId})">
                                 <span class="text">Editar Entrega</span>
                             </a>
+
                             <a class="btn btn--rReport" style="margin-right: 10px; display: flex; height: 40px" href="#">
                                 <span class="text">Eliminar Entrega</span>
-                            </a>*@
+                            </a>
                         }
                     </div>
                 </div>
@@ -241,9 +240,11 @@
                         }
                         else
                         {
-                            <a class="btn btn--rAdd" style="height:40px" href="@Url.Action("RegisterCourseTasks","CourseTasks")">
-                                <span class="text">Subir Tarea</span>
+
+                            <a class="btn btn--rAdd" title="Subir tarea" style="margin-right: 10px; height: 54px; width: 7%;"  href="@Url.Action("RegisterCourseTasks","CourseTasks")">
+                                <i class="fas fa-file-arrow-up" style="color: #ffffff; font-size:40px;"></i> <!-- Icono para cambiar estado -->
                             </a>
+                          
                         }
                     </div>
                 </div>

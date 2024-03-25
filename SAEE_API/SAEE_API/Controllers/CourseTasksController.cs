@@ -71,7 +71,50 @@ namespace SAEE_API.Controllers
             }
         }
 
-        [HttpGet]
+		[HttpPut]
+		[Route("UpdateCoursesTasks")]
+		public string UpdateCoursesTasks(CoursesTasksEnt courseTasks)
+		{
+			try
+			{
+				using (var context = new SAEEEntities())
+				{
+					// Buscar la tarea de curso existente por su ID
+					var existingTask = context.CourseTasks.FirstOrDefault(t => t.id == courseTasks.Id);
+
+					if (existingTask != null)
+					{
+					
+						existingTask.name = courseTasks.Name;
+						existingTask.description = courseTasks.Description;
+						existingTask.file = courseTasks.File;
+						existingTask.fileExtension = courseTasks.FileExtension;
+						existingTask.deliveredOn = courseTasks.DeliveredOn;
+						existingTask.assignmentId = courseTasks.AssignmentId;
+						existingTask.studentId = courseTasks.StudentId;
+
+					
+						context.SaveChanges();
+
+						return "OK"; 
+					}
+					else
+					{
+						return "No se encontró la tarea de curso especificada."; // La tarea de curso no existe
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				// En caso de error, registrar el error y devolver un mensaje de error al cliente
+				string errorDescription = e.Message.ToString();
+				reports.ErrorReport(errorDescription, courseTasks.activeUser, "UpdateCoursesTasks");
+				return "Error al actualizar la tarea de curso. Por favor, inténtelo de nuevo más tarde."; // Mensaje de error genérico
+			}
+		}
+
+
+		[HttpGet]
         [Route("SpecificAssignment")]
         public object SpecificAssignment(int q)
         {

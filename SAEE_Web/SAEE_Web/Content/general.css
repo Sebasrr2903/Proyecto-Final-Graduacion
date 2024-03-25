@@ -57,48 +57,47 @@ div.dataTables_wrapper div.dataTables_filter input {
     box-shadow: 0 2px 4px rgba(43,53,67,0);
 }
 
+.btn--rAdd,
+.btn--rAvailable,
+.btn--rReport, .btn--rUpdate {
+    width: 14rem;
+    height: 40px;
+    border-color: transparent;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 0; /* Evita que los botones se expandan */
+    position: relative;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: .3s ease-in-out;
+    -o-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    -webkit-box-shadow: 0 2px 4px rgba(43, 53, 67, 0);
+    box-shadow: 0 2px 4px rgba(43, 53, 67, 0);
+}
+
+.btn--rUpdate {
+    width: 10rem;
+    border-color: #18a3c2;
+    background: #18a3c2;
+}
+
 .btn--rAdd {
     border-color: rgb(156, 187, 152);
-    height: 30px;
     background: rgb(156, 187, 152);
-    position: relative;
-    overflow: hidden;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transition: .3s ease-in-out;
-    -o-transition: .3s ease-in-out;
-    transition: .3s ease-in-out;
-    -webkit-box-shadow: 0 2px 4px rgba(43,53,67,0);
-    box-shadow: 0 2px 4px rgba(43,53,67,0) ;
 }
+
 .btn--rAvailable {
     border-color: rgb(133, 133, 204);
-    height: 30px;
     background: rgb(133, 133, 204);
-    position: relative;
-    overflow: hidden;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transition: .3s ease-in-out;
-    -o-transition: .3s ease-in-out;
-    transition: .3s ease-in-out;
-    -webkit-box-shadow: 0 2px 4px rgba(43,53,67,0);
-    box-shadow: 0 2px 4px rgba(43,53,67,0);
 }
 
 .btn--rReport {
     border-color: rgb(246, 125, 117);
-    height: 30px;
     background: rgb(246, 125, 117);
-    position: relative;
-    overflow: hidden;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transition: .3s ease-in-out;
-    -o-transition: .3s ease-in-out;
-    transition: .3s ease-in-out;
-    -webkit-box-shadow: 0 2px 4px rgba(43,53,67,0);
-    box-shadow: 0 2px 4px rgba(43,53,67,0);
 }
 
 
@@ -121,7 +120,8 @@ div.dataTables_wrapper div.dataTables_filter input {
     left: 30px;
 }
 .btn--return {
-    background: -o-linear-gradient(338.59deg,#ff0844 24.85%,#ff8b67 95.39%);
+
+    width:10rem;
     background: #6a11cb;
     position: relative;
     overflow: hidden;
@@ -165,20 +165,19 @@ div.dataTables_wrapper div.dataTables_filter input {
     box-shadow: 0 2px 4px rgba(43,53,67,0)
 }
 
-    .btn--rlogin:after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: -o-linear-gradient(338.59deg,#ff8b67 24.85%,#ff0844 95.39%);
-        background: linear-gradient(111.41deg,#ff8b67 24.85%,#ff0844 95.39%);
-        -webkit-transition: opacity .3s ease-in-out;
-        -o-transition: opacity .3s ease-in-out;
-        transition: opacity .3s ease-in-out;
-        opacity: 0;
-        z-index: 1;
+    .btn--rlogin:hover {
+        background: linear-gradient(111.41deg,#2575fc 24.85%,rgb(106, 17, 203) 95.39%);
+        height: 30px;
+        border-color: #6a11cb;
+        position: relative;
+        overflow: hidden;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transition: .3s ease-in-out;
+        -o-transition: .3s ease-in-out;
+        transition: .3s ease-in-out;
+        -webkit-box-shadow: 0 2px 4px rgba(43,53,67,0);
+        box-shadow: 0 2px 4px rgba(43,53,67,0)
     }
 
     .btn--rlogin .text {
@@ -585,36 +584,8 @@ main {
     transition: .4s ease-in-out
 }
 
-    .card .content {
-        position: relative;
-        z-index: 2;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center
-    }
 
-    .card:after {
-        border-radius:10px;
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: -o-linear-gradient(307.13deg,#6a11cb 12.55%,#2575fc 108.54%);
-        background:#6a11cb;
-        opacity: 0;
-        -webkit-transition: opacity .4s ease-in-out;
-        -o-transition: opacity .4s ease-in-out;
-        transition: opacity .4s ease-in-out
-    }
+   
 
 .card_media {
     background: -o-linear-gradient(316.28deg,#6a11cb 21.85%,#2575fc 104.32%);
@@ -639,20 +610,7 @@ main {
     overflow: hidden
 }
 
-    .card_media:after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: #fff;
-        opacity: 0;
-        -webkit-transition: opacity .4s ease-in-out;
-        -o-transition: opacity .4s ease-in-out;
-        transition: opacity .4s ease-in-out;
-        z-index: 1
-    }
+ 
 
     .card_media .icon {
         position: relative;
@@ -676,23 +634,7 @@ main {
     max-width: 285px
 }
 
-.card:hover {
-    color: #fff;
-    -webkit-box-shadow: 0 2px 14px rgba(112,115,255,.75);
-    box-shadow: 0 2px 14px rgba(112,115,255,.75)
-}
 
-    .card:hover .card_media:after, .card:hover:after {
-        opacity: 1
-    }
-
-    .card:hover .card_media .icon {
-        color: #3d53eb
-    }
-
-    .card:hover .card_main-title {
-        color: #fff
-    }
 
 .course-card_wrapper {
     background: #fff;
@@ -1303,7 +1245,121 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
     background-color: #fff;
     z-index: 100000;
     will-change: transform;
-    -webkit-transition: .4s ease-in-out;
+    -webkit-transition: .4s eas /* Navbar normal */
+}
+
+/* Navbar pegajoso */
+.header.sticky {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.header.sticky + main {
+    margin-top: 90px;
+}
+
+/* Navbar abierto */
+.header.opened {
+    height: 100vh;
+}
+
+/* Logo */
+.header_logo .logo_picture {
+    width: 35px;
+    height: 39px;
+    margin-right: 5px;
+}
+
+.header_logo .text {
+    font-size: 12px;
+    margin-bottom: 5px;
+    font-weight: 400;
+}
+
+.header_logo .text .brand {
+    display: block;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    color: #2b3543;
+    font-size: 24px;
+    line-height: 1.3;
+    margin-bottom: -7px;
+    font-weight: 600;
+}
+
+.header_logo .text_secondary {
+    position: relative;
+    left: 1px;
+}
+
+/* Trigger del navbar */
+.header_trigger .line {
+    width: 30px;
+    height: 3px;
+    background-color: #485870;
+    display: block;
+    margin: 4px auto;
+    transition: .3s ease-in-out;
+}
+
+.header_trigger.active .line:nth-child(1) {
+    transform: translateY(1px);
+}
+
+.header_trigger.active .line:nth-child(3) {
+    transform: translateY(-13px) rotate(90deg);
+}
+
+.header_trigger.active .line:nth-child(2) {
+    width: 0;
+}
+
+/* Lista de navegación */
+.header_nav {
+    width: 100%;
+    text-align: center;
+    display: none; /* Oculta el menú por defecto */
+}
+
+/* Estilos adicionales para pantallas pequeñas */
+@media only screen and (max-width: 555px) {
+    .header_nav-list {
+        flex-direction: column;
+        align-items: center; /* Centra los elementos verticalmente */
+    }
+
+    .header_nav-list_item {
+        /* Espacio entre los elementos */
+    }
+}
+@media (max-width: 1000px) {
+    .header {
+        align-items:center;
+        height: auto;
+        padding: 10px 0;
+    }
+
+    .header_nav-list {
+    
+        align-items: center; /* Centra los elementos verticalmente */
+    }
+
+    .header_trigger {
+        display: block; /* Muestra el botón de menú en pantallas pequeñas */
+    }
+
+    .header_nav {
+        display: block; /* Muestra el menú en pantallas pequeñas */
+        margin-top: 20px;
+        
+        align-items: center; /* /* Añade espacio entre el botón de menú y el menú en pantallas pequeñas */
+    }
+
+  
+}
+e-in-out;
     -o-transition: .4s ease-in-out;
     transition: .4s ease-in-out;
     padding: 20px 0;
@@ -1506,6 +1562,8 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
         flex-grow: unset
     }
 
+
+
     .header {
         padding: 0;
         height: 84px;
@@ -1544,6 +1602,9 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
         align-items: center;
         position: relative
     }
+
+  
+
 
         .header .nav-item:not(.dropdown-item):after {
             content: '';
@@ -1584,6 +1645,7 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
         height: 100%
     }
 
+
         .header_nav .promobar_socials {
             display: none !important
         }
@@ -1605,18 +1667,26 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
         margin-right: 0;
         position: relative
     }
+    .header_nav-list_item a.active {
+        /* Estilos para el elemento del menú activo */
+        color: inherit; /* Cambiar color de texto */
+        font-weight: bold; /* Hacer el texto en negrita */
+        /* Otros estilos deseados */
+    }
 
-        .header_nav-list_item:not(.header_nav-list.dropdown):after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 4px;
-            bottom: 0;
-            left: 0;
-            background: -o-linear-gradient(338.59deg,#ff0844 24.85%,#ff8b67 95.39%);
-            background: linear-gradient(111.41deg,#ff0844 24.85%,#ff8b67 95.39%);
-            border-radius: 2px
-        }
+
+    .header_nav-list_item.active:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        bottom: 0;
+        left: 0;
+        background: -o-linear-gradient(338.59deg, #ff0844 24.85%, #ff8b67 95.39%);
+        background: linear-gradient(111.41deg, #ff0844 24.85%, #ff8b67 95.39%);
+        border-radius: 2px;
+    }
+
 
         .header_nav-list_item:not(.header_nav-list.dropdown).current, .header_nav-list_item:not(.header_nav-list.dropdown):focus, .header_nav-list_item:not(.header_nav-list.dropdown):hover {
             color: #2b3543
@@ -1718,9 +1788,7 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
     position: relative;
     padding: 60px 0;
     z-index: 1;
-    background: -webkit-gradient(linear,left bottom,left top,from(rgba(255,255,255,.9)),to(rgba(255,255,255,.9))),-webkit-gradient(linear,left top,right top,color-stop(.05%,#6a11cb),color-stop(16.85%,#6a11cb),color-stop(151.04%,#2575fc)) !important;
-    background: -o-linear-gradient(bottom,rgba(255,255,255,.9),rgba(255,255,255,.9)),-o-linear-gradient(left,#6a11cb .05%,#6a11cb 16.85%,#2575fc 151.04%) !important;
-    background: linear-gradient(0deg,rgba(255,255,255,.9),rgba(255,255,255,.9)),linear-gradient(90deg,#6a11cb .05%,#6a11cb 16.85%,#2575fc 151.04%) !important;
+    align-content:center;
     background-blend-mode: lighten,normal !important
 }
 
@@ -1730,8 +1798,6 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
         position: absolute;
         top: 0;
         left: 0;
-        background: -o-linear-gradient(281.77deg,rgba(251,248,254,.0001) -55.97%,#fbf8fe 83.31%,#fbf8fe 83.31%);
-        background: linear-gradient(168.23deg,rgba(251,248,254,.0001) -55.97%,#fbf8fe 83.31%,#fbf8fe 83.31%);
         z-index: 1
     }
 
@@ -1927,7 +1993,7 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
 }
 
 .contacts_form-form {
-    max-width: 50%;
+    max-width: 42%;
     margin: 0 auto
 }
 
@@ -1992,7 +2058,7 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
 
 .contacts_form-header_title {
     margin-bottom: 15px;
-    font-size: 44px
+    font-size: 35px
 }
 
 .contacts_form-header_text {
@@ -2027,7 +2093,7 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
     }
 
     .contacts_form {
-        padding: 80px 0 120px
+        padding: 40px 0 80px
     }
 
     .contacts_form-header_title {

@@ -5,6 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
+    .week-name {
+        color:purple; /* Establece el color del texto a negro */
+    }
     .list-group {
         height: 100%;
         max-width: 100%;
@@ -18,20 +21,14 @@
     }
 
     .title-little {
-        background-color: rgb(48, 120, 252); 
-        border-radius: 10px; 
+       
+  
         padding: 10px; 
-        margin-bottom: 20px; 
-        text-align: center; 
-        width: 28%;
+       
+       
     }
     .title-little-send {
-        background-color: rgb(72, 1, 219); 
-        border-radius: 10px; 
-        padding: 10px; 
-        margin-bottom: 20px; 
-        text-align: center; 
-        width: 20%;
+      
     }
 
     .btn--rTasks {
@@ -45,28 +42,32 @@
 
 
     .title-text {
-        color: #ffffff;
-        font-weight: bold; 
-        margin: 0; 
+        color: rgb(48, 120, 252);
+        font-weight: bold;
+        margin: 0;
     }
-
-    .active-state {
+    .title-text2 {
+        font-size: 21px;
+        color: rgb(72, 1, 219);
+        font-weight: bold;
+        margin: 0;
+    }
+        .active-state {
         text-align: center;
         width: 13%;
-        background-color: rgb(156, 187, 152);
-        padding:10px ;
-        color: white;
-        border-radius: 5px;
+        font-weight: bold;
+        padding: 10px;
+        color: #31ad37;
+
     }
 
     .inactive-state {
         padding: 5px;
         text-align: center;
         width: 15%;
-        
-        background-color: #ff6a6a;
-        color: white;
-        border-radius: 5px;
+        font-weight: bold;
+        color: #ff6a6a;
+      
     }
 </style>
 
@@ -175,7 +176,7 @@
                                 @if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
                                 {
                                  
-                                    <a class="btn btn--rAdd" title="Agregar Material" style="margin-right: 10px; height: 54px; " onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)" href="@Url.Action("RegisterMaterial","CourseMaterial")">
+                                    <a class="btn btn--rAdd" title="Agregar Material" style="margin-right: 10px; height: 54px; width: 7%;" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)" href="@Url.Action("RegisterMaterial","CourseMaterial")">
                                         <i class="fas fa-circle-plus" style="color: #ffffff; font-size:40px;" ></i> <!-- Icono para cambiar estado -->
                                     </a>
                                 }
@@ -197,24 +198,27 @@
                                         {
                                             if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
                                             {
-                                            <div style=" display: flex; text-align: left; flex-direction: row; margin-bottom: 20px;">
-                                                <a href="@Url.Action("DownloadMaterial","CourseMaterial", new { q = material.MaterialId })">
-                                                    <span class="text" style="color: rgb(72, 1, 219); font-size:18px"> <i class="fa-solid fa-file-arrow-down" style="font-size: 20px;"> </i> Descargar @material.MaterialName</span>
-                                                </a>
+                                                <div style=" display: flex; text-align: left; flex-direction: row; margin-bottom: 20px;">
+                                                    <a href="@Url.Action("DownloadMaterial","CourseMaterial", new { q = material.MaterialId })">
+                                                        <span class="text" style="color: rgb(72, 1, 219); font-size:18px"> <i class="fa-solid fa-file-arrow-down" style="font-size: 20px;"> </i> Descargar @material.MaterialName</span>
+                                                    </a>
 
-                                                <a href="@Url.Action("DeleteMaterial","CourseMaterial", new { q = material.MaterialId })" style="color: red; margin-left: 10px; display: flex; align-items: center;" onclick="return confirmDelete();">
-                                                    <i class="fa-solid fa-trash" style="font-size: 20px; padding-left:17px"></i>
-                                                </a>
-                                            </div>
-                                                       
-                                        }
+                                                    <a href="@Url.Action("DeleteMaterial","CourseMaterial", new { q = material.MaterialId })" style="color: red; margin-left: 10px; display: flex; align-items: center;" onclick="return confirmDelete();">
+                                                        <i class="fa-solid fa-trash" style="font-size: 20px; padding-left:17px"></i>
+                                                    </a>
+                                                    <hr />
+                                                </div>
+
+                                            }
                                             else
                                             {
                                                 <div style="text-align: start; margin-bottom: 10px;">
                                                     <a href="@Url.Action("DownloadMaterial","CourseMaterial", new { q = material.MaterialId })">
                                                         <span class="text" style="color: rgb(72, 1, 219); font-size:18px"> <i class="fa-solid fa-file-arrow-down" style="font-size: 20px;"> </i> Descargar @material.MaterialName</span>
                                                     </a>
+                                                    <hr />
                                                 </div>
+                                               
                                             }
                                         }
                                     }
@@ -233,7 +237,7 @@
                                 {
                                     <div style="text-align:left; margin-top:5px">
                                        
-                                        <a class="btn btn--rAdd" title="Agregar Entregable" style="margin-right: 10px; height: 54px; " onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)" href="@Url.Action("RegisterAssignment","CourseAssignment")">
+                                        <a class="btn btn--rAdd" title="Agregar Entregable" style="margin-right: 10px; height: 54px; width: 100%; " onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)" href="@Url.Action("RegisterAssignment","CourseAssignment")">
                                             <i class="fas fa-circle-plus" style="color: #ffffff; font-size:40px;" title="Agregar Entregable"></i> <!-- Icono para cambiar estado -->
                                         </a>
                                     </div>
@@ -255,7 +259,7 @@
                                             if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
                                             {
                                                 <div class="title-little-send">
-                                                    <p class="title-text" style="font-weight:bold;"><i class="fa fa-bars-progress" style="margin-right:20px;"></i>@assignment.AssignmentName</p>
+                                                    <p class="title-text2" style="font-weight:bold;"><i class="fa fa-bars-progress" style="margin-right:20px;"></i>@assignment.AssignmentName</p>
                                                 </div>
                                                 <h5 class="mb-1" style="padding-block-end:13px">Indicaciones: @assignment.AssignmentDescription</h5>
 
@@ -272,15 +276,15 @@
                                                     }
 
                                                     <div style="display: flex; justify-content: start; ">
-                                                        <a class="btn btn--rUpdate" style="margin-right: 10px; height: 40px" onclick="updateSessionWeek('@item.WeekNum', '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("UpdateAssignment","CourseAssignment")">
+                                                        <a class="btn btn--rUpdate" style="margin-right: 10px; height: 40px; width: 10%;" onclick="updateSessionWeek('@item.WeekNum', '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("UpdateAssignment","CourseAssignment")">
                                                             <i class="fas fa-edit" style="color: #ffffff;" title="Editar Entregable"></i> <!-- Icono para editar -->
                                                         </a>
 
-                                                        <a class="btn btn--rAvailable" style="margin-right: 10px; height: 40px" onclick="updateSessionWeek('@item.WeekNum', '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("ChangeStatusAssignment","CourseAssignment")">
+                                                        <a class="btn btn--rAvailable" style="margin-right: 10px; height: 40px; width: 10%;" onclick="updateSessionWeek('@item.WeekNum', '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("ChangeStatusAssignment","CourseAssignment")">
                                                             <i class="fas fa-exchange-alt" style="color: #ffffff;" title="Cambiar Estado"></i> <!-- Icono para cambiar estado -->
                                                         </a>
 
-                                                        <a class="btn btn--rReport" style="margin-right: 10px; height: 40px" onclick="updateSessionWeek('@item.WeekNum', '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("DeliveredCoursetasks","CourseTasks")">
+                                                        <a class="btn btn--rReport" style="margin-right: 10px; height: 40px; width: 10%;" onclick="updateSessionWeek('@item.WeekNum', '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("DeliveredCoursetasks","CourseTasks")">
                                                             <i class="fas fa-list-alt" style="color: #ffffff;" title="Ver Entregas"></i> <!-- Icono para ver entregas -->
                                                         </a>
                                                     </div>
@@ -321,7 +325,7 @@
                                 @if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
                                 {
                                     
-                                    <a class="btn btn--rUpdate" title="Editar Contenido" style="margin-right: 10px; height: 53px" href="@Url.Action("UpdateContentPerWeek","ContentPerWeek", new { q = item.ContentPerWeekId })">
+                                    <a class="btn btn--rUpdate" title="Editar Contenido" style="margin-right: 10px; height: 53px; width: 7%;" href="@Url.Action("UpdateContentPerWeek","ContentPerWeek", new { q = item.ContentPerWeekId })">
                                         <i class="fas fa-edit" style="color: #ffffff;font-size:38px"></i> 
                                     </a>
                                 }
@@ -341,7 +345,7 @@
                                 @if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
                                 {
                                   
-                                    <a class="btn btn--rAdd" title="Agregar  Material" style="margin-right: 10px; height: 54px; " onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)" href="@Url.Action("RegisterMaterial","CourseMaterial")">
+                                    <a class="btn btn--rAdd" title="Agregar  Material" style="margin-right: 10px; height: 54px; width: 7%;" onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)" href="@Url.Action("RegisterMaterial","CourseMaterial")">
                                         <i class="fas fa-circle-plus" style="color: #ffffff; font-size:40px;" ></i> <!-- Icono para cambiar estado -->
                                     </a>
                                 }
@@ -377,6 +381,7 @@
                                                     <a href="@Url.Action("DownloadMaterial","CourseMaterial", new { q = material.MaterialId })">
                                                         <span class="text" style="color: rgb(72, 1, 219); font-size:20px;"> <i class="fa-solid fa-file-arrow-down" style="font-size: 20px;"> </i> Descargar @material.MaterialName</span>
                                                     </a>
+                                                    <hr />
                                                 </div>
                                             }
                                         }
@@ -395,7 +400,7 @@
                                 {
                                     <div style="text-align:left; margin-top:5px">
                                        
-                                        <a class="btn btn--rAdd" title="Agregar Entregable" style="margin-right: 10px; height: 54px; "  onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)" href="@Url.Action("RegisterAssignment","CourseAssignment")">
+                                        <a class="btn btn--rAdd" title="Agregar Entregable" style="margin-right: 10px; height: 54px; width: 100%;"  onclick="updateSessionWeek(@item.WeekNum, '@item.WeekId', 0)" href="@Url.Action("RegisterAssignment","CourseAssignment")">
                                             <i class="fas fa-circle-plus" style="color: #ffffff; font-size:40px;" title="Agregar Entregable"></i> <!-- Icono para cambiar estado -->
                                         </a>
                                     </div>
@@ -419,7 +424,7 @@
                                             if ((int)Session["UserType"] == 2 || (int)Session["UserType"] == 1)
                                             {
                                                 <div class="title-little-send">
-                                                    <p class="title-text" style="font-weight:bold;"><i class="fa fa-bars-progress" style="margin-right:10px;"></i>@assignment.AssignmentName</p>
+                                                    <p class="title-text2" style="font-weight:bold;"><i class="fa fa-bars-progress" style="margin-right:10px;"></i>@assignment.AssignmentName</p>
                                                 </div>
                                                 <h5 class="mb-1" style="padding-block-end:13px">Indicaciones: @assignment.AssignmentDescription</h5>
 
@@ -435,15 +440,15 @@
                                                 }
 
                                                 <div style="text-align: left; display: flex; flex-direction: row;">
-                                                    <a class="btn btn--rUpdate" style="margin-right: 10px; height: 40px" onclick="updateSessionWeek('@item.WeekNum', '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("UpdateAssignment","CourseAssignment")">
+                                                    <a class="btn btn--rUpdate" style="margin-right: 10px; height: 40px; width:10%;" onclick="updateSessionWeek('@item.WeekNum', '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("UpdateAssignment","CourseAssignment")">
                                                         <i class="fas fa-edit" style="color: #ffffff;" title="Editar Entregable"></i> <!-- Icono para editar -->
                                                     </a>
 
-                                                    <a class="btn btn--rAvailable" style="margin-right: 10px; height: 40px" onclick="updateSessionWeek('@item.WeekNum', '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("ChangeStatusAssignment","CourseAssignment")">
+                                                    <a class="btn btn--rAvailable" style="margin-right: 10px; height: 40px; width: 10%;" onclick="updateSessionWeek('@item.WeekNum', '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("ChangeStatusAssignment","CourseAssignment")">
                                                         <i class="fas fa-exchange-alt" style="color: #ffffff;" title="Cambiar Estado"></i> <!-- Icono para cambiar estado -->
                                                     </a>
 
-                                                    <a class="btn btn--rReport" style="margin-right: 10px; height: 40px" onclick="updateSessionWeek('@item.WeekNum', '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("DeliveredCoursetasks","CourseTasks")">
+                                                    <a class="btn btn--rReport" style="margin-right: 10px; height: 40px; width: 10%;" onclick="updateSessionWeek('@item.WeekNum', '@item.WeekId', '@assignment.AssignmentId')" href="@Url.Action("DeliveredCoursetasks","CourseTasks")">
                                                         <i class="fas fa-list-alt" style="color: #ffffff;" title="Ver Entregas"></i> <!-- Icono para ver entregas -->
                                                     </a>
 
@@ -490,40 +495,55 @@
     }
 
 
+  function handleWeekClick(event, weekNum, weekId, assignmentId) {
+        event.preventDefault();
+
+        // Eliminar la clase 'active' de todos los enlaces
+        var navbarItems = document.querySelectorAll('.navbar-brand.choicebtn');
+        navbarItems.forEach(function(item) {
+            item.classList.remove('active');
+        });
+
+        // Agregar la clase 'active' al enlace seleccionado
+        event.target.classList.add('active');
+
+        // Actualizar la semana en el backend
+        updateSessionWeek(weekNum, weekId, assignmentId);
+    }
+
     function updateSessionWeek(weekNum, weekId, assignmentId) {
         fetch('@Url.Action("UpdateSessionWeek", "Enrolled")', {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-        weekNum: weekNum,
-        weekId: weekId,
-        assignmentId: assignmentId
-        })
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                weekNum: weekNum,
+                weekId: weekId,
+                assignmentId: assignmentId
+            })
         })
         .then(response => {
-        if (!response.ok) {
-        throw new Error('Network response was not ok');
-        }
-        return response.json();
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
         })
         .catch(error => {
-        console.error('There was a problem with your fetch operation:', error);
+            console.error('There was a problem with your fetch operation:', error);
         });
         return false;
-        }
-
-
-        // Función para recargar la página
-        function reloadPage() {
+    }
+    // Función para recargar la página
+    function reloadPage() {
         location.reload();
-        }
-        var reloadButtons = document.getElementsByClassName('choicebtn');
-        for (var i = 0; i < reloadButtons.length; i++) {
+    }
+
+    var reloadButtons = document.getElementsByClassName('choicebtn');
+    for (var i = 0; i < reloadButtons.length; i++) {
         reloadButtons[i].addEventListener('click', reloadPage);
-        }
-        </script>
+    }
+</script>
 
 
 

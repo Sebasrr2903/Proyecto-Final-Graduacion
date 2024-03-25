@@ -1,0 +1,79 @@
+﻿
+@functions {
+    string IsActive(string page)
+    {
+        var currentPage = $"{ViewContext.RouteData.Values["controller"]}/{ViewContext.RouteData.Values["action"]}";
+        return currentPage == page ? "active" : "";
+    }
+}
+<nav class="header_nav d-lg-none justify-content-center">
+    <ul class="header_nav-list d-flex align-items-center">
+        <li class="header_nav-list_item mr-3">
+            <a class="nav-item @(IsActive("Home/Index"))" href="@Url.Action("Index", "Home")" data-page="UsersTable">Inicio</a>
+        </li>
+
+        @if (Session["ActiveId"] != null)
+        {
+
+            if ((int)Session["UserType"] == 1) //Admin
+            {
+                <li class="header_nav-list_item mr-3">
+                    <a class="nav-item @(IsActive("User/UsersTable"))" href="@Url.Action("UsersTable", "User")" data-page="UsersTable">Usuarios</a>
+                </li>
+                <li class="header_nav-list_item mr-3">
+                    <a class="nav-item @(IsActive("Course/CoursesTable"))" href="@Url.Action("CoursesTable", "Course")" data-page="Cursos">Cursos</a>
+                </li>
+                <li class="header_nav-list_item mr-3">
+                    <a class="nav-item  @(IsActive("Report/GeneralReport"))" href="@Url.Action("GeneralReport", "Report")" data-page="Reportes">Reportes</a>
+                </li>
+            }
+            else if ((int)Session["UserType"] == 3) //Student
+            {
+                <li class="header_nav-list_item mr-3">
+                    <a class="nav-item" href="@Url.Action("AllCourses", "Course")" data-page="about">Mis Cursos</a>
+                </li>
+            }
+            else //Teacher
+            {
+                <li class="header_nav-list_item mr-3">
+                    <a class="nav-item" href="@Url.Action("AllCourses", "Course")" data-page="about">Mis Cursos</a>
+                </li>
+            }
+
+            <li class="header_nav-list_item mr-3">
+                <a class="nav-item @(IsActive("ProfileData/GeneralReport"))" style="color:#401ade; font-size:larger;" href="@Url.Action("ProfileData", "User")" data-page="about">@Session["Name"]</a>
+            </li>
+
+            <li class="header_nav-list_item mr-3">
+                @if (Session["ProfileImageB64"] == null)
+                {
+                    <img class="img-xs rounded-circle" src="https://cdn-icons-png.flaticon.com/512/2550/2550383.png" style="max-width:3rem; margin: auto;" alt="Foto de Perfil Default">
+                }
+                else
+                {
+                    <img class="img-xs rounded-circle" src="data:image/jpeg;base64,@Session["ProfileImageB64"]" style="max-width:3rem; margin: auto;" alt="Foto de Perfil">
+                }
+            </li>
+
+            <li class="header_nav-list_item">
+                <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("Logout", "User")">
+                    <span class="text">Cerrar Sesión</span>
+                </a>
+            </li>
+        }
+        else
+        {
+
+            <li class="header_nav-list_item mr-3">
+                <a class="nav-item" href="#" data-page="about">Preguntas frecuentes</a>
+            </li>
+            <li class="header_nav-list_item mr-3">
+                <a class="btn btn--rlogin" style="display:flex; height:40px" href="@Url.Action("Login", "User")">
+                    <span class="text">Iniciar Sesión</span>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
+
+

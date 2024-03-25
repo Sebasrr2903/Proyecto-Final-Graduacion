@@ -26,11 +26,12 @@ namespace SAEE_Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Login(UserEnt user)
-        {
+		[HttpPost]
+		public ActionResult Login(UserEnt user)
+		{
 			var resp = userModel.Login(user);
-			if (resp != null)
+
+			if (resp != null && resp.Active)
 			{
 				Session["ActiveId"] = resp.Id;
 				Session["Name"] = resp.Name;
@@ -38,28 +39,32 @@ namespace SAEE_Web.Controllers
 				Session["Email"] = resp.Email;
 				Session["PhoneNumber"] = resp.PhoneNumber;
 				Session["UserType"] = resp.UserType;
-
+				Session["Active"] = resp.Active;
 				Session["SelectedWeekNum"] = 0;
 
 				if (resp.ProfilePicture != null)
 				{
 					byte[] bytes = resp.ProfilePicture;
-
 					string base64String = Convert.ToBase64String(bytes);
-
 					Session["ProfileImageB64"] = base64String;
 				}
 
 				return RedirectToAction("Index", "Home");
+			}
+			else if (resp != null && !resp.Active)
+			{
+				ViewBag.BoxMessage = "Usuario inactivo. Por favor, contacte al administrador.";
+				return View();
 			}
 			else
 			{
 				ViewBag.BoxMessage = "Compruebe la información de sus credenciales.";
 				return View();
 			}
-        }
+		}
 
-        [HttpGet]
+
+		[HttpGet]
         public ActionResult Logout()
         {
             Session.Clear();
@@ -165,25 +170,30 @@ namespace SAEE_Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult RecoverPassword(UserEnt user)
-        {
-            var resp = userModel.RecoverPassword(user);
+		[HttpPost]
+		public ActionResult RecoverPassword(UserEnt user)
+		{
+			// Llamar al método para recuperar la contraseña del modelo de usuario
+			var resp = userModel.RecoverPassword(user);
 
-            if (resp == "OK")
-            {
-                ViewBag.BoxMessage = "Se ha enviado un correo electrónico para la recuperación de su cuenta.";
-                return View();
-                //Hacer que se redirija al login luego de mostrar el mensaje
-            }
-            else
-            {
-                ViewBag.BoxMessage = "No se ha podido recuperar la cuenta, verifique que los datos sean correctos.";
-                return View();
-            }
-        }
+			if (resp == "OK")
+			{
+				// Si la recuperación de la contraseña fue exitosa, establecer un mensaje de éxito en ViewBag
+				ViewBag.BoxSuccess = "Se ha enviado un correo electrónico para la recuperación de su cuenta.";
+			}
+			else
+			{
+				// Si la recuperación de la contraseña falló, establecer un mensaje de error en ViewBag
+				ViewBag.BoxMessage = "No se ha podido recuperar la cuenta, verifique que los datos sean correctos.";
+			}
 
-        [HttpGet]
+			// Redirigir a la vista actual para mostrar el mensaje
+			return View();
+		}
+
+
+
+		[HttpGet]
         public ActionResult ProfileData()
         {
             return View();

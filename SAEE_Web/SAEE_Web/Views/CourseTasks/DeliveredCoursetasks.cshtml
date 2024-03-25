@@ -5,104 +5,105 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<main style="margin: 20px auto; max-width: 1000px; flex-grow: 1;">
-    <div style="text-align: center;">
-        <h2>Tareas entregadas</h2>
-        <hr />
-        
-        <br>
-        <div style="display:flex;">
-            &nbsp;&nbsp;
-            <div style="text-align:left">
-                <a class="btn btn--rReport" id="" style="display:flex; height:40px" href="#">
-                    <span class="text">Descargar reporte</span>
-                </a>
+<main class="contacts">
+    <section class="contacts_form">
+        <div class="container">
+            <div class="contacts_form-header">
+                <h4 class="contacts_form-header_title">Entregables</h4>
             </div>
-        </div>
-        <br />
-        @if (Model.Count() > 0)
-        {
-            if (ViewBag.BoxMessage != null)
-            {
-                <div class="alert alert-danger" role="alert" style="text-align:center">
-                    @ViewBag.BoxMessage
+            <div style="display:flex;">
+                &nbsp;&nbsp;
+                <div style="text-align:left">
+                    <a class="btn btn--rReport" id="" style="display:flex; height:40px" href="#">
+                        <span class="text">Descargar reporte</span>
+                    </a>
                 </div>
-            }
-
-            <table id="tableData" class="table" style="">
-                <thead class="thead-light" style="">
-                    <tr>
-                        <th id="Bar" scope="col">Nombre de tarea</th>
-                        <th id="Bar" scope="col">Descripción</th>
-                        <th id="Bar" scope="col">Archivo</th>
-                        <th id="Bar" scope="col">Fecha de Entrega</th>
-                        <th id="Bar" scope="col">Estudiante</th>
-                        <th id="Bar" scope="col">Calificación</th>
-                        <th id="Bar" scope="col">Editar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <th>@item.Name</th>
-                            <td>@item.Description</td>
-
-                            <td>
-                                <a href="@Url.Action("DownloadTask","CourseTasks", new { q = item.Id })">
-                                    <span class="text" style="color: Dodgerblue;"> @item.FileExtension</span>
-                                </a>
-                            </td>
-
-                            <td>@item.DeliveredOn.ToString("dd/MM/yyyy")</td>
-                            <td>@item.StudentFullName</td>
-
-
-                            @if (item.GradingScore == 0) //No calificado
-                            {
-                                <td style="text-align:center">
-                                    <a href="@Url.Action("GradeAssignment","CourseTasks", new { q = item.Id })"><i class="fa-solid fa-upload"></i></a>
-                                </td>
-
-                                <td><i class="fa-solid fa-xmark"></i></td>
-                            }
-                            else
-                            {
-                                <td>@item.GradingScore</td>
-
-                                @*Realizar el editar entrega*@
-                                <td style="text-align:center">
-                                    <a href="@Url.Action("UpdateGradeAssignment","CourseTasks", new { q = item.GradingId })"><i class="fa-solid fa-edit"></i></a>
-                                </td>
-                            }
-
-
-
-
-
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <div class="alert alert-info col-12" role="alert" style="text-align:center; margin-top:5%; font-size:18pt;">
-                No hay entregas en este momento.
             </div>
-        }
-    </div>
-    <hr />
+            <br />
+            @if (Model.Count() > 0)
+            {
+                if (ViewBag.BoxMessage != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center">
+                        @ViewBag.BoxMessage
+                    </div>
+                }
+                <div class="table-responsive">
+                    <table id="tableData" class="table" style="">
+                        <thead class="thead-light" style="">
+                            <tr>
+                                <th id="Bar" scope="col">Nombre de tarea</th>
+                                <th id="Bar" scope="col">Descripción</th>
+                                <th id="Bar" scope="col">Archivo</th>
+                                <th id="Bar" scope="col">Fecha de Entrega</th>
+                                <th id="Bar" scope="col">Estudiante</th>
+                                <th id="Bar" scope="col">Calificación</th>
+                                <th id="Bar" scope="col">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th>@item.Name</th>
+                                    <td>@item.Description</td>
+
+                                    <td>
+                                        <a href="@Url.Action("DownloadTask","CourseTasks", new { q = item.Id })">
+                                            <span class="text" style="color: Dodgerblue;"> @item.FileExtension</span>
+                                        </a>
+                                    </td>
+
+                                    <td>@item.DeliveredOn.ToString("dd/MM/yyyy")</td>
+                                    <td>@item.StudentFullName</td>
+
+
+                                    @if (item.GradingScore == 0) //No calificado
+                                    {
+                                        <td style="text-align:center">
+                                            <a href="@Url.Action("GradeAssignment","CourseTasks", new { q = item.Id })"><i class="fa-solid fa-upload"></i></a>
+                                        </td>
+
+                                        <td><i class="fa-solid fa-xmark"></i></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.GradingScore</td>
+
+                                        @*Realizar el editar entrega*@
+                                        <td style="text-align:center">
+                                            <a href="@Url.Action("UpdateGradeAssignment","CourseTasks", new { q = item.GradingId })"><i class="fa-solid fa-edit"></i></a>
+                                        </td>
+                                    }
+
+
+
+
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    </div>
+                    }
+                    else
+                    {
+                    <div class="alert alert-info col-12" role="alert" style="text-align:center; margin-top:5%; font-size:18pt;">
+                        No hay entregas en este momento.
+                    </div>
+                    }
+                </div>
+                <hr />
+</section>
 </main>
 
-@* DATATABLES *@
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script>
     $(document).ready(function () {
         $('#tableData').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-            }
+            },
+            "paging": true // Habilita la paginación
         });
     });
 </script>

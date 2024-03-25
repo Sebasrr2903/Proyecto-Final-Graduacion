@@ -1,7 +1,8 @@
-﻿@model SAEE_Web.Entities.AssignmentGradingEnt
+﻿
+@model SAEE_Web.Entities.CoursesTasksEnt
 
 @{
-    ViewBag.Title = "UpdateGradeAssignment";
+    ViewBag.Title = "UpdateCourseTask";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,53 +10,62 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                
 
-                    <h2 class="contacts_form-header_title" style="font-size: 2.5em;">Actualizar la calificacion </h2>
-              
+                <h2 class="contacts_form-header_title" style="font-size: 2.5em;">Actualizar  Tarea</h2>
+
             </div>
             <hr />
-              <h5>Actualize la calificacion del estudiante</h5>
+            <h5>Actualize la informacion de Tarea.</h5>
 
             @if (ViewBag.BoxMessage != null)
             {
                 <div class="alert alert-danger" role="alert" style="text-align:center">
-                    @ViewBag.BoxMessage<br />
+                    @ViewBag.BoxMessage
                 </div>
-
             }
-          
 
-            @using (Html.BeginForm("UpdateGradeAssignment", "CourseTasks", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
+
+
+            @using (Html.BeginForm("UpdateCoursesTasks", "CourseTasks", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm", @enctype = "multipart/form-data" }))
             {
-
+              
                 @Html.HiddenFor(m => m.Id)
 
-                @Html.HiddenFor(m => m.TaskId)
+                @Html.HiddenFor(m => m.AssignmentId)
+                @Html.HiddenFor(m => m.StudentId)
+             
+           
 
                 <div class="form-group">
-                    <label style="margin-right: 53rem;">Nota:</label>
-                    @Html.TextBoxFor(m => m.Score, new { @class = "field required", @type = "number", @placeholder = "Nota" })
+                    <label style="margin-right: 25rem;">Nombre de la Tarea:</label>
+                    @Html.TextBoxFor(m => m.Description, new { @class = "field required", @type = "text", @placeholder = "Nombre de la Tarea", MaxLength = "30" })
                 </div>
 
                 <div class="form-group">
-                    <label style="margin-right: 30rem;">Comentarios:</label>
-                    @Html.TextAreaFor(m => m.PerformanceDescription, new { @class = "field required", @rows = "6", @placeholder = "Comentarios de la entrega", style = "height:15%;", MaxLength = "250", id = "contador" })
+                    <label style="margin-right: 53rem;">Descripcion:</label>
+                    @Html.TextAreaFor(m => m.FileExtension, new { @class = "field required", @rows = "6", @placeholder = "Descripcion", style = "height:15%;", MaxLength = "250", id = "contador" })
                     <div style="font-size: 12px; margin-left: 27rem;"> <span id="nameCharacterCount">0</span>/250 caracteres</div>
                 </div>
 
+
+
+                <div class="form-group">
+                    <label style="margin-right: 28rem;">Actualizar archivo:</label>
+                    <input type="file" name="FileNew" id="FileNew" class="field required" />
+                </div>
                 <hr />
                 <div class="contacts_form-form_footer">
                     <button type="button" class="btn btn--return" style="color:white; font-size: 1em; padding: 0.5em 1em; margin-right: 10px; width:9rem;" onclick="history.back()">
                         <i class="fas fa-arrow-left"></i> Volver
                     </button>
-                    <button type="button" class="btn btn--login" style="color: white;  width: 12rem" onclick="validateForm()">ACTUALIZAR</button>
-
+                    <button type="submit" class="btn btn--login" style="color: white;  width: 12rem" onclick="validateForm()">ACTUALIZAR</button>
                 </div>
             }
+
         </div>
     </section>
 </main>
+
 
 
 <!-- Modal -->
@@ -64,22 +74,6 @@
 
 
 <script>
-    // Obtener el elemento del input y el contador
-    var nameInput = document.getElementById('contador');
-    var nameCounter = document.getElementById('nameCharacterCount');
-
-    // Función para actualizar el contador
-    function updateNameCounter() {
-        nameCounter.textContent = nameInput.value.length;
-    }
-
-    // Agregar un event listener para el evento input
-    nameInput.addEventListener('input', updateNameCounter);
-
-    // Llamar a updateNameCounter inicialmente para mostrar el valor inicial
-    updateNameCounter();
-
-
     function validateForm() {
         var formIsValid = true;
         $(".field.required").each(function () {
@@ -108,7 +102,25 @@
     function submitForm() {
         $('#registerForm').submit();
     }
+
+
+
+    // Obtener el elemento del input y el contador
+    var nameInput = document.getElementById('contador');
+    var nameCounter = document.getElementById('nameCharacterCount');
+
+    // Función para actualizar el contador
+    function updateNameCounter() {
+        nameCounter.textContent = nameInput.value.length;
+    }
+
+    // Agregar un event listener para el evento input
+    nameInput.addEventListener('input', updateNameCounter);
+
+    // Llamar a updateNameCounter inicialmente para mostrar el valor inicial
+    updateNameCounter();
 </script>
+
 
 
 

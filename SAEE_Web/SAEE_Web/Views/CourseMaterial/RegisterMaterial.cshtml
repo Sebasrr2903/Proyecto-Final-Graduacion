@@ -10,16 +10,11 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-                <div class="position-relative" style="position: relative;">
-                    <div class="back-button-container" style="position: absolute; top: 5%; left: 0.5%;">
-                        <!-- Añade estilo de posicionamiento y margen -->
-                        <button type="button" class="btn btn--return" style="color:white; font-size: 1em; padding: 0.5em 1em;" onclick="history.back()">
-                            <i class="fas fa-arrow-left"></i> Volver
-                        </button>
-                    </div>
+               
+                    
 
                     <h2 class="contacts_form-header_title" style="font-size: 2.5em;">Registrar Cursos</h2>
-                </div>
+             
             </div>
             <hr />
             <h5>Agregue el material educativo de esta semana.</h5>
@@ -51,7 +46,11 @@
 
                 <hr />
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">REGISTRAR</button>
+                    <button type="button" class="btn btn--return" style="color:white; font-size: 1em; padding: 0.5em 1em; margin-right: 10px; width:9rem;" onclick="history.back()">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>
+                    <button type="button" class="btn btn--login" style="color: white;  width: 12rem" onclick="validateForm()">REGISTRAR</button>
+
                 </div>
             }
         </div>

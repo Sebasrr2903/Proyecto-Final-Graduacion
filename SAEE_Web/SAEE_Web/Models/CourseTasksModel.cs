@@ -34,6 +34,16 @@ namespace SAEE_Web.Models
                 var resp = client.PostAsync(url, content).Result;
                 return resp.Content.ReadFromJsonAsync<string>().Result;
             }
+        }   
+        public string UpdateCoursesTasks(CoursesTasksEnt courseTasks)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = urlAPI + "UpdateCoursesTasks";
+                JsonContent content = JsonContent.Create(courseTasks);
+                var resp = client.PutAsync(url, content).Result;
+                return resp.Content.ReadFromJsonAsync<string>().Result;
+            }
         }
 
         public List<CourseAssignmentsEnt> SpecificAssignment(int q)

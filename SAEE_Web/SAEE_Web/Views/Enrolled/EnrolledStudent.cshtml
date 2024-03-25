@@ -8,21 +8,12 @@
     <section class="contacts_form">
         <div class="container">
             <div class="contacts_form-header">
-
-                <div class="position-relative" style="position: relative;">
-                    <div class="back-button-container" style="position: absolute; top: 5%; left: 0.3%;">
-                        <!-- Añade estilo de posicionamiento y margen -->
-                        <button type="button" class="btn btn--return" style="color:white; font-size: 1em; padding: 0.5em 1em;" onclick="history.back()">
-                            <i class="fas fa-arrow-left"></i> Volver
-                        </button>
-                    </div>
-
                     <h2 class="contacts_form-header_title" style="font-size: 2em;">Matricular estudiantes</h2>
                 </div>
             </div>
             <hr />
-           
-        
+
+
             @if (ViewBag.BoxMessage != null)
             {
                 if (ViewBag.BoxMessage == "Estudiante matriculado.")
@@ -39,7 +30,7 @@
                 }
             }
 
-           
+
 
             @using (Html.BeginForm("EnrolledStudent", "Enrolled", FormMethod.Post, new { @class = "contacts_form-form", id = "registerForm" }))
             {
@@ -65,10 +56,14 @@
                 </div>
                 <hr />
                 <div class="contacts_form-form_footer">
-                    <button type="button" class="btn btn--login" style="color:white;" onclick="validateForm()">MATRICULAR</button>
+                    <button type="button" class="btn btn--return" style="color:white; font-size: 1em; padding: 0.5em 1em; margin-right: 10px; width:9rem;" onclick="history.back()">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>
+                    <button type="button" class="btn btn--login" style="color: white;  width: 12rem" onclick="validateForm()">REGISTRAR</button>
+
                 </div>
             }
-        </div>
+        
     </section>
 </main>
 
@@ -80,8 +75,24 @@
 
 
 <script>
+
+    function limpiarCampos() {
+        // Aquí puedes agregar el código para limpiar los campos del formulario
+        document.getElementById("registerForm").reset();
+    } 
+        function limpiarCampos() {
+            // Limpiar los campos del formulario
+            document.getElementById("registerForm").reset();
+
+        // Restablecer los selectores a su estado predeterminado ("Seleccionar")
+        document.getElementById("Student").value = "";
+        document.getElementById("Course").value = "";
+        document.getElementById("CourseAvailable").value = "";
+    }
+
+
     function showConfirmation() {
-  
+
         $('#confirmationModal').modal('show');
     }
 
@@ -99,35 +110,35 @@
 
         // Filtrar y agregar las opciones correspondientes al segundo dropdown
         availableCourses.forEach(function(course) {
-            var courseName = course.Text.split("||")[0].trim(); // Obtener solo el nombre del curso
+        var courseName = course.Text.split("||")[0].trim(); // Obtener solo el nombre del curso
 
-            if (courseName === selectedCourseName) {
-                var option = document.createElement("option");
-                option.text = course.Text;
-                option.value = course.Value;
-                courseDropdown.add(option);
-            }
+        if (courseName === selectedCourseName) {
+        var option = document.createElement("option");
+        option.text = course.Text;
+        option.value = course.Value;
+        courseDropdown.add(option);
+        }
         });
-    }
+        }
 
-    function validateForm() {
+        function validateForm() {
         var selectIsValid = true;
         $(".form-control").each(function () {
-            if ($(this).val().trim() == 0) {
-                selectIsValid = false;
-                $(this).css("border-color", "red");
-                if (!$(this).next().hasClass("error-message")) {
-                    $(this).after("<p class='error-message' style='color: red; text-align: left;'>Debe realizar una elección.</p>");
-                }
+        if ($(this).val().trim() == 0) {
+        selectIsValid = false;
+        $(this).css("border-color", "red");
+        if (!$(this).next().hasClass("error-message")) {
+        $(this).after("<p class='error-message' style='color: red; text-align: left;'>Debe realizar una elección.</p>");
+        }
 
-            } else {
-                $(this).css("border-color", "");
-                $(this).next(".error-message").remove();
-            }
+        } else {
+        $(this).css("border-color", "");
+        $(this).next(".error-message").remove();
+        }
         });
 
         if (selectIsValid) {
-            showConfirmation();
+        showConfirmation();
         }
-    }
-</script>
+        }
+        </script>
