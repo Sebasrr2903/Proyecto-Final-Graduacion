@@ -34,17 +34,10 @@ namespace SAEE_Web.Models
                 var resp = client.PostAsync(url, content).Result;
                 return resp.Content.ReadFromJsonAsync<string>().Result;
             }
-        }   
-        public string UpdateCoursesTasks(CoursesTasksEnt courseTasks)
-        {
-            using (var client = new HttpClient())
-            {
-                string url = urlAPI + "UpdateCoursesTasks";
-                JsonContent content = JsonContent.Create(courseTasks);
-                var resp = client.PutAsync(url, content).Result;
-                return resp.Content.ReadFromJsonAsync<string>().Result;
-            }
         }
+
+
+	
 
         public List<CourseAssignmentsEnt> SpecificAssignment(int q)
         {
@@ -110,9 +103,34 @@ namespace SAEE_Web.Models
 			}
 		}
 
+		public CoursesTasksEnt Task(int q)
+		{
+			using (var client = new HttpClient())
+			{
+				var url = urlAPI + "Task?q=" + q;
+				var resp = client.GetAsync(url).Result;
+				return resp.Content.ReadFromJsonAsync<CoursesTasksEnt>().Result;
+			}
+		}
+		public string UpdateCoursesTasks(CoursesTasksEnt courseTasks)
+		{
+			using (var client = new HttpClient())
+			{
+				string url = urlAPI + "UpdateCoursesTasks";
+				JsonContent content = JsonContent.Create(courseTasks);
+				var resp = client.PutAsync(url, content).Result;
+				return resp.Content.ReadFromJsonAsync<string>().Result;
+			}
+		}
 
-
-
+           public void DeleteTasks(int q)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = urlAPI + "DeleteTasks?q=" + q;
+                var resp = client.DeleteAsync(url).Result;
+            }
+        }
 
 
 	}

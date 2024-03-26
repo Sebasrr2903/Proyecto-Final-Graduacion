@@ -1342,7 +1342,7 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
     }
 
     .header_nav-list {
-    
+        font-weight: bold;
         align-items: center; /* Centra los elementos verticalmente */
     }
 
@@ -1357,6 +1357,10 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
         align-items: center; /* /* Añade espacio entre el botón de menú y el menú en pantallas pequeñas */
     }
 
+    header_nav-list_item mr-3 a.active{
+        color: inherit; /* Cambiar color de texto */
+        font-weight: bold;
+    }
   
 }
 e-in-out;
@@ -1673,7 +1677,10 @@ e-in-out;
         font-weight: bold; /* Hacer el texto en negrita */
         /* Otros estilos deseados */
     }
-
+    header_nav-list_item mr-3 a.active {
+        color: inherit; /* Cambiar color de texto */
+        font-weight: bold;
+    }
 
     .header_nav-list_item.active:after {
         content: '';
@@ -2037,7 +2044,7 @@ e-in-out;
         width: 100%
     }
 
-@media screen and (min-width:575.98px) {
+@media screen and (min-width:489px) {
     .contacts_form-form_wrapper .field {
         width: calc(50% - 5px);
         margin-bottom: 0 !important
@@ -2073,7 +2080,7 @@ e-in-out;
         height: 100%
     }
 
-@media screen and (min-width:767.98px) {
+@media screen and (min-width:489.98px) {
     .contacts_form {
         padding: 100px 0
     }

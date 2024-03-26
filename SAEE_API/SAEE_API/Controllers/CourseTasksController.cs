@@ -71,48 +71,7 @@ namespace SAEE_API.Controllers
             }
         }
 
-		[HttpPut]
-		[Route("UpdateCoursesTasks")]
-		public string UpdateCoursesTasks(CoursesTasksEnt courseTasks)
-		{
-			try
-			{
-				using (var context = new SAEEEntities())
-				{
-					// Buscar la tarea de curso existente por su ID
-					var existingTask = context.CourseTasks.FirstOrDefault(t => t.id == courseTasks.Id);
-
-					if (existingTask != null)
-					{
-					
-						existingTask.name = courseTasks.Name;
-						existingTask.description = courseTasks.Description;
-						existingTask.file = courseTasks.File;
-						existingTask.fileExtension = courseTasks.FileExtension;
-						existingTask.deliveredOn = courseTasks.DeliveredOn;
-						existingTask.assignmentId = courseTasks.AssignmentId;
-						existingTask.studentId = courseTasks.StudentId;
-
-					
-						context.SaveChanges();
-
-						return "OK"; 
-					}
-					else
-					{
-						return "No se encontró la tarea de curso especificada."; // La tarea de curso no existe
-					}
-				}
-			}
-			catch (Exception e)
-			{
-				// En caso de error, registrar el error y devolver un mensaje de error al cliente
-				string errorDescription = e.Message.ToString();
-				reports.ErrorReport(errorDescription, courseTasks.activeUser, "UpdateCoursesTasks");
-				return "Error al actualizar la tarea de curso. Por favor, inténtelo de nuevo más tarde."; // Mensaje de error genérico
-			}
-		}
-
+		
 
 		[HttpGet]
         [Route("SpecificAssignment")]
@@ -215,7 +174,71 @@ namespace SAEE_API.Controllers
         }
 
 
-        [HttpPost]
+		[HttpGet]
+		[Route("Task")]
+		public CourseTasks Task(int q)
+		{
+			try
+			{
+				using (var context = new SAEEEntities())
+				{
+					context.Configuration.LazyLoadingEnabled = false;
+					var datos = (from x in context.CourseTasks
+								 where x.id == q
+								 where x.id == q
+								 select x).FirstOrDefault();
+
+					return datos;
+				}
+			}
+			catch (Exception e)
+			{
+				string errorDescription = e.Message.ToString();
+				reports.ErrorReport(errorDescription, 1, "GetTask");
+
+				return null;
+			}
+		}
+		[HttpPut]
+		[Route("UpdateCoursesTasks")]
+		public string UpdateCoursesTasks(CoursesTasksEnt courseTasks)
+		{			
+          try
+			{
+				using (var context = new SAEEEntities())
+				{
+					var data = (from x in context.CourseTasks
+								where x.id == courseTasks.Id
+								select x).FirstOrDefault();
+
+					if (data != null)
+					{
+						
+						data.name = courseTasks.Name;
+                        data.description = courseTasks.Description;
+						data.file = courseTasks.File;
+						data.fileExtension = courseTasks.FileExtension;
+                        data.deliveredOn = courseTasks.DeliveredOn;
+
+						context.SaveChanges();
+					}
+
+					reports.ActionReport("UpdateCoursesTasksDone", courseTasks.activeUser, "UpdateCoursesTasks");
+					return "OK";
+				}
+			}
+			catch (Exception e)
+			{
+				string errorDescription = e.Message.ToString();
+				reports.ErrorReport(errorDescription, 1, "UpdateCoursesTasks");
+
+				return string.Empty;
+			}
+		}
+
+
+
+		[HttpPost]
         [Route("GradeAssignment")]
         public string GradeAssignment(AssignmentGradingEnt grade)
         {
@@ -311,6 +334,20 @@ namespace SAEE_API.Controllers
 
 
 
+		[HttpDelete]
+		[Route("DeleteTasks")]
+		public void DeleteTasks(long q)
+		{
+			using (var context = new SAEEEntities())
+			{
+				var datos = (from x in context.CourseTasks
+							 where x.id == q
+							 select x).FirstOrDefault();
+
+				context.CourseTasks.Remove(datos);
+				context.SaveChanges();
+			}
+		}
 
 
 

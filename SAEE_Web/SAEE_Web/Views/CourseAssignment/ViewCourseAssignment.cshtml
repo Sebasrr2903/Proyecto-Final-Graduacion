@@ -32,7 +32,7 @@
     }
 </style>
 
-<div style="width: 70%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; margin-block-end:8%;margin-top:2%;">
+<div style="width: 50%; text-align: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; margin-block-end:8%;margin-top:2%;">
     <div id="content-container">
         <div class="list-group">
             <div class="banner" style="height: 15rem; display: flex; align-items: center;">
@@ -147,6 +147,7 @@
                         <a class="mb-1" href="@Url.Action("DownloadTask","CourseTasks", new { q = Model.TaskId })">
                             <span class="text" style="color: Dodgerblue;"> <i class="fa-solid fa-file" style="font-size: 20px;"> </i> @Model.TaskFileExtension</span>
                         </a>
+
                     </div>
                     <div style="display:flex; padding-left:3%">
                         @{
@@ -164,27 +165,25 @@
                             }
                         }
 
-                        @if (formattedTimeLeft == "Sin tiempo")
-                        {
-                            
-                            <div class="d-flex w-100">
-                                <h5 class="mb-1">Ya no puede editar su entrega, el tiempo ha caducado.</h5>
-                            </div>
-                        }
-                        else
-                        {
-                            //Añadir funcionamiento de los siguientes botones, no estaba pensado pero son importantes
-                          
-                            //SEBAS:ALGO ME HACE FALTA PARA QUE SE VEA LA INFORMACION Y NO ENSENA LOS BOTONES POR LO DEL TIEMPO
+                        @*@if (formattedTimeLeft != "Sin tiempo")
+        {*@
 
-                            <a class="btn btn--rUpdate" style="margin-right: 10px; display: flex; height: 40px" href="@Url.Action("UpdateCoursesTasks","CourseTasks", new { id = Model.TaskId})">
-                                <span class="text">Editar Entrega</span>
-                            </a>
+                        <a class="btn btn--rUpdate" style="margin-right: 10px; display: flex; height: 40px" href="@Url.Action("UpdateCoursesTasks","CourseTasks", new { id = Model.TaskId})">
+                            <span class="text">Editar Entrega</span>
+                        </a>
 
-                            <a class="btn btn--rReport" style="margin-right: 10px; display: flex; height: 40px" href="#">
-                                <span class="text">Eliminar Entrega</span>
-                            </a>
-                        }
+                        <a class="btn btn--rReport" style="margin-right: 10px; display: flex; height: 40px" href="@Url.Action("DeleteTasks","CourseTasks", new { q = Model.AssignmentId })">
+                            <span class="text">Eliminar Entrega</span>
+                        </a>
+                    
+                        @*}
+        else
+        {*@
+
+                        <div class="d-flex w-100">
+                            <h5 class="mb-1">Ya no puede editar su entrega, el tiempo ha caducado.</h5>
+                        </div>
+                        @* } *@
                     </div>
                 </div>
             }

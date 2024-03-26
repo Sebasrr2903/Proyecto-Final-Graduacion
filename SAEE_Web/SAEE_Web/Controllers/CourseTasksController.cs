@@ -25,6 +25,8 @@ namespace SAEE_Web.Controllers
             return View();
         }
 
+
+
         [HttpPost]
         public ActionResult RegisterCourseTasks(HttpPostedFileBase FileNew, CoursesTasksEnt courseTasks)
         {
@@ -69,11 +71,12 @@ namespace SAEE_Web.Controllers
 
 
 		[HttpGet]
-		public ActionResult UpdateCoursesTasks()
+		public ActionResult UpdateCoursesTasks(int q)
 		{
-			returnUrl = Request.UrlReferrer?.ToString();//For return
+			returnUrl = Request.UrlReferrer?.ToString();
+			var data = courseTasksModel.Task(q);
 
-			return View();
+			return View(data);
 		}
 
 		[HttpPost]
@@ -183,7 +186,7 @@ namespace SAEE_Web.Controllers
 		public ActionResult UpdateGradeAssignment(int q)
 		{
 			returnUrl = Request.UrlReferrer?.ToString();//For return
-			var data = courseTasksModel.GradingData(q);
+			var data = courseTasksModel.GetTask(q);
 
 
 			return View(data);
@@ -207,6 +210,17 @@ namespace SAEE_Web.Controllers
 			}
 		}
 
+		[HttpGet]
+		public ActionResult DeleteTasks(int q)
+		{
+			returnUrl = Request.UrlReferrer?.ToString();
+
+			// Llamar al método DeleteTasks del modelo para iniciar el proceso de eliminación
+			courseTasksModel.DeleteTasks(q);
+
+			// Redirigir de vuelta a la página anterior
+			return Redirect(returnUrl);
+		}
 
 
 	}

@@ -22,10 +22,21 @@
         margin: 0; /* Elimina el margen predeterminado del título */
     }
     .title-text2 {
-        color: rgb(48, 120, 252);
+        padding:10px;
+        border-radius:10px;
+        background:rgba(106, 17, 203, .83);
+        color: rgb(255, 255, 255);
         font-weight: bold;
         margin: 0;
     }
+        .title-text2:hover {
+            padding: 10px;
+            border-radius: 10px;
+            background: #007bff;
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+            margin: 0;
+        }
 </style>
 
 <main class="contacts">
@@ -36,40 +47,39 @@
             </div>
 
 
-
             @if (Model.Any())
             {
                 <div class="row row-cols-1">
                     @foreach (var item in Model)
                     {
-                        <div class="col-4 mb-4">
-                            <div class="card h-100" style=" width:90%; padding: 10px;  background: linear-gradient(0deg, rgba(255, 255, 255, .9), rgba(255, 255, 255, .9)), linear-gradient(127.36deg, #6a11cb 31.85%, #2575fc 108.53%); border-color:transparent; ">
-                                <div class="card-header"style="background: linear-gradient(151.89deg, rgba(106, 17, 203, .83) 6.97%, rgba(37, 117, 252, .83) 84.71%); border-radius:10px;">
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card h-100" style="width: 90%; padding: 10px; background: linear-gradient(0deg, rgba(255, 255, 255, .9), rgba(255, 255, 255, .9)), linear-gradient(127.36deg, #6a11cb 31.85%, #2575fc 108.53%); border-color: transparent; min-width: 200px;">
+                                <div class="card-header" style="background: linear-gradient(151.89deg, rgba(106, 17, 203, .83) 6.97%, rgba(37, 117, 252, .83) 84.71%); border-radius:10px;">
                                     <img src="~/Images/librosEj.jpg" class="card-img-top" alt="Ejemplo Curso">
-                                   </div>
-                                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                                        <h4 class="card-title">@item.CourseName</h4>
-                                        <div class="d-flex align-items-center">
-                                            @if (Session["TeacherProfileImageB64"] == null)
-                                            {
-                                                <img class="img-xs rounded-circle mr-2 " src="https://cdn-icons-png.flaticon.com/512/2550/2550383.png" style="max-width: 2rem;" alt="Foto de Perfil Default">
-                                            }
-                                            else
-                                            {
-                                                <img class="img-xs rounded-circle mr-2" src="data:image/jpeg;base64,@Session["TeacherProfileImageB64"]" style="max-width:2rem;" alt="Foto de Perfil Profesor">
-                                            }
-                                            <h6 class="card-text" style="color:#6a11cb"><i class="fas  fa-chalkboard-user"></i>  @item.TechearName</h6>
-                                        </div>
-                                        <br />
-                                        <p class="card-text" style="">@item.CourseDescription</p>
+                                </div>
+                                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                    <h4 class="card-title">@item.CourseName</h4>
+                                    <div class="d-flex align-items-center">
+                                        @if (Session["TeacherProfileImageB64"] == null)
+                                        {
+                                            <img class="img-xs rounded-circle mr-2" src="https://cdn-icons-png.flaticon.com/512/2550/2550383.png" style="max-width: 2rem;" alt="Foto de Perfil Default">
+                                        }
+                                        else
+                                        {
+                                            <img class="img-xs rounded-circle mr-2" src="data:image/jpeg;base64,@Session["TeacherProfileImageB64"]" style="max-width:2rem;" alt="Foto de Perfil Profesor">
+                                        }
+                                        <h6 class="card-text" style="color:#6a11cb"><i class="fas  fa-chalkboard-user"></i>  @item.TechearName</h6>
                                     </div>
                                     <br />
-                                    
-                                        <a href="@Url.Action("SpecificCourse", "Course", new { q = item.CourseId })" class="title-text2">Ir al curso</a>
-                                 
-
-                                    <br />
+                                    <p class="card-text">@item.CourseDescription</p>
                                 </div>
+                                <br />
+                                <div class="justify-content-center" >
+                                    <a href="@Url.Action("SpecificCourse", "Course", new { q = item.CourseId })" class="title-text2">Ir al curso</a>
+                                </div>
+                             
+                                <br />
+                            </div>
                         </div>
                     }
                 </div>
@@ -77,12 +87,12 @@
 
 
 
-           
+
             else
             {
-            <div class="alert alert-info text-center" role="alert" style="max-width: 960px;">
-                No hay cursos en este momento.
-            </div>
+                <div class="alert alert-info text-center" role="alert" style="max-width: 960px;">
+                    No hay cursos en este momento.
+                </div>
             }
 
         </div>
